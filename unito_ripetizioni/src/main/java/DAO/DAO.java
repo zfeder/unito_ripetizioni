@@ -1,18 +1,22 @@
 package DAO;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.sql.*;
+import java.util.ArrayList;
 
-@WebServlet(name = "DAO")
-public class DAO extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
 
+public class DAO {
+
+    private static final String url1 = "jdbc:mysql://localhost:3306/unito_ripetizioni";
+    private static final String user = "root";
+    private static final String password = "";
+
+    public static void registerDriver() {
+        try {
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            System.out.println("Driver correttamente registrato");
+        } catch (SQLException e) {
+            System.out.println("Errore: " + e.getMessage());
+        }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
-
-    }
 }

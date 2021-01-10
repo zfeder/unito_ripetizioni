@@ -9,6 +9,11 @@
     </properties>
     <root id="archive" name="unito_ripetizioni-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="unito_ripetizioni:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mysql-connector-java-5.1.44-bin" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>
