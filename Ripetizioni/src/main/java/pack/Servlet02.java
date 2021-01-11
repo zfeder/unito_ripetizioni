@@ -6,9 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.*;
-import java.util.*;
+import java.util.Date;
+
 import DAO.*;
 
 @WebServlet(name = "Servlet02", urlPatterns = {"/Servlet02"})
@@ -31,19 +33,61 @@ public class Servlet02 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String utente = request.getParameter("futente");
-            String password = request.getParameter("fpassword");
-            //System.out.println(utente + password);
+            String utente = request.getParameter("utente");
+            String password = request.getParameter("password");
+            System.out.println(utente + password);
+
+
             if(DAO.checkDB(utente, password)){
                 out.println("Utente Registrato!");
                 out.println(utente + password);
-                out.flush();
+                {
+                    response.setContentType("text/html;charset=UTF-8");
+                    String userName = request.getParameter("utente");
+                    HttpSession s = request.getSession();
+                    if (userName!=null)
+                        s.setAttribute("utente", userName);
+                    String url = response.encodeURL("Servlet02");
+                    try {
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>Servlet Servlet03</title>");
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<p>Sei collegato come: " + s.getAttribute("utente") + "</p>");
+                        String azione = request.getParameter("action");
+                        out.println("<p>URL: " + url + "</p>");
+                        if (azione!=null && azione.equals("invalida")) {
+                            s.invalidate();
+                            out.println("<p>Sessione invalidata!</p>");
+                            out.println("<p>Ricarica <a href=\"" + url + "\"> la pagina</a></p>");
+                        }
+                        else {
+                            out.print("<p>Stato della sessione: ");
+                            if (s.isNew())
+                                out.println(" nuova sessione</p>");
+                            else out.println(" vecchia sessione</p>");
+                            out.println("<p>ID di sessione: "+s.getId() + "</p>");
+                            out.println("<p>Data di creazione: " + new Date(s.getCreationTime()) + "</p>");
+                            out.println("<p>Max inactive time interval (in secondi): "
+                                    + s.getMaxInactiveInterval() + "</p>");
+                            out.println("<p>Invalida <a href=\"" + url + "?action=invalida\"> la sessione</a></p>");
+                            out.println("<p>Ricarica <a href=\"" + url + "\"> la pagina</a></p>");
+                        }
+                        out.println("</body>");
+                        out.println("</html>");
+                    } finally {
+                        out.close();
+                    }
+                }
             }
             else
-                out.println("Utente Non Registrato!");
+                out.println("Utente Errato!");
         } finally {
             if (out!=null)
                 out.close();
         }
     }
+
+
 }
