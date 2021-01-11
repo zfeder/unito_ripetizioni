@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <title>Accesso a DB relazionale da app java web</title>
+
+    <style>
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div>
+    Clicca il bottone per visualizzare i dati
+</div>
+
+<form action="/Ripetizioni/Servlet01" method="post">
+    <p><input type="submit" name="submit" value="VISUALIZZA"/></p>
+</form>
+
+
+
+LOGIN
+<form method="post">
+    Inserisci utente:
+    <input id="futente" name="futente" size="30" type="text" />
+    Inserisci password:
+    <input id="fpassword" name="fpassword" size="30" type="text" />
+    <input id="go" name="go" type="button" value="GO" />
+
+
+</form>
+<div id="saluto" class="outputTextArea"></div>
+<script type="text/javascript">
+    $(document).ready(function () { // When the DOM of this page is constructed
+        $("#go").click(function () {// on click of go button do...
+            var n = document.getElementById("futente").value;
+            var m = document.getElementById("fpassword").value;
+
+// var m = document.getElementById("fpassword").value;
+            $.post("Servlet02", {futente: n, fpassword: m}, // POST to NewServlet
+                function (data) { // callBack function
+//alert(data);
+                    $("#saluto").html(data); // Select element
+//(by ID) and insert dynamic content (data) into it
+                });
+        });
+    });
+</script>
+
+
+
+</body>
+
+</html>
