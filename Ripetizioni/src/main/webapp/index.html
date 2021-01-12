@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <title>Prenotazione Lezioni Online</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -5,6 +7,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="style.css" />
+
 
 <script type="text/javascript">
     $(document).ready(function () { // When the DOM of this page is constructed
@@ -46,19 +49,38 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><form class="navbar-form navbar-right" role="form" method="post">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input id="utente" type="text" class="form-control" name="utente" value="" placeholder="Utente">
+
+                    <div id="app">
+                        <input  v-show="!isFavorite" id="utente" type="text" class="form-control" name="utente" value="" placeholder="Utente">
+                        <input  v-show="!isFavorite" id="password" type="password" class="form-control" name="password" value="" placeholder="Password">
+                        <button @click="addToFavorites" v-show="!isFavorite" id="go"  name="go" type="button" value="GO" type="submit" class="btn btn-primary">Login</button>
+                        <button @click="addToFavorites" v-show="isFavorite" id="no"  name="no" type="button" value="GO" type="submit" class="btn btn-primary">Logout</button>
                     </div>
 
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">
-                    </div>
-                    <button id="go" name="go" type="button" value="GO" type="submit" class="btn btn-primary">Login</button>
-                </form></li>
+                    <script src="https://unpkg.com/vue"></script>
+                    <script>
+                        new Vue({
+                            el: '#app',
+                            data: {
+                                isFavorite: false
+                            },
+                            methods: {
+                                addToFavorites() {
+                                    this.isFavorite = true;
+                                },
+                                deleteFromFavorites() {
+                                    this.isFavorite = false;
+                                }
+                            }
+                        })
+                    </script>
 
-                <div id="saluto" class="outputTextArea"></div>
+                </form>
+
+
+
+                </li>
+
 
             </ul>
         </div>
@@ -184,7 +206,9 @@
 </div>
 
 <footer class="container-fluid text-center">
-    <p>Footer Text</p>
+    <div id="saluto" class="outputTextArea"></div></p>
+
 </footer>
 
 </body>
+</html>
