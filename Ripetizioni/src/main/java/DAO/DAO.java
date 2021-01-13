@@ -55,8 +55,8 @@ public class DAO {
     public static boolean checkDB(String futente, String fpassword) {
         Connection conn1 = null;
         boolean t = false;
-        System.out.println("Utente: " + futente);
-        System.out.println("Password: " + fpassword);
+        //System.out.println("Utente: " + futente);
+        //System.out.println("Password: " + fpassword);
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             if (conn1 != null) {
@@ -67,13 +67,10 @@ public class DAO {
             String s = "Amministratore";
             while (rs.next() && t == false) {
                 String utente = rs.getString("ID_UTENTE");
-                //System.out.println(rs.getString("ID_UTENTE"));
                 String password = rs.getString("PASSWORD");
-                //System.out.println(rs.getString("PASSWORD"));
                 String ruolo = rs.getString("RUOLO");
                 if(ruolo.equals(s))
                     System.out.println("Questo utente è un amministratore");
-
                 else
                     System.out.println("Questo utente non è un amministratore");
                 if (utente.equals(futente) && password.equals(fpassword)) {

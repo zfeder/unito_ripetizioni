@@ -35,7 +35,8 @@ public class Servlet02 extends HttpServlet {
         try {
             String utente = request.getParameter("utente");
             String password = request.getParameter("password");
-            System.out.println(utente + password);
+            System.out.println("Utente: " + utente);
+            System.out.println("Password: " + password);
             String url = response.encodeURL("index.html");
             HttpSession s = request.getSession();
             String azione = request.getParameter("no");
@@ -51,15 +52,9 @@ public class Servlet02 extends HttpServlet {
                 out.println("<p>Data di creazione: " + new Date(s.getCreationTime()) + "</p>");
                 out.println("<p>Max inactive time interval (in secondi): "
                         + s.getMaxInactiveInterval() + "</p>");
-                //out.println("<p>Invalida <a href=\"" + url + "?action=invalida\"> la sessione</a></p>");
-               //  out.println("<p>Ricarica <a href=\"" + url + "\"> la pagina</a></p>");
-
                 if (DAO.checkDB(utente, password)) {
-                    out.println("Benvenuto");
-                    out.println(utente);
+                    out.println("Benvenuto, " + utente);
                     {
-                        //HttpSession s = request.getSession();
-                        //String url = response.encodeURL("index.html");
                         if (utente != null)
                             s.setAttribute("utente", utente);
                         try {
@@ -68,30 +63,12 @@ public class Servlet02 extends HttpServlet {
                             out.println("<title>Servlet02</title>");
                             out.println("</head>");
                             out.println("<body>");
-                           // out.println("<p>Sei collegato come: " + s.getAttribute("utente") + "</p>");
-                            //String azione = request.getParameter("no");
-                            // out.println("<p>URL: " + url + "</p>");
-
-
-                        /*else {
-                            out.print("<p>Stato della sessione: ");
-                            if (s.isNew())
-                                out.println(" nuova sessione</p>");
-                            else out.println(" vecchia sessione</p>");
-                            out.println("<p>ID di sessione: " + s.getId() + "</p>");
-                            out.println("<p>Data di creazione: " + new Date(s.getCreationTime()) + "</p>");
-                            out.println("<p>Max inactive time interval (in secondi): "
-                                    + s.getMaxInactiveInterval() + "</p>");
-                            //out.println("<p>Invalida <a href=\"" + url + "?action=invalida\"> la sessione</a></p>");
-                            out.println("<p>Ricarica <a href=\"" + url + "\"> la pagina</a></p>");
-                        }*/
                             out.println("</body>");
                             out.println("</html>");
                         } finally {
                             out.close();
                         }
                     }
-
                 } else
                     out.println("Utente Errato!");
             }
@@ -100,7 +77,5 @@ public class Servlet02 extends HttpServlet {
             if (out != null)
                 out.close();
         }
-
-
     }
 }
