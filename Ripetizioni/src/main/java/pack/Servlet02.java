@@ -52,11 +52,11 @@ public class Servlet02 extends HttpServlet {
                 out.println("<p>Max inactive time interval (in secondi): "
                         + s.getMaxInactiveInterval() + "</p>");
                 //out.println("<p>Invalida <a href=\"" + url + "?action=invalida\"> la sessione</a></p>");
-                out.println("<p>Ricarica <a href=\"" + url + "\"> la pagina</a></p>");
+               //  out.println("<p>Ricarica <a href=\"" + url + "\"> la pagina</a></p>");
 
                 if (DAO.checkDB(utente, password)) {
-                    out.println("Utente Registrato!");
-                    out.println(utente + password);
+                    out.println("Benvenuto");
+                    out.println(utente);
                     {
                         //HttpSession s = request.getSession();
                         //String url = response.encodeURL("index.html");
@@ -68,9 +68,9 @@ public class Servlet02 extends HttpServlet {
                             out.println("<title>Servlet02</title>");
                             out.println("</head>");
                             out.println("<body>");
-                            out.println("<p>Sei collegato come: " + s.getAttribute("utente") + "</p>");
+                           // out.println("<p>Sei collegato come: " + s.getAttribute("utente") + "</p>");
                             //String azione = request.getParameter("no");
-                            out.println("<p>URL: " + url + "</p>");
+                            // out.println("<p>URL: " + url + "</p>");
 
 
                         /*else {
