@@ -1,5 +1,6 @@
 package pack;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,6 +54,7 @@ public class Servlet02 extends HttpServlet {
                 out.println("<p>Max inactive time interval (in secondi): "
                         + s.getMaxInactiveInterval() + "</p>");
                 if (DAO.checkDB(utente, password)) {
+
                     out.println("Benvenuto, " + utente);
                     {
                         if (utente != null)
@@ -79,3 +81,4 @@ public class Servlet02 extends HttpServlet {
         }
     }
 }
+
