@@ -54,6 +54,7 @@ public class Servlet02 extends HttpServlet {
                 out.println("<p>Max inactive time interval (in secondi): "
                         + s.getMaxInactiveInterval() + "</p>");
                 if (DAO.checkDB(utente, password)) {
+                    DAO.checkAdmin(utente);
 
                     out.println("Benvenuto, " + utente);
                     {

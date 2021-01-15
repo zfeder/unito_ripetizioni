@@ -51,16 +51,14 @@ public class DAO {
     }
 
 
-    //CONTROL
+    //CONTROL UTENTE DB
     public static boolean checkDB(String futente, String fpassword) {
         Connection conn1 = null;
         boolean t = false;
-        //System.out.println("Utente: " + futente);
-        //System.out.println("Password: " + fpassword);
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             if (conn1 != null) {
-                System.out.println("Connected to the database test");
+                //System.out.println("Connected to the database test");
             }
             Statement st = conn1.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM UTENTE");
@@ -69,10 +67,6 @@ public class DAO {
                 String utente = rs.getString("ID_UTENTE");
                 String password = rs.getString("PASSWORD");
                 String ruolo = rs.getString("RUOLO");
-                if(ruolo.equals(s))
-                    System.out.println("Questo utente è un amministratore");
-                else
-                    System.out.println("Questo utente non è un amministratore");
                 if (utente.equals(futente) && password.equals(fpassword)) {
                     t = true;
                 }
@@ -90,5 +84,42 @@ public class DAO {
         }
         return t;
     }
+
+    //CONTROL ADMIN DB
+    public static boolean checkAdmin(String futente) {
+        Connection conn1 = null;
+        boolean b = false;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            if (conn1 != null) {
+                //System.out.println("Connected to the database test");
+            }
+            Statement st = conn1.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM UTENTE");
+            String s = "Amministratore";
+            while (rs.next() && b == false) {
+                String utente = rs.getString("ID_UTENTE");
+                String ruolo = rs.getString("RUOLO");
+                if(utente.equals(futente) && ruolo.equals(s)) {
+                    System.out.println("Ruolo: Amministratore");
+                    b = true;
+                }
+                else
+                    System.out.println("Ruolo: Non Amministratore");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return b;
+    }
+
 
 }
