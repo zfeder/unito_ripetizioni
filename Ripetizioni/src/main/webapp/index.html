@@ -37,15 +37,25 @@
     }
 
 
+    body{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    form label.error{
+        color: red;
+    }
+
+
+
 </style>
 
 <script>
+
     $(document).ready(function () { // When the DOM of this page is constructed
         $("#go").click(function () { // on click of go button do...
             var n = document.getElementById("utente").value;
             var m = document.getElementById("password").value;
 
-            //   var m = document.getElementById("fpassword").value;
             $.post("Servlet02", {utente: n, password: m},  // POST to NewServlet
                 function (data) {       // callBack function
                     //alert(data);
@@ -54,6 +64,8 @@
                 });
         });
     });
+
+
 
     $(document).ready(function () {
         $("#no").click(function () {
@@ -65,12 +77,23 @@
         });
     });
 
+
+
+
+
+
     $(document).ready(function() {
-        $('#loginModal').modal('show');
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
+        var ut = document.getElementById("utente").value;
+        var ps = document.getElementById("password").value;
+        if(ut != null && ps != null) {
+            $('#loginModal').modal('show');
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        }
+
     });
+
 
 
     document.getElementById('go').onclick = function (e) {
@@ -96,13 +119,7 @@
 
     }
 
-
-
-
-
-
 </script>
-
 
 </head>
 <body>
@@ -125,31 +142,18 @@
                 <li><a href="#">Contact</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+
                 <li><form class="navbar-form navbar-right" role="form" method="post">
 
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
-                        <button @click="deleteFromFavorites" v-show="isFavorite" id="no" name="no" type="button" value="GO" type="submit" class="btn btn-primary">Logout</button>
-
-                    <script src="https://unpkg.com/vue"></script>
-                    <script>
-                        new Vue({
-                            el: '#app',
-                            data: {
-                                isFavorite: false
-                            },
-                            methods: {
-                                addToFavorites() {
-                                    this.isFavorite = true;
-                                },
-                                deleteFromFavorites() {
-                                    this.isFavorite = false;
-                                }
-                            }
-                        })
-                    </script>
+                    <div id="app">
+                        {{ login }}
+                        <button type="button" v-show="!autorizzazione"  class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
+                        <button type="button" v-show="autorizzazione"  class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Logout</button>
 
 
-                    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+                        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
 
@@ -159,18 +163,20 @@
                                     </div>
                                     <div class="d-flex flex-column text-center">
 
-
-                                        <form action="#" id="formin">
+                                        <form>
                                             <div class="form-group">
                                                 <p> </p>
-                                                <input v-show="!isFavorite" id="utente" type="text" class="form-control" name="utente" value="" placeholder="Utente" class="error">
+                                                <input id="utente" type="text" class="form-control" name="utente" placeholder="Utente" required>
+                                                <label id="error_utente" class="error"></label>
                                                 <p> </p>
                                             </div>
                                             <div class="form-group">
-                                                <input v-show="!isFavorite" id="password" type="password" class="form-control" name="password" value="" placeholder="Password" class="error">
+                                                <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
+                                                <label id="error_pass" class="error"></label>
                                             </div>
                                             <p> </p>
-                                            <input type="submit" id="go"  value="Accedi" />
+                                            <input type="submit" v-on:click="getInfo" id="go" data-dismiss="modal" value="Login" class="btn btn-primary" />
+
                                         </form>
 
 
@@ -179,6 +185,41 @@
                             </div>
                         </div>
                     </div>
+                    </div>
+
+                    <script>
+                        var app = new Vue ({
+                            el: '#app',
+                            data: {
+                                login: ' ',
+                                autori: 'prova',
+                                autorizzazione: false,
+                                link : '/Ripetizioni/Servlet02'
+                            },
+
+                            methods:{
+                                getInfo:function(){
+                                    var auto = this;
+                                    $.post(this.link, {utente:$("#utente").val(), password:$("#password").val()}, function(data) {
+                                        auto.login = data;
+                                        if (auto.login.trim() === "Admin") {
+                                            auto.autorizzazione = true;
+                                            auto.login = "Benvenuto/a";
+                                        } else if (auto.login.trim() === "Utente") {
+                                            auto.autorizzazione = true;
+                                            auto.login = "Benvenuto/a";
+                                        } else if (auto.login.trim() === "Nonloggato") {
+                                            auto.autorizzazione = false;
+                                            auto.login = "Utente o password errato";
+                                        }
+
+                                    });
+                                }
+                            }
+                        });
+
+
+                    </script>
 
                 </form>
 
@@ -313,112 +354,11 @@
         <div class="row content">
             <div class="col-sm-2 sidenav">
                 <p><a href="#">Le mie prenotazioni</a></p>
-                <p><a href="#">Materie Disponibili</a></p>
+                <p><a href="#">Materie disponibili</a></p>
             </div>
             <div class="col-sm-8 text-left">
                 <h1></h1>
 
-                <!-- <table>
-                    <summary>Gestione delle lezioni</summary>
-                    <thead>
-                    <tr>
-                        <th>Slot Orario</th>
-                        <th>Lunedì</th>
-                        <th>Martedì</th>
-                        <th>Mercoledì</th>
-                        <th>Giovedì</th>
-                        <th>Venerdì</th>
-                    </tr>
-                    </thead>
-
-                    <tr class="week">
-                        <td>
-                            <span class="date">15:00/16:00</span>
-                        </td>
-                        <td>
-                            <span class="date">27</span>
-                        </td>
-                        <td>
-                            <span class="date">28</span>
-                        </td>
-                        <td>
-                            <span class="date">29</span>
-                        </td>
-                        <td>
-                            <span class="date">30</span>
-                        </td>
-                        <td>
-                            <span class="date">31</span>
-                        </td>
-                    </tr>
-
-
-                    <tr class="week">
-                        <td>
-                            <span class="date">16:00/17:00</span>
-                        </td>
-                        <td>
-                            <span class="date">3</span>
-                        </td>
-                        <td>
-                            <span class="date">4</span>
-                        </td>
-                        <td>
-                            <span class="date">5</span>
-                        </td>
-                        <td>
-                            <span class="date">6</span>
-                        </td>
-                        <td>
-                            <span class="date">7</span>
-                        </td>
-                    </tr>
-
-
-                    <tr class="week">
-                        <td>
-                            <span class="date">17:00/18:00</span>
-                        </td>
-                        <td>
-                            <span class="date">10</span>
-                        </td>
-                        <td>
-                            <span class="date">11</span>
-                        </td>
-                        <td>
-                            <span class="date">12</span>
-                        </td>
-                        <td>
-                            <span class="date">13</span>
-                        </td>
-                        <td>
-                            <span class="date">14</span>
-                        </td>
-                    </tr>
-
-
-                    <tr class="week">
-                        <td>
-                            <spam class="date">18:00/19:00</spam>
-                        </td>
-                        <td>
-                            <span class="date">17</span>
-                        </td>
-                        <td>
-                            <span class="date">18</span>
-                        </td>
-                        <td>
-                            <span class="date">19</span>
-                        </td>
-                        <td>
-                            <span class="date">20</span>
-                        </td>
-                        <td>
-                            <span class="date">21</span>
-                        </td>
-                    </tr>
-
-                </table> -->
 
             </div>
         </div>
@@ -428,7 +368,7 @@
 
 
 <footer class="container-fluid text-center">
-    <div id="saluto" class="outputTextArea"></div></p>
+    <div id="saluto" class="outputTextArea"></div>
     <div id="saluto2" class="outputTextArea"></div>
 </footer>
 
