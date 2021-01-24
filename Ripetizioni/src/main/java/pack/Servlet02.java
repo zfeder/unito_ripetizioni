@@ -40,6 +40,7 @@ public class Servlet02 extends HttpServlet {
             HttpSession s = request.getSession();
             if (request.getParameter("azione") != null) {
                 System.out.println("Sessione invalidata");
+                out.println("invalidato");
                 s.invalidate();
             }
             s.setAttribute("utente", utente);
