@@ -41,19 +41,27 @@
 
 <script>
 
-    $(document).ready(function () { // When the DOM of this page is constructed
-        $("#go").click(function () { // on click of go button do...
+    $(document).ready(function () {
+        $("#go").click(function () {
             var n = document.getElementById("utente").value;
             var m = document.getElementById("password").value;
-
-            $.post("Servlet02", {utente: n, password: m},  // POST to NewServlet
-                function (data) {       // callBack function
-                    //alert(data);
-                    $("#saluto").html(data); // Select element
-                    //(by ID) and insert dynamic content (data) into it
+            $.post("Servlet02", {utente: n, password: m},
+                function (data) {
+                    $("#saluto").html(data);
                 });
         });
     });
+
+
+
+
+
+
+
+
+
+
+
 
 
 </script>
@@ -70,15 +78,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Logo</a>
+            <li><img src="book.png" height="50" width="50"/></li>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Projects</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
+
             <ul class="nav navbar-nav navbar-right">
 
                 <li><form class="navbar-form navbar-right" role="form" method="post">
@@ -90,15 +93,14 @@
                     </span>
 
                     <script type="text/javascript">
-                        $(document).ready(function () { // When the DOM of this page is constructed
+                        $(document).ready(function () {
                             $("#logoutt").click(function () {
 
-                                $.post("ServletLogout",   // POST to NewServlet
+                                $.post("ServletLogout",
                                     function (data) {
                                         var auto = this;
                                         auto.autorizzazione = false;
-                                        $("#VisUtentii").html(data); // Select element
-                                        //(by ID) and insert dynamic content (data) into it
+                                        $("#VisUtentii").html(data);
                                     });
                             });
                         });
@@ -126,28 +128,14 @@
                                             </div>
                                             <p> </p>
                                             <input type="submit" v-on:click="getInfo" id="go" value="Login" data-dismiss="modal" class="btn btn-primary" />
-
                                         </form>
-
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
                 </form>
-
-
-
                 </li>
-
-
             </ul>
         </div>
     </div>
@@ -158,10 +146,11 @@
             <span v-show="utente"> <p><a href="#">Le mie prenotazioni</a></p>
                 <p><a href="#">Materie disponibili</a></p> </span>
         </div>
-        <div class="col-sm-8 text-left">
-            <h1>Welcome</h1>
+        <div class="col-sm-8 text-center">
+            <h1>Gestione delle lezioni</h1>
+            <h2> </h2>
             <table>
-                <summary>Gestione delle lezioni</summary>
+                <summary> </summary>
                 <thead>
                 <tr>
                     <th>Slot Orario</th>
