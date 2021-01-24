@@ -44,22 +44,12 @@ public class Servlet01 extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        ArrayList<Persona> persone = DAO.selectDB();
+        ArrayList<Utente> utenti = DAO.selectDB();
         System.out.println("FINE");
         try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
-            for (Persona pers : persone) {
+            for (Utente pers : utenti) {
                 out.println("<p>" + pers + "</p>");
             }
-            out.println("<p>FINE!</p>");
-            out.println("</body>");
-            out.println("</html>");
         }
     }
 }

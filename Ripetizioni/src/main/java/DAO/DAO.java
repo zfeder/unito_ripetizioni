@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class DAO {
 
-    private static final String url1 = "jdbc:mysql://localhost:3306/test";
+    private static final String url1 = "jdbc:mysql://localhost:3306/unito_ripetizioni";
     private static final String user = "root";
     private static final String password = "";
 
@@ -21,9 +21,9 @@ public class DAO {
 
 
     //SELECT
-    public static ArrayList<Persona> selectDB() {
+    public static ArrayList<Utente> selectDB() {
         Connection conn1 = null;
-        ArrayList<Persona> out = new ArrayList<>();
+        ArrayList<Utente> out = new ArrayList<>();
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             if (conn1 != null) {
@@ -31,10 +31,10 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM PERSONA");
+            ResultSet rs = st.executeQuery("SELECT * FROM UTENTE");
             while (rs.next()) {
-                Persona p = new Persona(rs.getString("NOME"), rs.getString("COGNOME"), rs.getString("MATRICOLA"));
-                out.add(p);
+                Utente u = new Utente(rs.getString("nome"), rs.getString("cognome"), rs.getString("utente"), rs.getString("password"), rs.getString("ruolo"));
+                out.add(u);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -66,7 +66,7 @@ public class DAO {
             ResultSet rs = st.executeQuery("SELECT * FROM UTENTE");
             String s = "Amministratore";
             while (rs.next() && t == false) {
-                String utente = rs.getString("ID_UTENTE");
+                String utente = rs.getString("UTENTE");
                 String password = rs.getString("PASSWORD");
                 String ruolo = rs.getString("RUOLO");
                 if(ruolo.equals(s))
@@ -103,7 +103,7 @@ public class DAO {
             ResultSet rs = st.executeQuery("SELECT * FROM UTENTE");
             String s = "Amministratore";
             while (rs.next() && b == false) {
-                String utente = rs.getString("ID_UTENTE");
+                String utente = rs.getString("UTENTE");
                 String ruolo = rs.getString("RUOLO");
                 if(utente.equals(futente) && ruolo.equals(s)) {
                     System.out.println("Amministratore");
