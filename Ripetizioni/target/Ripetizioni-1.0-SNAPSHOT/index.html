@@ -253,13 +253,37 @@
         </div>
         <div class="col-sm-2 sidenav">
                 <span v-show="admin"> <p>
-                     <input id="VisUtenti" name="VisUtenti" type="button" value="Visualizza Utenti" />
+                     
+                     <input type="submit" v-on:click="getUtente" id="VisUtenti" value="Visualizza Utenti"  />
+
                 </p>
                 <p><a href="#">Visualizza Prenotazioni</a></p>
                 <p><a href="#">Visualizza Materie</a></p> </span>
 
         </div>
 
+
+            <di v-for="Utente in Utente"><p>{{utente.primo}},{{utente.secondo}}</p></di>
+
+        <script>
+            var app = new Vue ({
+                el: '#app',
+                data: {
+                    utente: [],
+                    link: '/Ripetizioni/ServletJSON'
+                },
+
+                methods:{
+                    getUtente: function(){
+                        var self = this;
+                        $.get(this.link, function(data) {
+                            fromJson(data);
+                            self.utente = data;
+                        });
+                    }
+                }
+            });
+        </script>
 
 
     </div>

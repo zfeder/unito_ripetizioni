@@ -36,5 +36,12 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.7.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.7.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.7.0" level="project" />
+    <orderEntry type="library" name="jackson-annotations-2.1.2" level="project" />
+    <orderEntry type="library" name="jackson-core-2.7.0" level="project" />
+    <orderEntry type="library" name="jackson-databind-2.1.0" level="project" />
+    <orderEntry type="library" name="javax.json-1.0" level="project" />
+    <orderEntry type="library" name="javax.json-api-1.0-sources" level="project" />
+    <orderEntry type="library" name="json-rpc-1.0" level="project" />
+    <orderEntry type="library" name="json-taglib-0.4.1" level="project" />
   </component>
 </module>
