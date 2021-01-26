@@ -53,17 +53,6 @@
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
 </head>
@@ -253,36 +242,13 @@
         </div>
         <div class="col-sm-2 sidenav">
                 <span v-show="admin"> <p>
-                    <input type="submit" v-on:click="getUtente" id="VisUtenti" value="Visualizza Utenti"  />
+                     <button type="button" id="GetUtente"  >Visualizza Utenti</button>
+                     <button type="button" id="GetPrenotazioni"  >Visualizza Prenotazioni</button>
+                     <button type="button" id="GetMaterie"  >Visualizza Materie</button>
                 </p>
-                <p><a href="#">Visualizza Prenotazioni</a></p>
-                <p><a href="#">Visualizza Materie</a></p> </span>
-
+                </span>
         </div>
-
-
-            <di v-for="Utente in Utente"><p>{{utente.primo}},{{utente.secondo}}</p></di>
-
-        <script>
-            var app = new Vue ({
-                el: '#app',
-                data: {
-                    utente: [],
-                    link: '/Ripetizioni/ServletJSON'
-                },
-
-                methods:{
-                    getUtente: function(){
-                        var self = this;
-                        $.get(this.link, function(data) {
-                            fromJson(data);
-                            self.utente = data;
-                        });
-                    }
-                }
-            });
-        </script>
-
+        
 
     </div>
 </div>
