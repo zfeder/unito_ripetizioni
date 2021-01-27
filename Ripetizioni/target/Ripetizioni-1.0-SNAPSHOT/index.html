@@ -57,88 +57,83 @@
 
 </head>
 <body>
-<div id="app">
+    <div id="app">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <li><img src="book.png" height="50" width="50"/></li>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <form class="navbar-form navbar-right" role="form" method="post">
+                                {{ login }}
+                                <button type="button" v-show="!autorizzazione"  class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
+                                <span v-show="autorizzazione">
+                                    <button type="button" v-on:click="autorizzazione=false" id="selog" class="btn btn-primary" >Logout</button>
+                                </span>
 
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <li><img src="book.png" height="50" width="50"/></li>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-
-            <ul class="nav navbar-nav navbar-right">
-
-                <li><form class="navbar-form navbar-right" role="form" method="post">
-
-                        {{ login }}
-                        <button type="button" v-show="!autorizzazione"  class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
-                    <span v-show="autorizzazione">
-                        <button type="button" v-on:click="autorizzazione=false" id="logoutt" class="btn btn-primary" >Logout</button>
-                    </span>
-
-                    <script type="text/javascript">
-                        $(document).ready(function () {
-                            $("#logoutt").click(function () {
-
-                                $.post("ServletLogout",
-                                    function (data) {
-                                        var auto = this;
-                                        auto.autorizzazione = false;
-                                        $("#VisUtentii").html(data);
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $("#selog").click(function () {
+                                            $.post("ServletLogout",
+                                                function (data) {
+                                                    var auto = this;
+                                                    auto.autorizzazione = false;
+                                                    $("#visLog").html(data);
+                                                });
+                                        });
                                     });
-                            });
-                        });
-                    </script>
+                                </script>
 
-
-                        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-
-                                <div class="modal-body">
-                                    <div class="modal-header" align="center">
-                                        <img src="utente.png" height="50" width="50"/>
-                                    </div>
-                                    <div class="d-flex flex-column text-center">
-
-                                        <form>
-                                            <div class="form-group">
-                                                <p> </p>
-                                                <input id="utente" type="text" class="form-control" name="utente" placeholder="Utente" required>
-                                                <p> </p>
+                                <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="modal-header" align="center">
+                                                    <img src="utente.png" height="50" width="50"/>
+                                                </div>
+                                                <div class="d-flex flex-column text-center">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <p> </p>
+                                                            <input id="utente" type="text" class="form-control" name="utente" placeholder="Utente" required>
+                                                            <p> </p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
+                                                        </div>
+                                                        <p> </p>
+                                                            <input type="submit" v-on:click="getInfo" id="go" value="Login" data-dismiss="modal" class="btn btn-primary" />
+                                                    </form>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
-                                            </div>
-                                            <p> </p>
-                                            <input type="submit" v-on:click="getInfo" id="go" value="Login" data-dismiss="modal" class="btn btn-primary" />
-                                        </form>
+                                        </div>
                                     </div>
-                                </div>
                             </div>
-                        </div>
-                    </div>
-                </form>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="container-fluid text-center">
-    <div class="row content">
-        <div class="col-sm-2 sidenav">
-            <span v-show="utente"> <p><a href="#">Le mie prenotazioni</a></p>
-                <p><a href="#">Materie disponibili</a></p> </span>
-        </div>
-        <div class="col-sm-8 text-center">
-            <h1>Gestione delle lezioni</h1>
-            <h2> </h2>
-            <table>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid text-center">
+            <div class="row content">
+                <div class="col-sm-2 sidenav">
+                    <span v-show="cliente">
+                        <p><a href="#">Le mie prenotazioni</a></p>
+                        <p><a href="#">Materie disponibili</a></p>
+                    </span>
+                </div>
+                <div class="col-sm-8 text-center">
+                    <h1>Gestione delle lezioni</h1>
+                    <h2> </h2>
+                    <table>
                 <summary> </summary>
                 <thead>
                 <tr>
@@ -239,101 +234,85 @@
                 </tr>
 
             </table>
-        </div>
-        <div class="col-sm-2 sidenav">
-                <span v-show="admin"> <p>
-                     <button type="button" v-on:click="getUtente" id="getUtente"  >Visualizza Utenti</button>
-                     <button type="button" id="GetPrenotazioni"  >Visualizza Prenotazioni</button>
-                     <button type="button" id="GetMaterie"  >Visualizza Materie</button>
-                </p>
-                </span>
+                </div>
+                <div class="col-sm-2 sidenav">
+                    <span v-show="admin">
+                        <p>
+                            <button type="button" v-on:click="getUtente" id="getUtente"  >Visualizza Utenti</button>
+                            <button type="button" id="getPrenotazioni"  >Visualizza Prenotazioni</button>
+                            <button type="button" id="getMaterie"  >Visualizza Materie</button>
+                        </p>
+                    </span>
 
-            <div id="utentex">
-                <di v-for="utente in utenti"><p>{{utente.nome}} {{utente.cognome}} {{utente.utente}} {{utente.password}} {{utente.ruolo}}</p></di>
-            </div>
+                    <div id="utentex">
+                        <di v-for="utente in utenti"><p>{{utente.nome}} {{utente.cognome}} {{utente.utente}} {{utente.password}} {{utente.ruolo}}</p></di>
+                    </div>
 
 
-            <script>
-                var utentex = new Vue({
-                    el: '#utentex',
-                    data: {
-                        utenti: [],
-                        link: 'http://localhost:8080/Ripetizioni/ServletJSON'
-                    },
-                    //mounted è una funzione che viene invocata quanto la componente è pronta
-                    mounted() {
-                        this.getUtente()
-                    },
-                    methods: {
-                        getUtente: function () {
-                            var self = this;
-                            $.get(this.link, function (data) {
-                                self.utenti = data;
-                                //self.coppie = JSON.stringify(data); // non funziona
-                            });
+                    <script>
+                        var utentex = new Vue({
+                            el: '#utentex',
+                            data: {
+                            utenti: [],
+                            link: 'http://localhost:8080/Ripetizioni/ServletJSON'
+                        },
+                        methods: {
+                            getUtente: function () {
+                                var self = this;
+                                $.get(this.link, function (data) {
+                                    self.utenti = data;
+                                    //self.coppie = JSON.stringify(data); // non funziona
+                                });
+                            }
                         }
-                    }
-                });
-            </script>
+                        });
+                    </script>
+                </div>
+            </div>
         </div>
-        
-
+        <footer class="container-fluid text-center">
+            <span v-show="autorizzazione"><div id="saluto" class="outputTextArea"></div> </span>
+            <span v-show="!autorizzazione">  <div id="visLog" class="outputTextArea"></div> </span>
+        </footer>
     </div>
-</div>
 
-
-
-
-    <footer class="container-fluid text-center">
-        <span v-show="autorizzazione"><div id="saluto" class="outputTextArea"></div> </span>
-        <span v-show="!autorizzazione">  <div id="VisUtentii" class="outputTextArea"></div> </span>
-
-    </footer>
-
-
-</div>
-
-<script>
-    var app = new Vue ({
-        el: '#app',
-        data: {
+        <script>
+            var app = new Vue ({
+            el: '#app',
+            data: {
             login: ' ',
             autori: 'prova',
             autorizzazione: false,
-            utente: false,
+            cliente: false,
             admin: false,
             link : '/Ripetizioni/Servlet02'
-        },
+            },
 
-        methods:{
-            getInfo:function(){
-                var auto = this;
-                $.post(this.link, {utente:$("#utente").val(), password:$("#password").val()}, function(data) {
-                    auto.login = data;
-                    if (auto.login.trim() === "Admin") {
-                        auto.autorizzazione = true;
-                        auto.utente = true;
-                        auto.admin = true;
-                        auto.login = "Benvenuto/a";
-                    } else if (auto.login.trim() === "Utente") {
-                        auto.autorizzazione = true;
-                        auto.utente = true;
-                        auto.admin = false;
-                        auto.login = "Benvenuto/a";
-                    } else if (auto.login.trim() === "Nonloggato") {
-                        auto.autorizzazione = false;
-                        auto.utente = false;
-                        auto.admin = false;
-                        auto.login = "Utente o password errato";
-                    }
-
-                });
+            methods:{
+                getInfo:function(){
+                    var auto = this;
+                    $.post(this.link, {utente:$("#utente").val(), password:$("#password").val()}, function(data) {
+                        auto.login = data;
+                        if (auto.login.trim() === "Admin") {
+                            auto.autorizzazione = true;
+                            auto.cliente = true;
+                            auto.admin = true;
+                            auto.login = "Benvenuto/a";
+                        } else if (auto.login.trim() === "Cliente") {
+                            auto.autorizzazione = true;
+                            auto.cliente = true;
+                            auto.admin = false;
+                            auto.login = "Benvenuto/a";
+                        } else if (auto.login.trim() === "Nonloggato") {
+                            auto.autorizzazione = false;
+                            auto.cliente = false;
+                            auto.admin = false;
+                            auto.login = "Utente o Password errato";
+                        }
+                    });
+                }
             }
-        }
-    });
-
-
-</script>
-
+            });
+        </script>
 </body>
 </html>

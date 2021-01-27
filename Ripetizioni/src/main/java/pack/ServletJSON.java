@@ -41,6 +41,7 @@ public class ServletJSON extends HttpServlet {
         String s = JSONMan.serializeJson(new Utente("nome", "cognome", "utente", "password", "ruolo"));
         request.setAttribute("info", s);
 
+
         ArrayList<Utente> ar = DAO.selectDB();
         //List<Utente> ar = new ArrayList();
         //ar.add(new Utente("Federico", "Filì", "RevilingFederix", "1234", "Amministratore"));
