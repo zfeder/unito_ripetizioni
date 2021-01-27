@@ -9,6 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link rel="stylesheet" href="style.css" />
 
+
 <style>
     .container {
         padding: 2rem 0rem;
@@ -244,12 +245,18 @@
 
             <div class="col-sm-2 sidenav">
                 <span v-show="admin"> <p>
-                     <button type="button" v-on:click="getUtente" id="getUtente"  >Visualizza Utenti</button>
-                     <button type="button" id="getPrenotazioni"  >Visualizza Prenotazioni</button>
-                     <button type="button" id="getMaterie"  >Visualizza Materie</button>
-                </p>
+                     <button type="button" v-on:click="getUtente" id="getUtente"  >Visualizza Utenti</button> <br><br>
+                     <button type="button" v-on:click="getPrenotazione" id="getPrenotazioni"  >Prenotazioni </button> <br><br>
+                     <button type="button" id="addMaterie" >Aggiungi Materie</button> <br><br>
+                     <button type="button" id="removeMaterie"  >Rimuovi Materie</button> <br><br>
+                     <button type="button" id="addDocente"  >Aggiungi Docente</button> <br><br>
+                     <button type="button" id="removeDocente" >Rimuovi Docente</button> <br><br>
 
-                     <di v-for="utente in utente"><p>{{utente.nome}} {{utente.cognome}} {{utente.nomeutente}} {{utente.password}} {{utente.ruolo}}</p></di>
+                </p>
+                     <di v-for="prenotazione in prenotazioni"><p>{{prenotazione.idPrenotazione}} {{prenotazione.idUtente}} {{prenotazione.idDocente}} {{prenotazione.idCorso}} {{prenotazione.orario}} {{prenotazione.data}}</p></di>
+
+                     <di v-for="utente in utenti"><p>{{utente.nome}} {{utente.cognome}} {{utente.nomeutente}} {{utente.password}} {{utente.ruolo}}</p></di>
+
 
                 </span>
             </div>
@@ -279,9 +286,11 @@
             autorizzazione: false,
             utente: false,
             admin: false,
-            utente : [],
+            utenti : [],
+            prenotazioni : [],
             link : '/Ripetizioni/Servlet02',
-            link1 : '/Ripetizioni/ServletJSON'
+            link1 : '/Ripetizioni/ServletJSON',
+            link2 : '/Ripetizioni/ServletPrenotazioni'
 
         },
 
@@ -313,8 +322,14 @@
             getUtente: function () {
                 var self = this;
                 $.get(this.link1, function (data2) {
-                    self.utente = data2;
-                    //self.coppie = JSON.stringify(data); // non funziona
+                    self.utenti = data2;
+                });
+            },
+
+            getPrenotazione: function () {
+                var self1 = this;
+                $.get(this.link2, function (data3) {
+                    self1.prenotazioni = data3;
                 });
             }
 
