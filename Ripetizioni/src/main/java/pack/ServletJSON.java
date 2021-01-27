@@ -38,7 +38,7 @@ public class ServletJSON extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         // creo oggetto JSON con oggetto Coppia
-        String s = JSONMan.serializeJson(new Utente("nome", "cognome", "utente", "password", "ruolo"));
+        String s = JSONMan.serializeJson(new Utente("nome", "cognome", "nomeutente", "password", "ruolo"));
         request.setAttribute("info", s);
 
 

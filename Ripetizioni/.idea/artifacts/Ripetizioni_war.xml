@@ -9,6 +9,16 @@
     </properties>
     <root id="archive" name="Ripetizioni-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="Ripetizioni:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jackson-annotations-2.1.2" />
+          <element id="library" level="project" name="jackson-core-2.7.0" />
+          <element id="library" level="project" name="jackson-databind-2.1.0" />
+          <element id="library" level="project" name="javax.json-1.0" />
+          <element id="library" level="project" name="json-rpc-1.0" />
+          <element id="library" level="project" name="json-taglib-0.4.1" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>

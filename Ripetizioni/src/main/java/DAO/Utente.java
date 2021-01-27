@@ -3,7 +3,7 @@ package DAO;
 public class Utente {
     private String nome;
     private String cognome;
-    private String utente;
+    private String nomeUtente;
     private String password;
     private String ruolo;
 
@@ -11,7 +11,7 @@ public class Utente {
     public Utente(String nome, String cognome, String utente, String password, String ruolo) {
         this.nome = nome;
         this.cognome = cognome;
-        this.utente = utente;
+        this.nomeUtente = nomeUtente;
         this.password = password;
         this.ruolo = ruolo;
     }
@@ -24,8 +24,8 @@ public class Utente {
         return cognome;
     }
 
-    public String getUtente() {
-        return utente;
+    public String getnomeUtente() {
+        return nomeUtente;
     }
 
     public String getPassword() {

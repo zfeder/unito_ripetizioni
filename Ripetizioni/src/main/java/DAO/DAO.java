@@ -33,7 +33,7 @@ public class DAO {
             Statement st = conn1.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM UTENTE");
             while (rs.next()) {
-                Utente u = new Utente(rs.getString("nome"), rs.getString("cognome"), rs.getString("utente"), rs.getString("password"), rs.getString("ruolo"));
+                Utente u = new Utente(rs.getString("nome"), rs.getString("cognome"), rs.getString("nomeUtente"), rs.getString("password"), rs.getString("ruolo"));
                 out.add(u);
             }
         } catch (SQLException e) {
@@ -66,7 +66,7 @@ public class DAO {
             ResultSet rs = st.executeQuery("SELECT * FROM UTENTE");
             String s = "Amministratore";
             while (rs.next() && t == false) {
-                String utente = rs.getString("UTENTE");
+                String utente = rs.getString("NOMEUTENTE");
                 String password = rs.getString("PASSWORD");
                 String ruolo = rs.getString("RUOLO");
                 //if(ruolo.equals(s))
@@ -103,7 +103,7 @@ public class DAO {
             ResultSet rs = st.executeQuery("SELECT * FROM UTENTE");
             String s = "Amministratore";
             while (rs.next() && b == false) {
-                String utente = rs.getString("UTENTE");
+                String utente = rs.getString("NOMEUTENTE");
                 String ruolo = rs.getString("RUOLO");
                 if(utente.equals(futente) && ruolo.equals(s)) {
                     System.out.println("Amministratore");

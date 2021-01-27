@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="json-taglib-0.4.1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../JACKSON Library/json-taglib-0.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../Jackson/json-taglib-0.4.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
