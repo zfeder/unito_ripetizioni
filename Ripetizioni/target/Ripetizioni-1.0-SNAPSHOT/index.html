@@ -242,11 +242,39 @@
         </div>
         <div class="col-sm-2 sidenav">
                 <span v-show="admin"> <p>
-                     <button type="button" id="GetUtente"  >Visualizza Utenti</button>
+                     <button type="button" v-on:click="getUtente" id="getUtente"  >Visualizza Utenti</button>
                      <button type="button" id="GetPrenotazioni"  >Visualizza Prenotazioni</button>
                      <button type="button" id="GetMaterie"  >Visualizza Materie</button>
                 </p>
                 </span>
+
+            <div id="utentex">
+                <di v-for="utente in utenti"><p>{{utente.nome}} {{utente.cognome}} {{utente.utente}} {{utente.password}} {{utente.ruolo}}</p></di>
+            </div>
+
+
+            <script>
+                var utentex = new Vue({
+                    el: '#utentex',
+                    data: {
+                        utenti: [],
+                        link: 'http://localhost:8080/Ripetizioni/ServletJSON'
+                    },
+                    //mounted è una funzione che viene invocata quanto la componente è pronta
+                    mounted() {
+                        this.getUtente()
+                    },
+                    methods: {
+                        getUtente: function () {
+                            var self = this;
+                            $.get(this.link, function (data) {
+                                self.utenti = data;
+                                //self.coppie = JSON.stringify(data); // non funziona
+                            });
+                        }
+                    }
+                });
+            </script>
         </div>
         
 

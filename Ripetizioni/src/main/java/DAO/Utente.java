@@ -36,8 +36,4 @@ public class Utente {
         return ruolo;
     }
 
-    @Override
-    public String toString() { return nome + " " + cognome + " " + utente + " " + password + " " + ruolo + " ";
-    }
-
 }
