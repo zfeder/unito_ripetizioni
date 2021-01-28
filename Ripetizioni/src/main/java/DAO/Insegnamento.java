@@ -6,12 +6,11 @@ public class Insegnamento {
     private String idCorso;
 
 
-    public Insegnamento(String idInsegnamento, String idCorso , String idDocenteC) {
+    public Insegnamento(String idInsegnamento, String idDocenteC, String idCorso) {
         this.idInsegnamento = idInsegnamento;
         this.idDocenteC = idDocenteC;
         this.idCorso = idCorso;
     }
-
 
     public String getidInsegnamento() {
         return idInsegnamento;
@@ -21,7 +20,6 @@ public class Insegnamento {
         return idDocenteC;
     }
 
-    public String getidCorso() {
-        return idCorso; }
+    public String getidCorso() { return idCorso; }
 
 }

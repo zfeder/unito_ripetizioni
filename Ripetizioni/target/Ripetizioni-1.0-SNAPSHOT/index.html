@@ -53,11 +53,6 @@
         });
     });
 
-
-</script>
-
-<script>
-
     $(document).ready(function () {
         $("#AddDoc").click(function () {
             var nome = document.getElementById("dname").value;
@@ -65,19 +60,20 @@
             var iddocente = document.getElementById("idDoc").value;
             $.post("ServletAddDoc", {dname: nome, lname: cognome, idDoc: iddocente},
                 function (data) {
-                    $("#ADDEDDOC").html("Docente aggiunto con successo");
+                    $("#ADDEDDOC").html("Docente Aggiunto con successo");
                 });
         });
     });
 
+
     $(document).ready(function () {
         $("#AddCor").click(function () {
-            var insegnamento = document.getElementById("cins").value;
-            var docente = document.getElementById("cdoc").value;
-            var corso = document.getElementById("ccor").value;
-            $.post("ServletAddCorso", {cins: insegnamento, cdoc: docente, ccor: corso},
+            var idInsegnamento = document.getElementById("idInsegnamento").value;
+            var idDocenteC = document.getElementById("idDocenteC").value;
+            var idCorso = document.getElementById("idCorso").value;
+            $.post("ServletAddCorso", {idInsegnamento: idInsegnamento, idDocenteC: idDocenteC, idCorso: idCorso},
                 function (data) {
-                    $("#ADDECORS").html("Corso aggiunto con successo");
+                    $("#ADDEDCORSO").html("Docente Aggiunto con successo");
                 });
         });
     });
@@ -109,7 +105,8 @@
                         <button type="button" v-show="!autorizzazione"  class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
                         <span v-show="autorizzazione">
                         <button type="button" v-on:click="autorizzazione=false, admin=false, utente=false" id="logoutt" class="btn btn-primary" >Logout</button>
-                    </span>
+                        </span>
+
 
                         <script type="text/javascript">
                             $(document).ready(function () {
@@ -159,13 +156,21 @@
             </div>
         </div>
     </nav>
+
+
     <div class="container-fluid text-center">
         <div class="row content">
             <div class="col-sm-2 sidenav">
+
             <span v-show="utente"> <p><a href="#">Le mie prenotazioni</a></p>
                 <p><a href="#">Materie disponibili</a></p> </span>
+
+
             </div>
+
+
             <div class="col-sm-8 text-center">
+
                 <h1>Gestione delle lezioni</h1>
                 <h2> </h2>
                 <table>
@@ -268,7 +273,14 @@
                         </td>
                     </tr>
 
-                </table>
+                </table> <br>
+
+
+                <div class="btn-group btn-group-lg" role="group" aria-label="...">
+                    <button type="button" class="btn btn-default">Analisi</button>
+                    <button type="button" class="btn btn-default">Programmazione</button>
+                </div> <br>
+
             </div>
 
 
@@ -295,19 +307,19 @@
                 </span>
 
                     <span v-show="AddCorso">
-                    <label for="cins">Insegnamento</label> <br>
-                    <input type="text" id="cins" name="cins"> <br>
-                    <label for="cdoc">Docente</label> <br>
-                    <input type="text" id="cdoc" name="cdoc"> <br>
-                    <label for="ccor">Corso</label> <br>
-                    <input type="text" id="ccor" name="ccor"> <br><br>
+                    <label for="idInsegnamento">Insegnamento</label> <br>
+                    <input type="text" id="idInsegnamento" name="idInsegnamento"> <br>
+                    <label for="idDocenteC">Docente</label> <br>
+                    <input type="text" id="idDocenteC" name="idDocenteC"> <br>
+                    <label for="idCorso">Corso</label> <br>
+                    <input type="text" id="idCorso" name="idCorso"> <br><br>
 
                     <p><input type="submit" v-on:click="AddCorso" id="AddCor" name="submit" value="INSERISCI CORSO"/></p> <br>
                 </span>
 
                      <di v-for="prenotazione in prenotazioni"><p>{{prenotazione.idPrenotazione}} {{prenotazione.idUtente}} {{prenotazione.idDocente}} {{prenotazione.idCorso}} {{prenotazione.orario}} {{prenotazione.data}}</p></di>
 
-                     <di v-for="utente in utenti"><p>{{utente.nome}} {{utente.cognome}} {{utente.nomeutente}} {{utente.password}} {{utente.ruolo}}</p></di>
+                     <di v-for="utente in utenti"><p>{{utente.nome}} {{utente.cognome}} {{utente.nomeUtente}} {{utente.password}} {{utente.ruolo}}</p></di>
 
 
                 </span>
@@ -324,7 +336,7 @@
         <span v-show="autorizzazione"><div id="saluto" class="outputTextArea"></div> </span>
         <span v-show="!autorizzazione">  <div id="VisUtentii" class="outputTextArea"></div> </span>
         <span v-show="AddDocente">  <div id="ADDEDDOC" class="outputTextArea"></div> </span>
-        <span v-show="AddCorso">  <div id="ADDECORS" class="outputTextArea"></div> </span>
+        <span v-show="AddCorso">  <div id="ADDEDCORSO" class="outputTextArea"></div> </span>
 
 
     </footer>
@@ -342,13 +354,12 @@
             utente: false,
             admin: false,
             AddDocente: false,
-            AddCorso: false,
             utenti : [],
             prenotazioni : [],
+            AddCorso : false,
             link : '/Ripetizioni/Servlet02',
             link1 : '/Ripetizioni/ServletJSON',
-            link2 : '/Ripetizioni/ServletPrenotazioni'
-
+            link2 : '/Ripetizioni/ServletPrenotazioni',
         },
 
         methods:{
@@ -390,11 +401,8 @@
                 });
             },
 
-
         }
     });
-
-
 
 </script>
 

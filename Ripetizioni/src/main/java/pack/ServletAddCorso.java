@@ -41,18 +41,18 @@ public class ServletAddCorso extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         //PrintWriter out = response.getWriter();
-        String cins = request.getParameter("cins");
-        String cdoc = request.getParameter("cdoc");
-        String ccor = request.getParameter("ccor");
+        String idInsegnamento = request.getParameter("idInsegnamento");
+        String idDocenteC = request.getParameter("idDocenteC");
+        String idCorso = request.getParameter("idCorso");
         //System.out.println("INSERIMENTO DEI PARAMETRI");
 
-        if (cins != null && cdoc != null && ccor != null) {
-            Insegnamento d = new Insegnamento(cins, cdoc, ccor);
-            System.out.println(d.getidInsegnamento());
-            System.out.println(d.getidDocenteC());
-            System.out.println(d.getidCorso());
-            System.out.println("PARAMETRI CORSO INSERITI CORRETTAMENTE");
-            DAO.insertInsegnamento(d);
+        if ( idDocenteC!= null && idInsegnamento != null && idCorso != null) {
+            Insegnamento i = new Insegnamento( idInsegnamento, idDocenteC, idCorso);
+            System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
+            System.out.println(i.getidInsegnamento());
+            System.out.println(i.getidDocenteC());
+            System.out.println(i.getidCorso());
+            DAO.insertInsegnamento(i);
         }
     }
 

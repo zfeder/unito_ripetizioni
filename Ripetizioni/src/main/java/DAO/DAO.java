@@ -79,6 +79,65 @@ public class DAO {
         return out;
     }
 
+    public static ArrayList<Insegnamento> InsegnamentoDB() {
+        Connection conn1 = null;
+        ArrayList<Insegnamento> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            if (conn1 != null) {
+                System.out.println("Connected to the database test");
+            }
+
+            Statement st = conn1.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM INSEGNAMENTO");
+            while (rs.next()) {
+                Insegnamento p = new Insegnamento(rs.getString("idInsegnamento"), rs.getString("idDocente"), rs.getString("idCorso"));
+                out.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+    }
+
+    public static ArrayList<Prenotazione> prenotazioneDB() {
+        Connection conn1 = null;
+        ArrayList<Prenotazione> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            if (conn1 != null) {
+                System.out.println("Connected to the database test");
+            }
+
+            Statement st = conn1.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE");
+            while (rs.next()) {
+                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
+                                    rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Data"));
+                out.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+    }
+
 
     //CONTROL
     public static boolean checkDB(String futente, String fpassword) {
@@ -168,20 +227,21 @@ public class DAO {
 
     }
 
-    public static void insertInsegnamento(Insegnamento d) throws SQLException {
+    public static void insertInsegnamento(Insegnamento i) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO INSEGNAMENTO (IDINSEGNAMENTO, IDDOCENTE, IDCORSO) VALUES (?,?,?)");
-        stmt.setString(1, d.getidInsegnamento());
-        stmt.setString(2, d.getidDocenteC());
-        stmt.setString(3, d.getidCorso());
+        stmt.setString(1, i.getidInsegnamento());
+        stmt.setString(2, i.getidDocenteC());
+        stmt.setString(3, i.getidCorso());
         stmt.executeUpdate();
         stmt.close();
         conn.close();
 
     }
 
-    }
+
+}
 
 
 
