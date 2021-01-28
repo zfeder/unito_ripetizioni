@@ -56,6 +56,23 @@
 
 </script>
 
+<script>
+
+    $(document).ready(function () {
+        $("#AddDoc").click(function () {
+            var nome = document.getElementById("dname").value;
+            var cognome = document.getElementById("lname").value;
+            var iddocente = document.getElementById("idDoc").value;
+            $.post("ServletAddDoc", {dname: nome, lname: cognome, idDoc: iddocente},
+                function (data) {
+                    $("#ADDEDDOC").html("Docente Aggiunto con successo");
+                });
+        });
+    });
+
+
+</script>
+
 </head>
 <body>
 <div id="app">
@@ -247,12 +264,27 @@
                 <span v-show="admin"> <p>
                      <button type="button" v-on:click="getUtente" id="getUtente"  >Visualizza Utenti</button> <br><br>
                      <button type="button" v-on:click="getPrenotazione" id="getPrenotazioni"  >Prenotazioni </button> <br><br>
+                     <button type="button" v-on:click="AddDocente = true" id="addDocente"  >Aggiungi Docente</button> <br><br>
+                     <button type="button" id="removeDocente" >Rimuovi Docente</button> <br><br>
                      <button type="button" id="addMaterie" >Aggiungi Materie</button> <br><br>
                      <button type="button" id="removeMaterie"  >Rimuovi Materie</button> <br><br>
-                     <button type="button" id="addDocente"  >Aggiungi Docente</button> <br><br>
-                     <button type="button" id="removeDocente" >Rimuovi Docente</button> <br><br>
 
                 </p>
+
+                <span v-show="AddDocente">
+
+                             <label for="dname">Nome</label> <br>
+                            <input type="text" id="dname" name="dname"> <br>
+                            <label for="lname">Cognome</label> <br>
+                            <input type="text" id="lname" name="lname"> <br>
+                            <label for="idDoc">idDocente</label> <br>
+                          <input type="text" id="idDoc" name="idDoc"> <br><br>
+
+                            <p><input type="submit" v-on:click="AddDocente" id="AddDoc" name="submit" value="INSERISCI DOCENTE"/></p> <br>
+                        </form>
+
+
+                </span>
                      <di v-for="prenotazione in prenotazioni"><p>{{prenotazione.idPrenotazione}} {{prenotazione.idUtente}} {{prenotazione.idDocente}} {{prenotazione.idCorso}} {{prenotazione.orario}} {{prenotazione.data}}</p></di>
 
                      <di v-for="utente in utenti"><p>{{utente.nome}} {{utente.cognome}} {{utente.nomeutente}} {{utente.password}} {{utente.ruolo}}</p></di>
@@ -271,6 +303,8 @@
     <footer class="container-fluid text-center">
         <span v-show="autorizzazione"><div id="saluto" class="outputTextArea"></div> </span>
         <span v-show="!autorizzazione">  <div id="VisUtentii" class="outputTextArea"></div> </span>
+        <span v-show="AddDocente">  <div id="ADDEDDOC" class="outputTextArea"></div> </span>
+
 
     </footer>
 
@@ -286,11 +320,13 @@
             autorizzazione: false,
             utente: false,
             admin: false,
+            AddDocente: false,
             utenti : [],
             prenotazioni : [],
             link : '/Ripetizioni/Servlet02',
             link1 : '/Ripetizioni/ServletJSON',
-            link2 : '/Ripetizioni/ServletPrenotazioni'
+            link2 : '/Ripetizioni/ServletPrenotazioni',
+            link2 : '/Ripetizioni/ServletAddDoc'
 
         },
 
@@ -330,6 +366,11 @@
                 var self1 = this;
                 $.get(this.link2, function (data3) {
                     self1.prenotazioni = data3;
+                });
+            },
+
+            AddDocenti: function () {
+                $.get(this.link3, function (data4) {
                 });
             }
 

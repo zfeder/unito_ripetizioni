@@ -155,6 +155,19 @@ public class DAO {
         return b;
     }
 
+    public static void insertDocente(Docente p) throws SQLException {
+        Connection conn = DriverManager.getConnection(url1, user, password);
+        Statement st = conn.createStatement();
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO DOCENTE (NOME, COGNOME, IDDOCENTE) VALUES (?,?,?)");
+        stmt.setString(1, p.getNome());
+        stmt.setString(2, p.getCognome());
+        stmt.setString(3, p.getidocente());
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+
+    }
+
     }
 
 
