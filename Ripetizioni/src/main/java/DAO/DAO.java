@@ -168,6 +168,19 @@ public class DAO {
 
     }
 
+    public static void insertCorso(Corso p) throws SQLException {
+        Connection conn = DriverManager.getConnection(url1, user, password);
+        Statement st = conn.createStatement();
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO INSEGNAMENTO (IDINSEGNAMENTO, IDDOCENTE, IDCORSO) VALUES (?,?,?)");
+        stmt.setString(1, p.getidInsegnamento());
+        stmt.setString(2, p.getidDocenteC());
+        stmt.setString(3, p.getidCorso());
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+
+    }
+
     }
 
 

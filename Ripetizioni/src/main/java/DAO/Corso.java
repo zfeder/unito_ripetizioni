@@ -6,7 +6,7 @@ public class Corso {
     private String idCorso;
 
 
-    public Corso(String idInsegnamento, String idCorso , String idDocente) {
+    public Corso(String idInsegnamento, String idCorso , String idDocenteC) {
         this.idInsegnamento = idInsegnamento;
         this.idDocenteC = idDocenteC;
         this.idCorso = idCorso;
