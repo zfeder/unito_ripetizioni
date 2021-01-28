@@ -161,20 +161,20 @@ public class DAO {
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO DOCENTE (NOME, COGNOME, IDDOCENTE) VALUES (?,?,?)");
         stmt.setString(1, p.getNome());
         stmt.setString(2, p.getCognome());
-        stmt.setString(3, p.getidocente());
+        stmt.setString(3, p.getidDocente());
         stmt.executeUpdate();
         stmt.close();
         conn.close();
 
     }
 
-    public static void insertCorso(Corso p) throws SQLException {
+    public static void insertInsegnamento(Insegnamento d) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO INSEGNAMENTO (IDINSEGNAMENTO, IDDOCENTE, IDCORSO) VALUES (?,?,?)");
-        stmt.setString(1, p.getidInsegnamento());
-        stmt.setString(2, p.getidDocenteC());
-        stmt.setString(3, p.getidCorso());
+        stmt.setString(1, d.getidInsegnamento());
+        stmt.setString(2, d.getidDocenteC());
+        stmt.setString(3, d.getidCorso());
         stmt.executeUpdate();
         stmt.close();
         conn.close();

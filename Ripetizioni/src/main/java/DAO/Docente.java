@@ -21,6 +21,6 @@ public class Docente {
         return cognome;
     }
 
-    public String getidocente() { return idDocente; }
+    public String getidDocente() { return idDocente; }
 
 }

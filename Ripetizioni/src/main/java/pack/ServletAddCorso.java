@@ -47,12 +47,12 @@ public class ServletAddCorso extends HttpServlet {
         //System.out.println("INSERIMENTO DEI PARAMETRI");
 
         if (cins != null && cdoc != null && ccor != null) {
-            Corso p = new Corso(cins, cdoc, ccor);
+            Insegnamento d = new Insegnamento(cins, cdoc, ccor);
+            System.out.println(d.getidInsegnamento());
+            System.out.println(d.getidDocenteC());
+            System.out.println(d.getidCorso());
             System.out.println("PARAMETRI CORSO INSERITI CORRETTAMENTE");
-            System.out.println(p.getidInsegnamento());
-            System.out.println(p.getidDocenteC());
-            System.out.println(p.getidCorso());
-            DAO.insertCorso(p);
+            DAO.insertInsegnamento(d);
         }
     }
 

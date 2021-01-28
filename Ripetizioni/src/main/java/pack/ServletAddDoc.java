@@ -48,10 +48,10 @@ public class ServletAddDoc extends HttpServlet {
 
         if (dname != null && lname != null && idDoc != null) {
             Docente p = new Docente(dname, lname, idDoc);
-            System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
             System.out.println(p.getNome());
             System.out.println(p.getCognome());
-            System.out.println(p.getidocente());
+            System.out.println(p.getidDocente());
+            System.out.println("PARAMETRI DOCENTE INSERITI CORRETTAMENTE");
             DAO.insertDocente(p);
         }
     }
