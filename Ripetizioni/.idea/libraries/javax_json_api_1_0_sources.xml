@@ -3,7 +3,7 @@
     <CLASSES />
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../JACKSON Library/javax.json-api-1.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../Jackson/javax.json-api-1.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

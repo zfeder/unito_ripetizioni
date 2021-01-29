@@ -33,24 +33,24 @@ public class Servlet02 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        System.out.println("Collegato alla servlet02");
         String utente = request.getParameter("utente");
         String password = request.getParameter("password");
         String stato = "Nonloggato";
         if (DAO.checkDB(utente, password)) {
+            System.out.println("checkdb");
             HttpSession s = request.getSession();
-            if (request.getParameter("azione") != null) {
-                System.out.println("Sessione invalidata");
-                out.println("invalidato");
-                s.invalidate();
-            }
             s.setAttribute("utente", utente);
             s.setAttribute("password", password);
             if (DAO.checkAdmin(utente)) {
+                System.out.println("checkadmin");
                 stato = "Admin";
             } else {
                 stato = "Utente";
             }
         }
+        System.out.println(stato);
+
         out.println(stato);
     }
 }
