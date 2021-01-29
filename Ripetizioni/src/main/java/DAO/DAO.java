@@ -240,6 +240,17 @@ public class DAO {
 
     }
 
+    public static void removeDocente(DocenteREM i) throws SQLException {
+        Connection conn = DriverManager.getConnection(url1, user, password);
+        Statement st = conn.createStatement();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM DOCENTE WHERE iddocente=?;");
+        stmt.setString(1, i.getidDocenteREM());
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+
+    }
+
 
 }
 

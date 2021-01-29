@@ -14,6 +14,10 @@
 
 
     <style>
+        .navbar {
+            color: white;
+        }
+
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -60,6 +64,10 @@
             padding: 15px;
         }
 
+        .costumbutt {
+            width: 150px !important;
+        }
+
     </style>
 
 
@@ -79,7 +87,7 @@
         });
 
 
-   // <!-- AGGIUNTA DOCENTE CON CONFERMA-->
+        <!-- AGGIUNTA DOCENTE CON CONFERMA-->
 
 
         $(document).ready(function () {
@@ -94,7 +102,7 @@
             });
         });
 
-  //  <!-- AGGIUNTA CORSO CON CONFERMA-->
+        //  <!-- AGGIUNTA CORSO CON CONFERMA-->
 
         $(document).ready(function () {
             $("#AddCor").click(function () {
@@ -108,115 +116,154 @@
             });
         });
 
+        //  <!-- RIMOZIONE DOCENTE CON CONFERMA-->
+
+
+        $(document).ready(function () {
+            $("#RemDoc").click(function () {
+                var idDocRem = document.getElementById("idDocRem").value;
+                $.post("ServletRemoveDoc", {idDocRem: idDocRem},
+                    function (data) {
+                        $("#REMOVEDDOC").html("Docente Rimosso con successo");
+                    });
+            });
+        });
     </script>
 
 </head>
 <body class="d-flex flex-column h-100">
-<div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-        <div class="container-fluid">
-
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                </ul>
-                <!-- LOGIN E LOGOUT -->
-                {{ login }}
-                <button type="button" v-show="!autorizzazione" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</button>
-                <span v-show="autorizzazione">
-                        <button type="button" v-on:click="autorizzazione=false, admin=false, utente=false" id="logoutt" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</button>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                    <!-- LOGIN E LOGOUT -->
+                    {{ login }}
+                    <button type="button" v-show="!autorizzazione" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</button>
+                    <span v-show="autorizzazione">
+                        <button type="button" v-on:click="autorizzazione=false, admin=false, utente=false" id="logoutt" class="btn btn-outline-primary">Logout</button>
                     </span>
 
-                <!-- LOGOUT CON CONFERMA NEL FOOTER -->
+                    <!-- LOGOUT CON CONFERMA NEL FOOTER -->
 
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        $("#logoutt").click(function () {
-
-                            $.post("ServletLogout",
-                                function (data) {
-                                    var auto = this;
-                                    auto.autorizzazione = false;
-                                    $("#VisUtentii").html(data);
-                                });
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $("#logoutt").click(function () {
+                                $.post("ServletLogout",
+                                    function (data) {
+                                        var auto = this;
+                                        auto.autorizzazione = false;
+                                        $("#VisUtentii").html(data);
+                                    });
+                            });
                         });
-                    });
-                </script>
+                    </script>
 
-                <!-- MENU DI LOGIN CON USER E PASS -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <!-- FORM DI UTENTE E PASSWORD -->
-                            <div class="modal-body">
-                                <div class="d-flex justify-content-center">
-                                    <img src="utente.png" height="50" width="50"/>
+                    <!-- MENU DI LOGIN CON USER E PASS -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content text-center">
+                                <!-- FORM DI UTENTE E PASSWORD -->
+                                <div class="modal-body">
+                                    <div class="modal-header justify-content-center">
+                                        <img src="utente.png" height="50" width="50"/>
+                                    </div>
+                                    <form>
+                                        <div class="mb-3">
+                                            <p> </p>
+                                            <input id="utente" type="text" class="form-control" name="utente" placeholder="Utente" required>
+                                            <p> </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
+                                        </div>
+                                        <p> </p>
+                                        <button type="button" v-on:click="getInfo" id="go" class="btn btn-outline-primary" data-bs-dismiss="modal" >Login</button> <br><br>
+                                    </form>
                                 </div>
-                                <form>
-                                    <div class="mb-3">
-                                        <input id="utente" type="text" class="form-control" name="utente" placeholder="Utente" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
-                                    </div>
-                                    <button type="button" v-on:click="getInfo" id="go" class="btn btn-outline-success" data-bs-dismiss="modal" >Login</button> <br><br>
-
-                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <!-- SIDENAV CON MAIN -->
-    <div class="container-fluid">
-        <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                <!-- COMANDI UTENTI E ADMIN -->
-                <div class="position-sticky pt-3">
-                    <span v-show="admin"> <p>
-                     <button type="button" v-on:click="getUtente" id="getUtente"  >Visualizza Utenti</button> <br><br>
-                     <button type="button" v-on:click="getPrenotazione" id="getPrenotazioni"  >Prenotazioni </button> <br><br>
-                     <button type="button" v-on:click="AddDocente = true" id="addDocente"  >Aggiungi Docente</button> <br><br>
-                     <button type="button" id="removeDocente" >Rimuovi Docente</button> <br><br>
-                     <button type="button" v-on:click="AddCorso = true" id="addCorso" >Aggiungi Corso</button> <br><br>
-                     <button type="button" id="removeCorso"  >Rimuovi Corso</button> <br><br>
-                </p>
+        <!-- SIDENAV CON MAIN -->
+        <div class="container-fluid">
+            <div class="row">
+                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                    <!-- COMANDI UTENTI E ADMIN -->
+                    <div class="position-sticky pt-3">
+                        <ul class="nav flex-column">
 
 
-                <span v-show="AddDocente">
-                    <label for="dname">Nome</label> <br>
-                    <input type="text" id="dname" name="dname"> <br>
-                    <label for="lname">Cognome</label> <br>
-                    <input type="text" id="lname" name="lname"> <br>
-                    <label for="idDoc">idDocente</label> <br>
-                    <input type="text" id="idDoc" name="idDoc"> <br><br>
-
-                    <p><input type="submit" v-on:click="AddDocente" id="AddDoc" name="submit" value="INSERISCI DOCENTE"/></p> <br>
-                </span>
-
-                    <span v-show="AddCorso">
-                    <label for="idInsegnamento">Insegnamento</label> <br>
-                    <input type="text" id="idInsegnamento" name="idInsegnamento"> <br>
-                    <label for="idDocenteC">Docente</label> <br>
-                    <input type="text" id="idDocenteC" name="idDocenteC"> <br>
-                    <label for="idCorso">Corso</label> <br>
-                    <input type="text" id="idCorso" name="idCorso"> <br><br>
-
-                    <p><input type="submit" v-on:click="AddCorso" id="AddCor" name="submit" value="INSERISCI CORSO"/></p> <br>
-                </span>
-
-                     <di v-for="prenotazione in prenotazioni"><p>{{prenotazione.idPrenotazione}} {{prenotazione.idUtente}} {{prenotazione.idDocente}} {{prenotazione.idCorso}} {{prenotazione.orario}} {{prenotazione.data}}</p></di>
-
-                     <di v-for="utente in utenti"><p>{{utente.nome}} {{utente.cognome}} {{utente.nomeUtente}} {{utente.password}} {{utente.ruolo}}</p></di>
+                        <span v-show="admin">
+                            <p>
+                                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-6 mt-4 mb-1 text-muted">
+                                    <span>PANNELLO ADMIN</span>
+                                </h6>
+                            <li class="nav-item">
+                                <p> </p>
+                                <button type="button" v-on:click="getUtente" id="getUtente" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Utenti</button>
+                                <p> </p>
+                                <button type="button" v-on:click="getPrenotazione" id="getPrenotazioni" class="btn btn-outline-secondary btn-sm costumbutt">Prenotazioni </button>
+                                <p> </p>
+                                <button type="button" v-on:click="AddDocente = true" id="addDocente" class="btn btn-outline-secondary btn-sm costumbutt">Aggiungi Docente</button>
+                                <p> </p>
+                                <button type="button" v-on:click="removeDoc = true" id="removeDocente" class="btn btn-outline-secondary btn-sm costumbutt">Rimuovi Docente</button>
+                                <p> </p>
+                                <button type="button" v-on:click="AddCorso = true" id="addCorso" class="btn btn-outline-secondary btn-sm costumbutt">Aggiungi Corso</button>
+                                <p> </p>
+                                <button type="button" id="removeCorso" class="btn btn-outline-secondary btn-sm costumbutt">Rimuovi Corso</button>
+                                <p> </p>
+                            </p>
 
 
-                </span>
+
+                            <span v-show="AddDocente">
+                                <label for="dname">Nome</label> <br>
+                                <input type="text" id="dname" name="dname"> <br>
+                                <label for="lname">Cognome</label> <br>
+                                <input type="text" id="lname" name="lname"> <br>
+                                <label for="idDoc">idDocente</label> <br>
+                                <input type="text" id="idDoc" name="idDoc"> <br><br>
+
+                                <p>
+                                    <input type="submit" v-on:click="AddDocente" id="AddDoc" name="submit" value="INSERISCI DOCENTE"/>
+                                </p> <br>
+                            </span>
+
+                            <span v-show="AddCorso">
+                                <label for="idInsegnamento">Insegnamento</label> <br>
+                                <input type="text" id="idInsegnamento" name="idInsegnamento"> <br>
+                                <label for="idDocenteC">Docente</label> <br>
+                                <input type="text" id="idDocenteC" name="idDocenteC"> <br>
+                                <label for="idCorso">Corso</label> <br>
+                                <input type="text" id="idCorso" name="idCorso"> <br><br>
+
+                                <p>
+                                    <input type="submit" v-on:click="AddCorso" id="AddCor" name="submit" value="INSERISCI CORSO"/>
+                                </p> <br>
+                            </span>
+
+                            <span v-show="removeDoc">
+                                <label for="idDocRem">ID DOCENTE</label> <br>
+                                <input type="text" id="idDocRem" name="idDocRem"> <br>
+
+                                <p><input type="submit" id="RemDoc" name="submit" value="RIMUOVI DOCENTE"/></p> <br>
+                            </span>
+
+
+                            <di v-for="prenotazione in prenotazioni"><p>{{prenotazione.idPrenotazione}} {{prenotazione.idUtente}} {{prenotazione.idDocente}} {{prenotazione.idCorso}} {{prenotazione.orario}} {{prenotazione.data}}</p></di>
+
+                            <di v-for="utente in utenti"><p>{{utente.nome}} {{utente.cognome}} {{utente.nomeUtente}} {{utente.password}} {{utente.ruolo}}</p></di>
+                        </li>
+                        </span>
+
+                        </ul>
 
 
                 </div>
@@ -240,6 +287,7 @@
         <span v-show="!autorizzazione">  <div id="VisUtentii" class="outputTextArea"></div> </span>
         <span v-show="AddDocente">  <div id="ADDEDDOC" class="outputTextArea"></div> </span>
         <span v-show="AddCorso">  <div id="ADDEDCORSO" class="outputTextArea"></div> </span>
+        <span v-show="removeDoc">  <div id="REMOVEDDOC" class="outputTextArea"></div> </span>
     </footer>
 
 
@@ -258,6 +306,7 @@
             utenti : [],
             prenotazioni : [],
             AddCorso : false,
+            removeDoc : false,
             link :  '/Ripetizioni/Servlet02',
             link1 : '/Ripetizioni/ServletJSON',
             link2 : '/Ripetizioni/ServletPrenotazioni',
