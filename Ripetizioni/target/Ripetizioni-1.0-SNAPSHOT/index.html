@@ -155,7 +155,8 @@
                                     <div class="mb-3">
                                         <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
                                     </div>
-                                    <input type="submit" v-on:click="getCiao" id="go" value="Login" data-dismiss="modal" class="btn btn-primary" />
+                                    <button type="button" v-on:click="getInfo" id="go" class="btn btn-outline-success" data-bs-dismiss="modal" >Login</button> <br><br>
+
                                 </form>
                             </div>
                         </div>
@@ -171,8 +172,8 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <!-- COMANDI UTENTI E ADMIN -->
                 <div class="position-sticky pt-3">
-                    <span v-show="!admin"> <p>
-                     <button type="button" v-on:click="getCiao" id="getUtente"  >Visualizza Utenti</button> <br><br>
+                    <span v-show="admin"> <p>
+                     <button type="button" v-on:click="getUtente" id="getUtente"  >Visualizza Utenti</button> <br><br>
                      <button type="button" v-on:click="getPrenotazione" id="getPrenotazioni"  >Prenotazioni </button> <br><br>
                      <button type="button" v-on:click="AddDocente = true" id="addDocente"  >Aggiungi Docente</button> <br><br>
                      <button type="button" id="removeDocente" >Rimuovi Docente</button> <br><br>
@@ -227,9 +228,7 @@
     </div>
     <!-- FOOTER PER STAMPE -->
 
-    <footer class="footer mt-auto py-3 bg-dark">
-
-
+    <footer class="footer mt-auto py-3 bg-dark text-center">
         <span v-show="autorizzazione"><div id="saluto" class="outputTextArea"></div> </span>
         <span v-show="!autorizzazione">  <div id="VisUtentii" class="outputTextArea"></div> </span>
         <span v-show="AddDocente">  <div id="ADDEDDOC" class="outputTextArea"></div> </span>
@@ -274,9 +273,9 @@
                         auto.admin = false;
                         auto.login = "Benvenuto/a";
                     } else if (auto.login.trim() === "Nonloggato") {
-                        auto.autorizzazione = true;
-                        auto.utente = true;
-                        auto.admin = true;
+                        auto.autorizzazione = false;
+                        auto.utente = false;
+                        auto.admin = false;
                         auto.login = "Utente o password errato";
                     }
                 });
@@ -296,31 +295,6 @@
                 });
             },
 
-            getCiao : function () {
-                var self1 = this;
-                $.get(this.link3, {utente:$("#utente").val(), password:$("#password").val()}, function (data3) {
-                    self1.login = data3;
-                    if (self1.login.trim() === "Admin") {
-                        self1.autorizzazione = true;
-                        self1.utente = true;
-                        self1.admin = true;
-                        self1.login = "Benvenuto/a";
-                    } else if (auto.login.trim() === "Utente") {
-                        self1.autorizzazione = true;
-                        self1.utente = true;
-                        self1.admin = false;
-                        self1.login = "Benvenuto/a";
-                    } else if (self1.login.trim() === "Nonloggato") {
-                        self1.autorizzazione = true;
-                        self1.utente = true;
-                        self1.admin = true;
-                        self1.login = "Utente o password errato";
-                    }
-
-
-
-                });
-            }
 
         }
     });

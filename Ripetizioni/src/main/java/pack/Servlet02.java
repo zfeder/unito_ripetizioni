@@ -38,12 +38,10 @@ public class Servlet02 extends HttpServlet {
         String password = request.getParameter("password");
         String stato = "Nonloggato";
         if (DAO.checkDB(utente, password)) {
-            System.out.println("checkdb");
             HttpSession s = request.getSession();
             s.setAttribute("utente", utente);
             s.setAttribute("password", password);
             if (DAO.checkAdmin(utente)) {
-                System.out.println("checkadmin");
                 stato = "Admin";
             } else {
                 stato = "Utente";
