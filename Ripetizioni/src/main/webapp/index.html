@@ -166,51 +166,47 @@
 
 
                                     <span v-show="AddDocente">
-                                        <label for="nome">Nome</label> <br>
-                                        <input type="text" id="nome" name="nome"> <br>
-                                        <label for="cognome">Cognome</label> <br>
-                                        <input type="text" id="cognome" name="cognome"> <br>
-                                        <label for="iddocente">idDocente</label> <br>
-                                        <input type="text" id="iddocente" name="iddocente">
+                                        <label for="nome">INSERISCI DOCENTE</label>
                                         <p> </p>
-
-                                        <p>
-                                            <input type="submit" v-on:click="addDoc" id="AddDoc" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI DOCENTE"/>
-                                        </p> <br>
+                                        <input type="text" id="nome" name="nome" placeholder="Nome">
+                                        <p> </p>
+                                        <input type="text" id="cognome" name="cognome" placeholder="Cognome">
+                                        <p> </p>
+                                        <input type="text" id="iddocente" name="iddocente" placeholder="ID Docente">
+                                        <p> </p>
+                                        <input type="submit" v-on:click="addDoc" id="AddDoc" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI DOCENTE"/>
+                                        <p> </p>
                                     </span>
 
                                     <span v-show="AddCorso">
-                                        <label for="idInsegnamento">Insegnamento</label> <br>
-                                        <input type="text" id="idInsegnamento" name="idInsegnamento"> <br>
-                                        <label for="idDocenteC">Docente</label> <br>
-                                        <input type="text" id="idDocenteC" name="idDocenteC"> <br>
-                                        <label for="idCorso">Corso</label> <br>
-                                        <input type="text" id="idCorso" name="idCorso">
+                                        <label for="idInsegnamento">INSERISCI CORSO</label>
                                         <p> </p>
-
-                                        <p>
-                                            <input type="submit" v-on:click="addCor" id="AddCor" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI CORSO"/>
-                                        </p> <br>
+                                        <input type="text" id="idInsegnamento" name="idInsegnamento" placeholder="ID Insegnamento">
+                                        <p> </p>
+                                        <input type="text" id="idDocenteC" name="idDocenteC" placeholder="ID Docente">
+                                        <p> </p>
+                                        <input type="text" id="idCorso" name="idCorso" placeholder="ID Corso">
+                                        <p> </p>
+                                        <input type="submit" v-on:click="addCor" id="AddCor" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI CORSO"/>
+                                        <p> </p>
                                     </span>
 
                                     <span v-show="removeDoc">
-                                        <label for="idDocRem">ID DOCENTE</label> <br>
-                                        <input type="text" id="idDocRem" name="idDocRem">
+                                        <label for="idDocRem">RIMUOVI DOCENTE</label>
                                         <p> </p>
-
-                                        <p>
-                                            <input type="submit"  v-on:click="remDoc" id="RemDoc" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI DOCENTE"/>
-                                        </p> <br>
+                                        <input type="text" id="idDocRem" name="idDocRem" placeholder="ID Docente">
+                                        <p> </p>
+                                        <input type="submit"  v-on:click="remDoc" id="RemDoc" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI DOCENTE"/>
+                                        <p> </p>
                                     </span>
 
                                     <span v-show="removeCor">
-                                        <label for="idCorRem">ID CORSO</label> <br>
-                                        <input type="text" id="idCorRem" name="idCorRem">
+                                        <label for="idCorRem">RIMUOVI CORSO</label>
                                         <p> </p>
-
-                                        <p>
-                                            <input type="submit"  v-on:click="remCor" id="RemCor" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI CORSO"/>
-                                        </p> <br>
+                                        <input type="text" id="idCorRem" name="idCorRem" placeholder="ID Corso">
+                                        <p> </p>
+                                        <input type="submit"  v-on:click="remCor" id="RemCor" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI CORSO"/>
+                                        <p> </p>
                                     </span>
 
                                     <span v-show="showPrenotazioni">
