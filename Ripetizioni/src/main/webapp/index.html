@@ -75,59 +75,8 @@
 
     <script>
 
-        $(document).ready(function () {
-            $("#go").click(function () {
-                var n = document.getElementById("utente").value;
-                var m = document.getElementById("password").value;
-                $.post("Servlet02", {utente: n, password: m},
-                    function (data) {
-                        $("#saluto").html(data);
-                    });
-            });
-        });
 
 
-        <!-- AGGIUNTA DOCENTE CON CONFERMA-->
-
-
-        $(document).ready(function () {
-            $("#AddDoc").click(function () {
-                var nome = document.getElementById("dname").value;
-                var cognome = document.getElementById("lname").value;
-                var iddocente = document.getElementById("idDoc").value;
-                $.post("ServletAddDoc", {dname: nome, lname: cognome, idDoc: iddocente},
-                    function (data) {
-                        $("#ADDEDDOC").html("Docente Aggiunto con successo");
-                    });
-            });
-        });
-
-        //  <!-- AGGIUNTA CORSO CON CONFERMA-->
-
-        $(document).ready(function () {
-            $("#AddCor").click(function () {
-                var idInsegnamento = document.getElementById("idInsegnamento").value;
-                var idDocenteC = document.getElementById("idDocenteC").value;
-                var idCorso = document.getElementById("idCorso").value;
-                $.post("ServletAddCorso", {idInsegnamento: idInsegnamento, idDocenteC: idDocenteC, idCorso: idCorso},
-                    function (data) {
-                        $("#ADDEDCORSO").html("Docente Aggiunto con successo");
-                    });
-            });
-        });
-
-        //  <!-- RIMOZIONE DOCENTE CON CONFERMA-->
-
-
-        $(document).ready(function () {
-            $("#RemDoc").click(function () {
-                var idDocRem = document.getElementById("idDocRem").value;
-                $.post("ServletRemoveDoc", {idDocRem: idDocRem},
-                    function (data) {
-                        $("#REMOVEDDOC").html("Docente Rimosso con successo");
-                    });
-            });
-        });
     </script>
 
 </head>
@@ -144,7 +93,9 @@
                     {{ login }}
                     <button type="button" v-show="!autorizzazione" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</button>
                     <span v-show="autorizzazione">
-                        <button type="button" v-on:click="autorizzazione=false, admin=false, utente=false" id="logoutt" class="btn btn-outline-primary">Logout</button>
+                        <button type="button" v-on:click="autorizzazione=false, admin=false, utente=false,
+                                                          AddDocente = false, AddCorso = false, removeDoc = false
+                                                          showPrenotazioni = false, showUtenti = false" id="logoutt" class="btn btn-outline-primary">Logout</button>
                     </span>
 
                     <!-- LOGOUT CON CONFERMA NEL FOOTER -->
@@ -224,15 +175,15 @@
 
 
                             <span v-show="AddDocente">
-                                <label for="dname">Nome</label> <br>
-                                <input type="text" id="dname" name="dname"> <br>
-                                <label for="lname">Cognome</label> <br>
-                                <input type="text" id="lname" name="lname"> <br>
-                                <label for="idDoc">idDocente</label> <br>
-                                <input type="text" id="idDoc" name="idDoc"> <br><br>
+                                <label for="nome">Nome</label> <br>
+                                <input type="text" id="nome" name="nome"> <br>
+                                <label for="cognome">Cognome</label> <br>
+                                <input type="text" id="cognome" name="cognome"> <br>
+                                <label for="iddocente">idDocente</label> <br>
+                                <input type="text" id="iddocente" name="iddocente"> <br><br>
 
                                 <p>
-                                    <input type="submit" v-on:click="AddDocente" id="AddDoc" name="submit" value="INSERISCI DOCENTE"/>
+                                    <input type="submit" v-on:click="addDoc" id="AddDoc" name="submit" value="INSERISCI DOCENTE"/>
                                 </p> <br>
                             </span>
 
@@ -245,7 +196,7 @@
                                 <input type="text" id="idCorso" name="idCorso"> <br><br>
 
                                 <p>
-                                    <input type="submit" v-on:click="AddCorso" id="AddCor" name="submit" value="INSERISCI CORSO"/>
+                                    <input type="submit" v-on:click="addCor" id="AddCor" name="submit" value="INSERISCI CORSO"/>
                                 </p> <br>
                             </span>
 
@@ -253,13 +204,15 @@
                                 <label for="idDocRem">ID DOCENTE</label> <br>
                                 <input type="text" id="idDocRem" name="idDocRem"> <br>
 
-                                <p><input type="submit" id="RemDoc" name="submit" value="RIMUOVI DOCENTE"/></p> <br>
+                                <p><input type="submit"  v-on:click="remDoc" id="RemDoc" name="submit" value="RIMUOVI DOCENTE"/></p> <br>
                             </span>
+                                <span v-show="showPrenotazioni">
+                                     <di v-for="prenotazione in prenotazioni"><p>{{prenotazione.idPrenotazione}} {{prenotazione.idUtente}} {{prenotazione.idDocente}} {{prenotazione.idCorso}} {{prenotazione.orario}} {{prenotazione.data}}</p></di>
+                                </span>
+                                <span v-show="showUtenti">
+                                    <di v-for="utente in utenti"><p>{{utente.nome}} {{utente.cognome}} {{utente.nomeUtente}} {{utente.password}} {{utente.ruolo}}</p></di>
+                                </span>
 
-
-                            <di v-for="prenotazione in prenotazioni"><p>{{prenotazione.idPrenotazione}} {{prenotazione.idUtente}} {{prenotazione.idDocente}} {{prenotazione.idCorso}} {{prenotazione.orario}} {{prenotazione.data}}</p></di>
-
-                            <di v-for="utente in utenti"><p>{{utente.nome}} {{utente.cognome}} {{utente.nomeUtente}} {{utente.password}} {{utente.ruolo}}</p></di>
                         </li>
                         </span>
 
@@ -286,6 +239,7 @@
         <span v-show="autorizzazione"><div id="saluto" class="outputTextArea"></div> </span>
         <span v-show="!autorizzazione">  <div id="VisUtentii" class="outputTextArea"></div> </span>
         <span v-show="AddDocente">  <div id="ADDEDDOC" class="outputTextArea"></div> </span>
+        {{confermaAzione}}
         <span v-show="AddCorso">  <div id="ADDEDCORSO" class="outputTextArea"></div> </span>
         <span v-show="removeDoc">  <div id="REMOVEDDOC" class="outputTextArea"></div> </span>
     </footer>
@@ -307,9 +261,17 @@
             prenotazioni : [],
             AddCorso : false,
             removeDoc : false,
+            showPrenotazioni : false,
+            showUtenti : false,
+            confermaAzione : '',
             link :  '/Ripetizioni/Servlet02',
             link1 : '/Ripetizioni/ServletJSON',
             link2 : '/Ripetizioni/ServletPrenotazioni',
+            link3 : '/Ripetizioni/ServletAddDoc',
+            link4 : '/Ripetizioni/ServletAddCorso',
+            link5 : '/Ripetizioni/ServletRemoveDoc',
+
+
         },
 
         methods:{
@@ -339,6 +301,7 @@
             getUtente: function () {
                 var self = this;
                 $.get(this.link1, function (data2) {
+                    self.showUtenti = true;
                     self.utenti = data2;
                 });
             },
@@ -346,7 +309,32 @@
             getPrenotazione: function () {
                 var self1 = this;
                 $.get(this.link2, function (data3) {
+                    self1.showPrenotazioni = true;
                     self1.prenotazioni = data3;
+                });
+            },
+
+            addDoc: function(){
+                var doc = this;
+                $.post(this.link3, {nome:$("#nome").val(), cognome:$("#cognome").val(), iddocente:$("#iddocente").val()}, function(data) {
+                    doc.confermaAzione = data;
+
+                });
+            },
+
+            addCor: function(){
+                var cor = this;
+                $.post(this.link4, {idInsegnamento:$("#idInsegnamento").val(), idDocenteC:$("#idDocenteC").val(), idCorso:$("#idCorso").val()}, function(data) {
+                    cor.confermaAzione = data;
+
+                });
+            },
+
+            remDoc: function(){
+                var doc = this;
+                $.post(this.link5, {idInsegnamento:$("#idDocRem").val()}, function(data) {
+                    doc.confermaAzione = data;
+
                 });
             },
 

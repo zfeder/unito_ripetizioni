@@ -40,11 +40,12 @@ public class ServletAddCorso extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        //PrintWriter out = response.getWriter();
+        PrintWriter out = response.getWriter();
         String idInsegnamento = request.getParameter("idInsegnamento");
         String idDocenteC = request.getParameter("idDocenteC");
         String idCorso = request.getParameter("idCorso");
         //System.out.println("INSERIMENTO DEI PARAMETRI");
+        String stato = "Errore nell'aggiungere corso";
 
         if ( idDocenteC!= null && idInsegnamento != null && idCorso != null) {
             Insegnamento i = new Insegnamento( idInsegnamento, idDocenteC, idCorso);
@@ -53,7 +54,10 @@ public class ServletAddCorso extends HttpServlet {
             System.out.println(i.getidDocenteC());
             System.out.println(i.getidCorso());
             DAO.insertInsegnamento(i);
+            stato = "Corso aggiunto correttamente";
         }
+        out.print(stato);
+
     }
 
 }

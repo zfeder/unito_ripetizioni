@@ -40,15 +40,19 @@ public class ServletRemoveDoc extends HttpServlet {
             throws ServletException, IOException, SQLException {
 
         response.setContentType("text/html;charset=UTF-8");
-        //PrintWriter out = response.getWriter();
+        PrintWriter out = response.getWriter();
         String idDocRem = request.getParameter("idDocRem");
         System.out.println(idDocRem);
+        String stato = "Errore nel rimuovere docente";
 
         if (idDocRem != null) {
             DocenteREM p = new DocenteREM(idDocRem);
             System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
             System.out.println(p.getidDocenteREM());
             DAO.removeDocente(p);
+            stato = "Docente rimosso correttamente";
         }
+        out.print(stato);
     }
 }
+

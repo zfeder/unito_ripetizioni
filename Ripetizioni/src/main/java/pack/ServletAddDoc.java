@@ -40,20 +40,24 @@ public class ServletAddDoc extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        //PrintWriter out = response.getWriter();
-        String dname = request.getParameter("dname");
-        String lname = request.getParameter("lname");
-        String idDoc = request.getParameter("idDoc");
+        PrintWriter out = response.getWriter();
+        String nome = request.getParameter("nome");
+        String cognome = request.getParameter("cognome");
+        String iddocente = request.getParameter("iddocente");
         //System.out.println("INSERIMENTO DEI PARAMETRI");
-
-        if (dname != null && lname != null && idDoc != null) {
-            Docente p = new Docente(dname, lname, idDoc);
+        String stato = "Errore inserimento";
+        if (nome != null && cognome != null && iddocente != null) {
+            Docente p = new Docente(nome, cognome, iddocente);
             System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
             System.out.println(p.getNome());
             System.out.println(p.getCognome());
             System.out.println(p.getidDocente());
             DAO.insertDocente(p);
+            stato = "Docente aggiunto correttamente";
         }
+        out.print(stato);
+
+
     }
 
 }
