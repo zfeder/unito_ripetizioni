@@ -251,9 +251,16 @@ public class DAO {
 
     }
 
+    public static void removeCorso(CorsoREM i) throws SQLException {
+        Connection conn = DriverManager.getConnection(url1, user, password);
+        Statement st = conn.createStatement();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM INSEGNAMENTO WHERE idinsegnamento=?;");
+        stmt.setString(1, i.getCorsoREM());
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close();
 
-
-
+    }
 }
 
 
