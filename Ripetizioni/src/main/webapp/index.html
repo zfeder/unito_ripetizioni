@@ -163,7 +163,10 @@
                                     <p> </p>
                                     <button type="button" v-on:click="removeCor = true" id="removeCorso" class="btn btn-outline-secondary btn-sm costumbutt">Rimuovi Corso</button>
                                     <p> </p>
-
+                                    <button type="button" v-on:click="AddMateria = true" id="addMateria" class="btn btn-outline-secondary btn-sm costumbutt">Aggiungi Materia</button>
+                                    <p> </p>
+                                    <button type="button" v-on:click="removeMat = true" id="removeMateria" class="btn btn-outline-secondary btn-sm costumbutt">Rimuovi Materia</button>
+                                    <p> </p>
 
                                     <span v-show="AddDocente">
                                         <label for="nome">INSERISCI DOCENTE</label>
@@ -191,6 +194,15 @@
                                         <p> </p>
                                     </span>
 
+                                    <span v-show="AddMateria">
+                                        <label for="idInsegnamento">INSERISCI MATERIA</label>
+                                        <p> </p>
+                                        <input type="text" id="idMateria" name="idMateria" placeholder="Titolo Corso">
+                                        <p> </p>
+                                        <input type="submit" v-on:click="addMat" id="AddMat" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI MATERIA"/>
+                                        <p> </p>
+                                    </span>
+
                                     <span v-show="removeDoc">
                                         <label for="idDocRem">RIMUOVI DOCENTE</label>
                                         <p> </p>
@@ -206,6 +218,15 @@
                                         <input type="text" id="idCorRem" name="idCorRem" placeholder="ID Corso">
                                         <p> </p>
                                         <input type="submit"  v-on:click="remCor" id="RemCor" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI CORSO"/>
+                                        <p> </p>
+                                    </span>
+
+                                    <span v-show="removeMat">
+                                        <label for="idCorRem">RIMUOVI MATERIA</label>
+                                        <p> </p>
+                                        <input type="text" id="idMatRem" name="idMatRem" placeholder="Titolo Corso">
+                                        <p> </p>
+                                        <input type="submit"  v-on:click="remMat" id="RemMat" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI MATERIA"/>
                                         <p> </p>
                                     </span>
 
@@ -238,6 +259,10 @@
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         Calendario Lezioni
+                        <button type="button"  v-on:click="getMats" id="Matss" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Materie</button>
+                        <div v-for="materia in mats">
+                            <button type="button"  v-on:click="getMats" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
+                        </div>
                     </div>
 
                     <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
@@ -268,11 +293,14 @@
                 AddDocente: false,
                 utenti : [],
                 prenotazioni : [],
+                mats : [],
                 AddCorso : false,
                 removeDoc : false,
                 showPrenotazioni : false,
                 showUtenti : false,
                 removeCor : false,
+                AddMateria : false,
+                removeMat : false,
                 confermaAzione : '',
                 link :  '/Ripetizioni/Servlet02',
                 link1 : '/Ripetizioni/ServletJSON',
@@ -280,7 +308,10 @@
                 link3 : '/Ripetizioni/ServletAddDoc',
                 link4 : '/Ripetizioni/ServletAddCorso',
                 link5 : '/Ripetizioni/ServletRemoveDoc',
-                link6 : '/Ripetizioni/ServletRemoveCorso'
+                link6 : '/Ripetizioni/ServletRemoveCorso',
+                link7 : '/Ripetizioni/ServletAddMat',
+                link8 : '/Ripetizioni/ServletRemoveMateria',
+                link9 : '/Ripetizioni/ServletJSONMateria',
             },
 
             methods:{
@@ -352,6 +383,29 @@
                     $.post(this.link6, {idCorRem:$("#idCorRem").val()}, function(data) {
                         Cor.confermaAzione = data;
 
+                    });
+                },
+
+                addMat: function(){
+                    var mat = this;
+                    $.post(this.link7, {idMateria:$("#idMateria").val()}, function(data) {
+                        mat.confermaAzione = data;
+
+                    });
+                },
+
+                remMat: function(){
+                    var Mat = this;
+                    $.post(this.link8, {idMatRem:$("#idMatRem").val()}, function(data) {
+                        Mat.confermaAzione = data;
+
+                    });
+                },
+
+                getMats: function () {
+                    var self1 = this;
+                    $.get(this.link9, function (data3) {
+                        self1.mats = data3;
                     });
                 },
             }
