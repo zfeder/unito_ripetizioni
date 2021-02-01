@@ -312,6 +312,39 @@ public class DAO {
         conn.close();
 
     }
+
+    public static ArrayList<Prenotazione> MiaPrenotazione(String Utente) {
+        Connection conn1 = null;
+        String u = Utente;
+        ArrayList<Prenotazione> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            if (conn1 != null) {
+                System.out.println("Connected to the database test");
+            }
+
+            Statement st = conn1.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE WHERE idUtente='"+Utente+"';");
+            //   st.setString(1, Utente);
+            while (rs.next()) {
+                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
+                        rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Data"));
+                out.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+    }
+
 }
 
 

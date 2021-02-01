@@ -91,7 +91,7 @@
                     {{ login }}
                     <button type="button" v-show="!autorizzazione" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</button>
                     <span v-show="autorizzazione">
-                        <button type="button" v-on:click="autorizzazione=false, admin=false, utente=false, AddDocente = false, AddCorso = false, removeDoc = false, showPrenotazioni = false, showUtenti = false, removeCor = false" id="logoutt" class="btn btn-outline-primary">Logout</button>
+                        <button type="button" v-on:click="autorizzazione=false, admin=false, utente=false, AddDocente = false, AddCorso = false, removeDoc = false, showPrenotazioni = false, showMiePrenotazioni = false, showUtenti = false, removeCor = false" id="logoutt" class="btn btn-outline-primary">Logout</button>
                     </span>
 
                     <!-- LOGOUT CON CONFERMA NEL FOOTER -->
@@ -230,13 +230,6 @@
                                         <p> </p>
                                     </span>
 
-                                    <span v-show="showPrenotazioni">
-                                        <di v-for="prenotazione in prenotazioni"><p>{{prenotazione.idPrenotazione}} {{prenotazione.idUtente}} {{prenotazione.idDocente}} {{prenotazione.idCorso}} {{prenotazione.orario}} {{prenotazione.data}}</p></di>
-                                    </span>
-
-                                    <span v-show="showUtenti">
-                                        <di v-for="utente in utenti"><p>{{utente.nome}} {{utente.cognome}} {{utente.nomeUtente}} {{utente.password}} {{utente.ruolo}}</p></di>
-                                    </span>
                                 </li>
                             </span>
 
@@ -247,8 +240,8 @@
                                 </h6>
                                 <li class="nav-item">
                                     <p> </p>
-                                    <button type="button" id="getMiePren" class="btn btn-outline-secondary btn-sm costumbutt">Le mie prenotazioni</button>
-                                    <p> </p>
+                                    <button type="button" v-on:click="getMiePrenotazioni" id="getMiePrenotazioni" class="btn btn-outline-secondary btn-sm costumbutt">Prenotazioni </button>
+                                     <p> </p>
                                 </li>
                             </span>
                         </ul>
@@ -257,6 +250,19 @@
                 <!-- MAIN CON CALENDARIO -->
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+                    <span v-show="showPrenotazioni">
+                        <di v-for="prenotazione in prenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.data}}</p></di>
+                    </span>
+
+                    <span v-show="showUtenti">
+                        <di v-for="utente in utenti"><p>Nome: {{utente.nome}} Cognome: {{utente.cognome}} ID: {{utente.nomeUtente}} Password: {{utente.password}} Ruolo: {{utente.ruolo}}</p></di>
+                    </span>
+
+                    <span v-show="showMiePrenotazioni">
+                        <di v-for="prenotazione in Mieprenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.data}}</p></di>
+                    </span>
+
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         Calendario Lezioni
                         <button type="button"  v-on:click="getMats" id="Matss" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Materie</button>
@@ -297,6 +303,7 @@
                 AddCorso : false,
                 removeDoc : false,
                 showPrenotazioni : false,
+                showMiePrenotazioni : false,
                 showUtenti : false,
                 removeCor : false,
                 AddMateria : false,
@@ -312,6 +319,8 @@
                 link7 : '/Ripetizioni/ServletAddMat',
                 link8 : '/Ripetizioni/ServletRemoveMateria',
                 link9 : '/Ripetizioni/ServletJSONMateria',
+                link10 : '/Ripetizioni/ServletMiePrenotazioni',
+
             },
 
             methods:{
@@ -406,6 +415,14 @@
                     var self1 = this;
                     $.get(this.link9, function (data3) {
                         self1.mats = data3;
+                    });
+                },
+
+                getMiePrenotazioni: function () {
+                    var self1 = this;
+                    $.get(this.link10, function (data3) {
+                        self1.showMiePrenotazioni = true;
+                        self1.Mieprenotazioni = data3;
                     });
                 },
             }
