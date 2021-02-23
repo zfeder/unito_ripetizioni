@@ -43,17 +43,14 @@ public class ServletAddDoc extends HttpServlet {
         PrintWriter out = response.getWriter();
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
-        String iddocente = request.getParameter("iddocente");
         //System.out.println("INSERIMENTO DEI PARAMETRI");
-        String stato = "Errore inserimento";
-        if (nome != null && cognome != null && iddocente != null) {
-            Docente p = new Docente(nome, cognome, iddocente);
+        int stato = 33;
+        if (nome != null && cognome != null) {
+            Docente p = new Docente(nome, cognome, null);
             System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
             System.out.println(p.getNome());
             System.out.println(p.getCognome());
-            System.out.println(p.getidDocente());
-            DAO.insertDocente(p);
-            stato = "Docente aggiunto correttamente";
+            stato = (DAO.insertDocente(p.getNome(), p.getCognome()));
         }
         out.print(stato);
 

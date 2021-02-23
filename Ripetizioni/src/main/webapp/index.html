@@ -175,8 +175,6 @@
                                         <p> </p>
                                         <input type="text" id="cognome" name="cognome" placeholder="Cognome">
                                         <p> </p>
-                                        <input type="text" id="iddocente" name="iddocente" placeholder="ID Docente">
-                                        <p> </p>
                                         <input type="submit" v-on:click="addDoc" id="AddDoc" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI DOCENTE"/>
                                         <p> </p>
                                     </span>
@@ -365,7 +363,7 @@
 
                 addDoc: function(){
                     var doc = this;
-                    $.post(this.link3, {nome:$("#nome").val(), cognome:$("#cognome").val(), iddocente:$("#iddocente").val()}, function(data) {
+                    $.post(this.link3, {nome:$("#nome").val(), cognome:$("#cognome").val()}, function(data) {
                         doc.confermaAzione = data;
 
                     });

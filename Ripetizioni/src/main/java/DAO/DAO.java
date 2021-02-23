@@ -243,18 +243,42 @@ public class DAO {
         return out;
     }
 
-    public static void insertDocente(Docente p) throws SQLException {
-        Connection conn = DriverManager.getConnection(url1, user, password);
-        Statement st = conn.createStatement();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO DOCENTE (NOME, COGNOME, IDDOCENTE) VALUES (?,?,?)");
-        stmt.setString(1, p.getNome());
-        stmt.setString(2, p.getCognome());
-        stmt.setString(3, p.getidDocente());
-        stmt.executeUpdate();
-        stmt.close();
-        conn.close();
+    public static int insertDocente(String nome, String cognome) {
+        Connection conn1 = null;
+        ResultSet rs = null;
+        int s = 0;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            if (conn1 != null) {
+                System.out.println("Connected to the database test");
+            }
 
+            Statement stmt = conn1.createStatement();
+            stmt.executeUpdate("INSERT INTO DOCENTE (NOME, COGNOME) VALUES ('"+nome+"','"+cognome+"')", Statement.RETURN_GENERATED_KEYS);
+            rs = stmt.getGeneratedKeys();
+
+            if (rs.next()) {
+                s = rs.getInt(1);
+            } else {
+
+                // throw an exception from here
+            }
+
+            System.out.println(s);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return s;
     }
+
 
     public static void insertInsegnamento(Insegnamento i) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
