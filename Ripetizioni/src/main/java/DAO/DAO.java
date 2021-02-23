@@ -62,7 +62,7 @@ public class DAO {
             Statement st = conn1.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE");
             while (rs.next()) {
-                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Data"));
+                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"));
                 out.add(p);
             }
         } catch (SQLException e) {
@@ -280,17 +280,64 @@ public class DAO {
     }
 
 
-    public static void insertInsegnamento(Insegnamento i) throws SQLException {
-        Connection conn = DriverManager.getConnection(url1, user, password);
-        Statement st = conn.createStatement();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO INSEGNAMENTO (IDINSEGNAMENTO, IDDOCENTE, IDCORSO) VALUES (?,?,?)");
-        stmt.setString(1, i.getidInsegnamento());
-        stmt.setString(2, i.getidDocenteC());
-        stmt.setString(3, i.getidCorso());
-        stmt.executeUpdate();
-        stmt.close();
-        conn.close();
 
+    public static int insertInsegnamento(String idDocenteC, String idCorso) {
+        Connection conn1 = null;
+        ResultSet rs = null;
+        int s = 0;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            if (conn1 != null) {
+                System.out.println("Connected to the database test");
+            }
+
+            Statement stmt = conn1.createStatement();
+            stmt.executeUpdate("INSERT INTO INSEGNAMENTO (IDDOCENTE, IDCORSO) VALUES ('"+idDocenteC+"','"+idCorso+"')", Statement.RETURN_GENERATED_KEYS);
+            rs = stmt.getGeneratedKeys();
+
+            if (rs.next()) {
+                s = rs.getInt(1);
+            } else {
+
+                // throw an exception from here
+            }
+
+            Statement stmt2 = conn1.createStatement();
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Lunedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Lunedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Lunedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Lunedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Lunedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Martedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Martedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Martedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Martedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Mercoledì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Mercoledì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Mercoledì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Mercoledì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Giovedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Giovedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Giovedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Giovedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Venerdì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Venerdì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Venerdì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Venerdì')");
+
+            System.out.println(s);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return s;
     }
 
     public static void removeDocente(DocenteREM i) throws SQLException {

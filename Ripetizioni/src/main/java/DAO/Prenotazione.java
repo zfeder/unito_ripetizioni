@@ -6,7 +6,7 @@ public class Prenotazione {
     private String idDocente;
     private String idCorso;
     private String Orario;
-    private String Data;
+    private String Giorno;
 
 
     public Prenotazione(String idPrenotazione, String idUtente, String idDocente, String idCorso, String Orario, String Data) {
@@ -15,7 +15,7 @@ public class Prenotazione {
         this.idDocente = idDocente;
         this.idCorso = idCorso;
         this.Orario = Orario;
-        this.Data = Data;
+        this.Giorno = Giorno;
 
     }
 
@@ -39,8 +39,8 @@ public class Prenotazione {
         return Orario;
     }
 
-    public String getData() {
-        return Data;
+    public String getGiorno() {
+        return Giorno;
     }
 
 

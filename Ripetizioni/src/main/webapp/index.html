@@ -180,22 +180,20 @@
                                     </span>
 
                                     <span v-show="AddCorso">
-                                        <label for="idInsegnamento">INSERISCI CORSO</label>
-                                        <p> </p>
-                                        <input type="text" id="idInsegnamento" name="idInsegnamento" placeholder="ID Insegnamento">
+                                        <label for="idDocenteC">INSERISCI CORSO</label>
                                         <p> </p>
                                         <input type="text" id="idDocenteC" name="idDocenteC" placeholder="ID Docente">
                                         <p> </p>
-                                        <input type="text" id="idCorso" name="idCorso" placeholder="ID Corso">
+                                        <input type="text" id="idCorso" name="idCorso" placeholder="Nome Materia">
                                         <p> </p>
                                         <input type="submit" v-on:click="addCor" id="AddCor" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI CORSO"/>
                                         <p> </p>
                                     </span>
 
                                     <span v-show="AddMateria">
-                                        <label for="idInsegnamento">INSERISCI MATERIA</label>
+                                        <label for="idMateria">INSERISCI MATERIA</label>
                                         <p> </p>
-                                        <input type="text" id="idMateria" name="idMateria" placeholder="Titolo Corso">
+                                        <input type="text" id="idMateria" name="idMateria" placeholder="Nome Materia">
                                         <p> </p>
                                         <input type="submit" v-on:click="addMat" id="AddMat" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI MATERIA"/>
                                         <p> </p>
@@ -267,10 +265,18 @@
                         <div v-for="materia in mats">
                             <button type="button"  v-on:click="getMats" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
                         </div>
+
+
                     </div>
 
                     <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
                 </main>
+
+                <button type="button"  v-on:click="getCalendario" id="calendario" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Calendario</button>
+                <div v-for="insegnamento in calendario">
+                    <button type="button"  v-on:click="getCalendario" class="btn btn-outline-secondary btn-sm costumbutt">{{insegnamento.idPrenotazione}}</button>
+                </div>
+
             </div>
         </div>
         <!-- FOOTER PER STAMPE -->
@@ -318,6 +324,7 @@
                 link8 : '/Ripetizioni/ServletRemoveMateria',
                 link9 : '/Ripetizioni/ServletJSONMateria',
                 link10 : '/Ripetizioni/ServletMiePrenotazioni',
+                link11 : '/Ripetizioni/ServletJSONCalendario',
 
             },
 
@@ -371,7 +378,7 @@
 
                 addCor: function(){
                     var cor = this;
-                    $.post(this.link4, {idInsegnamento:$("#idInsegnamento").val(), idDocenteC:$("#idDocenteC").val(), idCorso:$("#idCorso").val()}, function(data) {
+                    $.post(this.link4, {idDocenteC:$("#idDocenteC").val(), idCorso:$("#idCorso").val()}, function(data) {
                         cor.confermaAzione = data;
 
                     });
@@ -423,6 +430,14 @@
                         self1.Mieprenotazioni = data3;
                     });
                 },
+
+                getCalendario: function () {
+                    var self1 = this;
+                    $.get(this.link11, function (data4) {
+                        self1.calendario = data4;
+                    });
+                },
+
             }
         });
     </script>
