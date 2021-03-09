@@ -263,19 +263,24 @@
                         Calendario Lezioni
                         <button type="button"  v-on:click="getMats" id="Matss" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Materie</button>
                         <div v-for="materia in mats">
-                            <button type="button"  v-on:click="getMats" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                            <button type="button"  v-on:click="passMat('{{materia.titoloCorso}}')"  id="calendar" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
+
                         </div>
+
+
 
 
                     </div>
 
+                    <div v-for="insegnamento in calendario">
+                        <button type="button"  v-on:click="getCalendario" class="btn btn-outline-secondary btn-sm costumbutt">{{insegnamento.idPrenotazione}}</button>
+                    </div>
+
+
                     <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
                 </main>
 
-                <button type="button"  v-on:click="getCalendario" id="calendario" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Calendario</button>
-                <div v-for="insegnamento in calendario">
-                    <button type="button"  v-on:click="getCalendario" class="btn btn-outline-secondary btn-sm costumbutt">{{insegnamento.idPrenotazione}}</button>
-                </div>
 
             </div>
         </div>
@@ -304,6 +309,7 @@
                 utenti : [],
                 prenotazioni : [],
                 mats : [],
+                calendario : [],
                 AddCorso : false,
                 removeDoc : false,
                 showPrenotazioni : false,
@@ -437,6 +443,16 @@
                         self1.calendario = data4;
                     });
                 },
+
+                passMat: function (e) {
+                    var doc = this;
+                    var value = e;
+                    $.post(this.link5, {value:$("#value").val()}, function(data) {
+                        doc.confermaAzione = data;
+
+                    });
+
+                }
 
             }
         });
