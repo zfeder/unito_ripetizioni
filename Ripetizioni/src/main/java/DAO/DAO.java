@@ -119,7 +119,7 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE WHERE idCorso='"+nome+"';");
+            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE WHERE idCorso='"+nome+"' AND idUtente='null' ;" );
             while (rs.next()) {
                 Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"));
                 out.add(p);
@@ -307,7 +307,6 @@ public class DAO {
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Lunedì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Lunedì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Lunedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Lunedì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Martedì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Martedì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Martedì')");
@@ -399,7 +398,7 @@ public class DAO {
             //   st.setString(1, Utente);
             while (rs.next()) {
                 Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
-                        rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Data"));
+                        rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"));
                 out.add(p);
             }
         } catch (SQLException e) {

@@ -247,17 +247,7 @@
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-                    <span v-show="showPrenotazioni">
-                        <di v-for="prenotazione in prenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.data}}</p></di>
-                    </span>
 
-                    <span v-show="showUtenti">
-                        <di v-for="utente in utenti"><p>Nome: {{utente.nome}} Cognome: {{utente.cognome}} ID: {{utente.nomeUtente}} Password: {{utente.password}} Ruolo: {{utente.ruolo}}</p></di>
-                    </span>
-
-                    <span v-show="showMiePrenotazioni">
-                        <di v-for="prenotazione in Mieprenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.data}}</p></di>
-                    </span>
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         Calendario Lezioni
@@ -272,8 +262,24 @@
 
                     </div>
 
+                    <span v-show="showPrenotazioni">
+                        <di v-for="prenotazione in prenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}}</p></di>
+                    </span>
+
+                    <span v-show="showUtenti">
+                        <di v-for="utente in utenti"><p>Nome: {{utente.nome}} Cognome: {{utente.cognome}} ID: {{utente.nomeUtente}} Password: {{utente.password}} Ruolo: {{utente.ruolo}}</p></di>
+                    </span>
+
+                    <span v-show="showMiePrenotazioni">
+                        <di v-for="prenotazione in Mieprenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}}</p></di>
+                    </span>
+
                     <div v-for="insegnamento in calendario">
-                        <button type="button"  v-on:click="getCalendario" class="btn btn-outline-secondary btn-sm costumbutt">{{insegnamento.idPrenotazione}}</button>
+                        Docente: {{insegnamento.idDocente}}
+                        Materia: {{insegnamento.idCorso}}
+                        Giorno: {{insegnamento.giorno}}
+                        Orario: {{insegnamento.orario}}
+                        <button type="button"  v-on:click="getCalendario" class="btn btn-outline-secondary btn-sm costumbutt">PRENOTA</button>
                     </div>
 
 
@@ -446,10 +452,10 @@
                 },
 
                 passMat: function (e) {
-                    var doc = this;
+                    var self1 = this;
                     var value = e;
-                    $.post(this.link11, {value:value}, function(data) {
-                        doc.confermaAzione = data;
+                    $.post(this.link11, {value:value}, function(data4) {
+                        self1.calendario = data4;
 
                     });
 

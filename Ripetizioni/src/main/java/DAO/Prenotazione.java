@@ -9,7 +9,7 @@ public class Prenotazione {
     private String Giorno;
 
 
-    public Prenotazione(String idPrenotazione, String idUtente, String idDocente, String idCorso, String Orario, String Data) {
+    public Prenotazione(String idPrenotazione, String idUtente, String idDocente, String idCorso, String Orario, String Giorno) {
         this.idPrenotazione = idPrenotazione;
         this.idUtente = idUtente;
         this.idDocente = idDocente;
