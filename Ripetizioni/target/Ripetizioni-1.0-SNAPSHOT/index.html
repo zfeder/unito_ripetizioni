@@ -263,15 +263,7 @@
                         Calendario Lezioni
                         <button type="button"  v-on:click="getMats" id="Matss" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Materie</button>
                         <div v-for="materia in mats">
-                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-                            <button type="button"  v-on:click="getCalendario"  id="calendar" class="btn btn-outline-secondary btn-sm costumbutt" value="dwdd">{{materia.titoloCorso}}</button>
-
-                            <script type="text/javascript">
-                                $("#calendar").click(function() {
-                                    var fired_button = $("button").val();
-                                    alert(fired_button);
-                                });
-                            </script>
+                            <button type="button"  v-on:click="passMat(materia.titoloCorso)"  id="calendar" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
 
                         </div>
 
@@ -338,6 +330,8 @@
                 link9 : '/Ripetizioni/ServletJSONMateria',
                 link10 : '/Ripetizioni/ServletMiePrenotazioni',
                 link11 : '/Ripetizioni/ServletJSONCalendario',
+                link12 : '/Ripetizioni/ServletBottumMat',
+
 
             },
 
@@ -450,6 +444,16 @@
                         self1.calendario = data4;
                     });
                 },
+
+                passMat: function (e) {
+                    var doc = this;
+                    var value = e;
+                    $.post(this.link11, {value:value}, function(data) {
+                        doc.confermaAzione = data;
+
+                    });
+
+                }
 
             }
         });

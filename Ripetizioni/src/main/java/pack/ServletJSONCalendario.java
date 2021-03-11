@@ -38,11 +38,13 @@ public class ServletJSONCalendario extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         // creo oggetto JSON con oggetto Coppia
+        String nome = request.getParameter("value");
+        System.out.println("CIAO" + nome);
         String s = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Giorno"));
         request.setAttribute("info", s);
 
 
-        ArrayList<Prenotazione> ar = DAO.PrenotazioneDB();
+        ArrayList<Prenotazione> ar = DAO.prenotazioneDB(nome);
         String ris = JSONMan.serializeJson(ar);
         System.out.println(ris);
         out.print(ris);

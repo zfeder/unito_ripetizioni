@@ -108,9 +108,10 @@ public class DAO {
         return out;
     }
 
-    public static ArrayList<Prenotazione> prenotazioneDB() {
+    public static ArrayList<Prenotazione> prenotazioneDB(String s) {
         Connection conn1 = null;
         ArrayList<Prenotazione> out = new ArrayList<>();
+        String nome = s;
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             if (conn1 != null) {
@@ -118,10 +119,9 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE");
+            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE WHERE idCorso='"+nome+"';");
             while (rs.next()) {
-                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
-                                    rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Data"));
+                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"));
                 out.add(p);
             }
         } catch (SQLException e) {
