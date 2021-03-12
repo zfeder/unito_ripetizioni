@@ -279,7 +279,7 @@
                         Materia: {{insegnamento.idCorso}}
                         Giorno: {{insegnamento.giorno}}
                         Orario: {{insegnamento.orario}}
-                        <button type="button"  v-on:click="getCalendario" class="btn btn-outline-secondary btn-sm costumbutt">PRENOTA</button>
+                        <button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso)" class="btn btn-outline-secondary btn-sm costumbutt">PRENOTA</button>
                     </div>
 
 
@@ -336,7 +336,7 @@
                 link9 : '/Ripetizioni/ServletJSONMateria',
                 link10 : '/Ripetizioni/ServletMiePrenotazioni',
                 link11 : '/Ripetizioni/ServletJSONCalendario',
-                link12 : '/Ripetizioni/ServletBottumMat',
+                link12 : '/Ripetizioni/ServletPrenota',
 
 
             },
@@ -444,18 +444,23 @@
                     });
                 },
 
-                getCalendario: function () {
-                    var self1 = this;
-                    $.get(this.link11, function (data4) {
-                        self1.calendario = data4;
-                    });
-                },
-
                 passMat: function (e) {
                     var self1 = this;
                     var value = e;
                     $.post(this.link11, {value:value}, function(data4) {
                         self1.calendario = data4;
+
+                    });
+
+                },
+
+                prenota: function (a, b, c, d) {
+                    var self1 = this;
+                    var orario = a;
+                    var giorno = b;
+                    var docente = c;
+                    var corso = d;
+                    $.post(this.link12, {orario:orario}, {giorno:giorno}, {docente:docente}, {corso:corso}, function(data) {
 
                     });
 
