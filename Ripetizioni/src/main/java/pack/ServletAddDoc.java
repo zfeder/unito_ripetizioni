@@ -41,6 +41,7 @@ public class ServletAddDoc extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String nome = request.getParameter("nome");
+        String finale = null;
         String cognome = request.getParameter("cognome");
         //System.out.println("INSERIMENTO DEI PARAMETRI");
         int stato = 33;
@@ -49,9 +50,12 @@ public class ServletAddDoc extends HttpServlet {
             System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
             System.out.println(p.getNome());
             System.out.println(p.getCognome());
+            String s = "Docente aggiunto correttamente con l'id: ";
             stato = (DAO.insertDocente(p.getNome(), p.getCognome()));
+            String ss = "" + stato;
+            finale = s.concat(ss);
         }
-        out.print(stato);
+        out.print(finale);
 
 
     }
