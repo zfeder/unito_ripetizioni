@@ -161,7 +161,7 @@
                                         <p> </p>
                                         <input type="text" id="cognome" name="cognome" placeholder="Cognome">
                                         <p> </p>
-                                        <input type="submit" v-on:click="addDoc" id="AddDoc" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI DOCENTE"/>
+                                        <input type="submit" v-on:click="addDoc('addDocente')" id="AddDoc" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI DOCENTE"/>
                                         <p> </p>
                                     </span>
 
@@ -172,7 +172,7 @@
                                         <p> </p>
                                         <input type="text" id="idCorso" name="idCorso" placeholder="Nome Materia">
                                         <p> </p>
-                                        <input type="submit" v-on:click="addCor" id="AddCor" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI CORSO"/>
+                                        <input type="submit" v-on:click="addCor('addCorso')" id="AddCor" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI CORSO"/>
                                         <p> </p>
                                     </span>
 
@@ -181,7 +181,7 @@
                                         <p> </p>
                                         <input type="text" id="idMateria" name="idMateria" placeholder="Nome Materia">
                                         <p> </p>
-                                        <input type="submit" v-on:click="addMat" id="AddMat" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI MATERIA"/>
+                                        <input type="submit" v-on:click="addMat('addMateria')" id="AddMat" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI MATERIA"/>
                                         <p> </p>
                                     </span>
 
@@ -310,20 +310,17 @@
                 AddMateria : false,
                 removeMat : false,
                 confermaAzione : '',
-                link :  '/Ripetizioni/Servlet02',
                 link1 : '/Ripetizioni/ServletJSON',
                 link2 : '/Ripetizioni/ServletPrenotazioni',
-                link3 : '/Ripetizioni/ServletAddDoc',
-                link4 : '/Ripetizioni/ServletAddCorso',
                 link5 : '/Ripetizioni/ServletRemoveDoc',
                 link6 : '/Ripetizioni/ServletRemoveCorso',
-                link7 : '/Ripetizioni/ServletAddMat',
                 link8 : '/Ripetizioni/ServletRemoveMateria',
                 link9 : '/Ripetizioni/ServletJSONMateria',
                 link10 : '/Ripetizioni/ServletMiePrenotazioni',
                 link11 : '/Ripetizioni/ServletJSONCalendario',
                 link12 : '/Ripetizioni/ServletPrenota',
                 LinkLogin : '/Ripetizioni/ServletLogin',
+                LinkAdd : '/Ripetizioni/ServletAdd',
 
 
             },
@@ -387,17 +384,17 @@
                     });
                 },
 
-                addDoc: function(){
+                addDoc: function(azione){
                     var doc = this;
-                    $.post(this.link3, {nome:$("#nome").val(), cognome:$("#cognome").val()}, function(data) {
+                    $.post(this.LinkAdd, {nome:$("#nome").val(), cognome:$("#cognome").val(), azione:azione}, function(data) {
                         doc.confermaAzione = data;
 
                     });
                 },
 
-                addCor: function(){
+                addCor: function(azione){
                     var cor = this;
-                    $.post(this.link4, {idDocenteC:$("#idDocenteC").val(), idCorso:$("#idCorso").val()}, function(data) {
+                    $.post(this.LinkAdd, {idDocenteC:$("#idDocenteC").val(), idCorso:$("#idCorso").val(), azione:azione}, function(data) {
                         cor.confermaAzione = data;
 
                     });
@@ -419,9 +416,9 @@
                     });
                 },
 
-                addMat: function(){
+                addMat: function(azione){
                     var mat = this;
-                    $.post(this.link7, {idMateria:$("#idMateria").val()}, function(data) {
+                    $.post(this.LinkAdd, {idMateria:$("#idMateria").val(), azione:azione}, function(data) {
                         mat.confermaAzione = data;
 
                     });
