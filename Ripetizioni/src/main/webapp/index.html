@@ -190,7 +190,7 @@
                                         <p> </p>
                                         <input type="text" id="idDocRem" name="idDocRem" placeholder="ID Docente">
                                         <p> </p>
-                                        <input type="submit"  v-on:click="remDoc" id="RemDoc" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI DOCENTE"/>
+                                        <input type="submit"  v-on:click="remDoc('removeDocente')" id="RemDoc" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI DOCENTE"/>
                                         <p> </p>
                                     </span>
 
@@ -199,7 +199,7 @@
                                         <p> </p>
                                         <input type="text" id="idCorRem" name="idCorRem" placeholder="ID Corso">
                                         <p> </p>
-                                        <input type="submit"  v-on:click="remCor" id="RemCor" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI CORSO"/>
+                                        <input type="submit"  v-on:click="remCor('removeCorso')" id="RemCor" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI CORSO"/>
                                         <p> </p>
                                     </span>
 
@@ -208,7 +208,7 @@
                                         <p> </p>
                                         <input type="text" id="idMatRem" name="idMatRem" placeholder="Titolo Corso">
                                         <p> </p>
-                                        <input type="submit"  v-on:click="remMat" id="RemMat" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI MATERIA"/>
+                                        <input type="submit"  v-on:click="remMat('removeMateria')" id="RemMat" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI MATERIA"/>
                                         <p> </p>
                                     </span>
 
@@ -321,6 +321,7 @@
                 link12 : '/Ripetizioni/ServletPrenota',
                 LinkLogin : '/Ripetizioni/ServletLogin',
                 LinkAdd : '/Ripetizioni/ServletAdd',
+                LinkRemove : '/Ripetizioni/ServletRemove',
 
 
             },
@@ -400,17 +401,17 @@
                     });
                 },
 
-                remDoc: function(){
+                remDoc: function(azione){
                     var doc = this;
-                    $.post(this.link5, {idInsegnamento:$("#idDocRem").val()}, function(data) {
+                    $.post(this.LinkRemove, {idDocRem:$("#idDocRem").val(), azione:azione}, function(data) {
                         doc.confermaAzione = data;
 
                     });
                 },
 
-                remCor: function(){
+                remCor: function(azione){
                     var Cor = this;
-                    $.post(this.link6, {idCorRem:$("#idCorRem").val()}, function(data) {
+                    $.post(this.LinkRemove, {idCorRem:$("#idCorRem").val(), azione:azione}, function(data) {
                         Cor.confermaAzione = data;
 
                     });
@@ -424,9 +425,9 @@
                     });
                 },
 
-                remMat: function(){
+                remMat: function(azione){
                     var Mat = this;
-                    $.post(this.link8, {idMatRem:$("#idMatRem").val()}, function(data) {
+                    $.post(this.LinkRemove, {idMatRem:$("#idMatRem").val(), azione:azione}, function(data) {
                         Mat.confermaAzione = data;
 
                     });
