@@ -91,23 +91,9 @@
                     {{ login }}
                     <button type="button" v-show="!autorizzazione" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</button>
                     <span v-show="autorizzazione">
-                        <button type="button" v-on:click="autorizzazione=false, admin=false, utente=false, AddDocente = false, AddCorso = false, removeDoc = false, showPrenotazioni = false, showMiePrenotazioni = false, showUtenti = false, removeCor = false" id="logoutt" class="btn btn-outline-primary">Logout</button>
+                        <button type="button" v-on:click=getLogout('logout') id="logoutt" class="btn btn-outline-primary">Logout</button>
                     </span>
 
-                    <!-- LOGOUT CON CONFERMA NEL FOOTER -->
-
-                    <script type="text/javascript">
-                        $(document).ready(function () {
-                            $("#logoutt").click(function () {
-                                $.post("ServletLogout",
-                                    function (data) {
-                                        var auto = this;
-                                        auto.autorizzazione = false;
-                                        $("#VisUtentii").html(data);
-                                    });
-                            });
-                        });
-                    </script>
 
                     <!-- MENU DI LOGIN CON USER E PASS -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -128,7 +114,7 @@
                                             <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
                                         </div>
                                         <p> </p>
-                                        <button type="button" v-on:click="getInfo" id="go" class="btn btn-primary" data-bs-dismiss="modal" >Login</button> <br><br>
+                                        <button type="button" v-on:click="getInfo('login')" id="go" class="btn btn-primary" data-bs-dismiss="modal" >Login</button> <br><br>
                                     </form>
                                 </div>
                             </div>
@@ -292,10 +278,9 @@
         <!-- FOOTER PER STAMPE -->
 
         <footer class="footer mt-auto py-3 bg-dark text-center">
-            <span v-show="autorizzazione"><div id="saluto" class="outputTextArea"></div> </span>
-            <span v-show="!autorizzazione">  <div id="VisUtentii" class="outputTextArea"></div> </span>
             <span v-show="AddDocente">  <div id="ADDEDDOC" class="outputTextArea"></div> </span>
             {{confermaAzione}}
+            {{logout}}
             <span v-show="AddCorso">  <div id="ADDEDCORSO" class="outputTextArea"></div> </span>
             <span v-show="removeDoc">  <div id="REMOVEDDOC" class="outputTextArea"></div> </span>
         </footer>
@@ -306,6 +291,7 @@
             el: '#app',
             data: {
                 login: ' ',
+                logout: ' ',
                 autori: 'prova',
                 autorizzazione: false,
                 utente: false,
@@ -337,14 +323,15 @@
                 link10 : '/Ripetizioni/ServletMiePrenotazioni',
                 link11 : '/Ripetizioni/ServletJSONCalendario',
                 link12 : '/Ripetizioni/ServletPrenota',
+                LinkLogin : '/Ripetizioni/ServletLogin',
 
 
             },
 
             methods:{
-                getInfo:function(){
+                getInfo:function(azione){
                     var auto = this;
-                    $.post(this.link, {utente:$("#utente").val(), password:$("#password").val()}, function(data) {
+                    $.post(this.LinkLogin, {utente:$("#utente").val(), password:$("#password").val(), azione:azione}, function(data) {
                         auto.login = data;
                         if (auto.login.trim() === "Admin") {
                             auto.autorizzazione = true;
@@ -362,6 +349,25 @@
                             auto.admin = false;
                             auto.login = "Utente o password errato";
                         }
+                        auto.logout = " ";
+                    });
+                },
+
+                getLogout: function (azione) {
+                    var self = this;
+                    $.post(this.LinkLogin, {azione:azione}, function(data) {
+                        self.autorizzazione=false;
+                        self.admin=false;
+                        self.utente=false;
+                        self.AddDocente = false;
+                        self.AddCorso = false;
+                        self.removeDoc = false;
+                        self.showPrenotazioni = false;
+                        self.showMiePrenotazioni = false;
+                        self.showUtenti = false;
+                        self.removeCor = false;
+                        self.logout = "Logout effettuato con successo";
+                        self.login = " ";
                     });
                 },
 
