@@ -37,8 +37,8 @@ public class ServletAddMat extends HttpServlet {
     }
 
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String titolocorso = request.getParameter("idMateria");

@@ -311,10 +311,10 @@ public class DAO {
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Martedì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Martedì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Martedì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Mercoledì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Mercoledì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Mercoledì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Mercoledì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Mercoledì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Giovedì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Giovedì')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Giovedì')");
