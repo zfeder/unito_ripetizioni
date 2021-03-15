@@ -155,7 +155,7 @@
                                     <p> </p>
                                     <button type="button" v-on:click="getPrenotazione" id="getPrenotazioni" class="btn btn-outline-secondary btn-sm costumbutt">Prenotazioni </button>
                                     <p> </p>
-                                    <button type="button" v-on:click="AddDocente = true" id="addDocente" class="btn btn-outline-secondary btn-sm costumbutt">Aggiungi Docente</button>
+                                    <button type="button" v-on:click="AddDocShow" id="addDocente" class="btn btn-outline-secondary btn-sm costumbutt">Aggiungi Docente</button>
                                     <p> </p>
                                     <button type="button" v-on:click="removeDoc = true" id="removeDocente" class="btn btn-outline-secondary btn-sm costumbutt">Rimuovi Docente</button>
                                     <p> </p>
@@ -457,9 +457,18 @@
                 prenota: function (orario, giorno, docente, corso) {
                     var self1 = this;
                     $.post(this.link12, {orario:orario, giorno:giorno, docente:docente, corso:corso}, function(data) {
-                        self1.login = data;
 
                     });
+
+                },
+
+                AddDocShow: function () {
+                    var auto = this;
+                    if (auto.AddDocente === false) {
+                        auto.AddDocente = true;
+                    } else {
+                        auto.AddDocente = false;
+                    }
 
                 }
 

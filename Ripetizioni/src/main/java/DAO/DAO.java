@@ -31,7 +31,7 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM UTENTE");
+            ResultSet rs = st.executeQuery("SELECT * FROM UTENTE WHERE nomeUtente!='null';");
             while (rs.next()) {
                 Utente u = new Utente(rs.getString("nome"), rs.getString("cognome"), rs.getString("nomeUtente"), rs.getString("password"), rs.getString("ruolo"));
                 out.add(u);
@@ -60,7 +60,7 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE");
+            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE WHERE idUtente!='null';");
             while (rs.next()) {
                 Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"));
                 out.add(p);
@@ -151,7 +151,7 @@ public class DAO {
                 System.out.println("Connected to the database test");
             }
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM UTENTE");
+            ResultSet rs = st.executeQuery("SELECT * FROM UTENTE WHERE nomeUtente!='null';");
             String s = "Amministratore";
             while (rs.next() && t == false) {
                 String utente = rs.getString("NOMEUTENTE");
