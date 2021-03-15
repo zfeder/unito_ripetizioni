@@ -454,13 +454,10 @@
 
                 },
 
-                prenota: function (a, b, c, d) {
+                prenota: function (orario, giorno, docente, corso) {
                     var self1 = this;
-                    var orario = a;
-                    var giorno = b;
-                    var docente = c;
-                    var corso = d;
-                    $.post(this.link12, {orario:orario}, {giorno:giorno}, {docente:docente}, {corso:corso}, function(data) {
+                    $.post(this.link12, {orario:orario, giorno:giorno, docente:docente, corso:corso}, function(data) {
+                        self1.login = data;
 
                     });
 

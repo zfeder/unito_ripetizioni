@@ -415,10 +415,11 @@ public class DAO {
         return out;
     }
 
-    public static void prenota(String Docente, String Orario, String Giorno, String Corso, String Utente)  throws SQLException {
+    public static void prenota(String Docente, String Giorno, String Orario, String Corso, String Utente)  throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
-        PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "' WHERE idDocente = '" + Docente + "' AND Orario = '" + Orario + "' AND Giorno = '" + Giorno + "' AND Corso = '" + Corso + "';");
+        System.out.println(Docente + Orario + Giorno + Corso + Utente + "Dentro prenota");
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "' WHERE idDocente = '" + Docente + "' AND Orario = '" + Orario + "' AND Giorno = '" + Giorno + "' AND idCorso = '" + Corso + "';");
         stmt.executeUpdate();
         stmt.close();
         conn.close();

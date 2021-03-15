@@ -42,17 +42,18 @@ public class ServletPrenota extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        System.out.println("Collegato alla servlet Prenota");
         String docente = request.getParameter("docente");
         String orario = request.getParameter("orario");
         String giorno = request.getParameter("giorno");
         String corso = request.getParameter("corso");
         HttpSession s = request.getSession();
         String utente = (String) s.getAttribute("utente");
-        System.out.println(utente);
+        System.out.println(utente + docente + orario + giorno + corso);
         DAO.prenota(docente, orario, giorno, corso, utente);
         //System.out.println("INSERIMENTO DEI PARAMETRI");
-
-
+        String stato = "Prenotazione avvenuta con successo";
+        out.println(stato);
     }
 
 }
