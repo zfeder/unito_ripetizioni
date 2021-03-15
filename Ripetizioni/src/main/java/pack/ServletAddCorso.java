@@ -41,17 +41,20 @@ public class ServletAddCorso extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        String finale = null;
         String idDocenteC = request.getParameter("idDocenteC");
         String idCorso = request.getParameter("idCorso");
         //System.out.println("INSERIMENTO DEI PARAMETRI");
         int stato = 33;
         if ( idDocenteC!= null  && idCorso != null) {
-            System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
+            String s = "Corso aggiunto correttamente con ID: ";
             System.out.println(idDocenteC);
             System.out.println(idCorso);
             stato =  (DAO.insertInsegnamento(idDocenteC, idCorso));
+            String ss = "" + stato;
+            finale = s.concat(ss);
         }
-        out.print(stato);
+        out.print(finale);
 
     }
 

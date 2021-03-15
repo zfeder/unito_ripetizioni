@@ -50,7 +50,7 @@ public class ServletAddDoc extends HttpServlet {
             System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
             System.out.println(p.getNome());
             System.out.println(p.getCognome());
-            String s = "Docente aggiunto correttamente con l'id: ";
+            String s = "Docente aggiunto correttamente con ID: ";
             stato = (DAO.insertDocente(p.getNome(), p.getCognome()));
             String ss = "" + stato;
             finale = s.concat(ss);
