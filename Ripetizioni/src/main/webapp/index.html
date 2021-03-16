@@ -70,13 +70,6 @@
     </style>
 
 
-
-    <script>
-
-
-
-    </script>
-
 </head>
 <body class="d-flex flex-column h-100">
     <div id="app">
@@ -139,7 +132,7 @@
                                     <p> </p>
                                     <button type="button" v-on:click="getUtente('getUtente')" id="getUtente" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Utenti</button>
                                     <p> </p>
-                                    <button type="button" v-on:click="getPrenotazione('allPrenotazioni')" id="getPrenotazioni" class="btn btn-outline-secondary btn-sm costumbutt">Prenotazioni </button>
+                                    <button type="button" v-on:click="getPrenotazione('allPrenotazioni')" id="getPrenotazioni" class="btn btn-outline-secondary btn-sm costumbutt">Prenotazioni</button>
                                     <p> </p>
                                     <button type="button" v-on:click="AddDocShow" id="addDocente" class="btn btn-outline-secondary btn-sm costumbutt">Aggiungi Docente</button>
                                     <p> </p>
@@ -211,7 +204,6 @@
                                         <input type="submit"  v-on:click="remMat('removeMateria')" id="RemMat" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI MATERIA"/>
                                         <p> </p>
                                     </span>
-
                                 </li>
                             </span>
 
@@ -223,36 +215,36 @@
                                 <li class="nav-item">
                                     <p> </p>
                                     <button type="button" v-on:click="getMiePrenotazioni('miePrenotazioni')" id="getMiePrenotazioni" class="btn btn-outline-secondary btn-sm costumbutt">Prenotazioni </button>
-                                     <p> </p>
+                                    <p> </p>
                                 </li>
                             </span>
                         </ul>
                     </div>
                 </nav>
+
                 <!-- MAIN CON CALENDARIO -->
-
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-
-
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         Calendario Lezioni
                         <button type="button"  v-on:click="getMats('getMateria')" id="Matss" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Materie</button>
-                        <div v-for="materia in mats">
-                            <button type="button"  v-on:click="passMat(materia.titoloCorso, 'getCalendario')"  id="calendar" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
-                        </div>
+
+
+                            <div v-for="materia in mats">
+                                <button type="button"  v-on:click="passMat(materia.titoloCorso, 'getCalendario')"  id="calendar" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
+                            </div>
                     </div>
 
                     <span v-show="showPrenotazioni">
-                        <di v-for="prenotazione in prenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}} Stato: {{prenotazione.stato}}</p></di>
+                        <di v-for="prenotazione in prenotazioni"><p> ID_Prenotazione: {{prenotazione.idPrenotazione}} ID_Utente: {{prenotazione.idUtente}} ID_Docente: {{prenotazione.idDocente}} ID_Corso: {{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}} Stato: {{prenotazione.stato}}</p></di>
                     </span>
 
                     <span v-show="showUtenti">
-                        <di v-for="utente in utenti"><p>Nome: {{utente.nome}} Cognome: {{utente.cognome}} ID: {{utente.nomeUtente}} Password: {{utente.password}} Ruolo: {{utente.ruolo}}</p></di>
+                        <di v-for="utente in utenti"><p>Nome: {{utente.nome}} Cognome: {{utente.cognome}} Nome_Utente: {{utente.nomeUtente}} Password: {{utente.password}} Ruolo: {{utente.ruolo}}</p></di>
                     </span>
 
                     <span v-show="showMiePrenotazioni">
-                        <di v-for="prenotazione in Mieprenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}} Stato: {{prenotazione.stato}}</p>
+                        <di v-for="prenotazione in Mieprenotazioni"><p> ID_Prenotazione: {{prenotazione.idPrenotazione}} ID_Utente: {{prenotazione.idUtente}} ID_Docente: {{prenotazione.idDocente}} ID_Corso: {{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}} Stato: {{prenotazione.stato}}</p>
                             <div v-if="prenotazione.stato === 'Prenotata'">
                                 <button type="button"  v-on:click="disdici(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonDisdici')" class="btn btn-outline-secondary btn-sm costumbutt">DISDICI</button>
                                 <button type="button"  v-on:click="svolta(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonSvolta')" class="btn btn-outline-secondary btn-sm costumbutt">SVOLTA</button>
@@ -266,7 +258,10 @@
                             Materia: {{insegnamento.idCorso}}
                             Giorno: {{insegnamento.giorno}}
                             Orario: {{insegnamento.orario}}
-                            <button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, 'buttonPrenotazioni')" class="btn btn-outline-secondary btn-sm costumbutt">PRENOTA</button>
+                            <span v-show="autorizzazione">
+                                <button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, 'buttonPrenotazioni')" class="btn btn-outline-secondary btn-sm costumbutt">PRENOTA</button>
+                            </span>
+                            <p> </p>
                         </div>
                     </span>
 
@@ -438,13 +433,15 @@
 
                 getMats: function (azione) {
                     var self1 = this;
+                    var auto = this;
                     $.get(this.LinkJSON, {azione:azione}, function (data3) {
                         self1.showCalendario = false;
                         self1.showMiePrenotazioni = false;
-                        self1.showMiePrenotazioni = false;
+                        self1.showPrenotazioni = false;
                         self1.showUtenti = false;
                         self1.mats = data3;
                     });
+
                 },
 
                 getMiePrenotazioni: function (azione) {
@@ -465,10 +462,11 @@
                         self1.calendario = data4;
                         self1.showCalendario = true;
                         self1.showMiePrenotazioni = false;
-                        self1.showMiePrenotazioni = false;
+                        self1.showPrenotazioni = false;
                         self1.showUtenti = false;
 
                     });
+
 
                 },
 
