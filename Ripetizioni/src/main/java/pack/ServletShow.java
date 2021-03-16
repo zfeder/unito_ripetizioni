@@ -111,7 +111,7 @@ public class ServletShow extends HttpServlet {
                     throwables.printStackTrace();
                 }
                 //System.out.println("INSERIMENTO DEI PARAMETRI");
-                String stato3 = "Prenotazione avvenuta con successo";
+                String stato3 = "Prenotazione disdetta con successo";
                 out3.println(stato3);
 
                 break;
@@ -138,7 +138,7 @@ public class ServletShow extends HttpServlet {
                     throwables.printStackTrace();
                 }
                 //System.out.println("INSERIMENTO DEI PARAMETRI");
-                String stato4 = "Prenotazione avvenuta con successo";
+                String stato4 = "Prenotazione svolta con successo";
                 out4.println(stato4);
 
                 break;

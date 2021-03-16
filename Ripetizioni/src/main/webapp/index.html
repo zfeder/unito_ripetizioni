@@ -258,9 +258,10 @@
 
                     <span v-show="showMiePrenotazioni">
                         <di v-for="prenotazione in Mieprenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}} Stato: {{prenotazione.stato}}</p>
-                            <button type="button"  v-on:click="disdici(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonDisdici')" class="btn btn-outline-secondary btn-sm costumbutt">DISDICI</button>
-                            <button type="button"  v-on:click="svolta(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonSvolta')" class="btn btn-outline-secondary btn-sm costumbutt">SVOLTA</button>
-
+                            <div v-if="prenotazione.stato === 'Prenotata'">
+                                <button type="button"  v-on:click="disdici(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonDisdici')" class="btn btn-outline-secondary btn-sm costumbutt">DISDICI</button>
+                                <button type="button"  v-on:click="svolta(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonSvolta')" class="btn btn-outline-secondary btn-sm costumbutt">SVOLTA</button>
+                            </div>
                         </di>
                     </span>
 
@@ -467,7 +468,7 @@
                 disdici: function (idPrenotazione, idUtente, idDocente, idCorso, orario, giorno, stato, azione) {
                     var self1 = this;
                     $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
-
+                        self1.confermaAzione = data;
                     });
 
                 },
@@ -475,7 +476,7 @@
                 svolta: function (idPrenotazione, idUtente, idDocente, idCorso, orario, giorno, stato, azione) {
                     var self1 = this;
                     $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
-
+                        self1.confermaAzione = data;
                     });
 
                 },
