@@ -6,9 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.*;
 
 import DAO.*;
@@ -34,17 +36,77 @@ public class ServletJSON extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
+        String azione = request.getParameter("azione");
+        System.out.println(azione);
+        switch (azione) {
+            case "getUtente":
+                response.setContentType("application/json");
+                PrintWriter out = response.getWriter();
 
-        // creo oggetto JSON con oggetto Coppia
-        String s = JSONMan.serializeJson(new Utente("nome", "cognome", "nomeutente", "password", "ruolo"));
-        request.setAttribute("info", s);
+                // creo oggetto JSON con oggetto Coppia
+                String s = JSONMan.serializeJson(new Utente("nome", "cognome", "nomeutente", "password", "ruolo"));
+                request.setAttribute("info", s);
 
-        ArrayList<Utente> ar = DAO.selectDB();
-        String ris = JSONMan.serializeJson(ar);
-        System.out.println(ris);
-        out.print(ris);
+                ArrayList<Utente> ar = DAO.selectDB();
+                String ris = JSONMan.serializeJson(ar);
+                System.out.println(ris);
+                out.print(ris);
+                break;
+            case "getCalendario":
+                response.setContentType("application/json");
+                PrintWriter out1 = response.getWriter();
+
+                // creo oggetto JSON con oggetto Coppia
+                String nome = request.getParameter("value");
+                System.out.println("CIAO" + nome);
+                String s1 = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Giorno", "Stato"));
+                request.setAttribute("info", s1);
+
+
+                ArrayList<Prenotazione> ar1 = DAO.prenotazioneDB(nome);
+                String ris1 = JSONMan.serializeJson(ar1);
+                System.out.println(ris1);
+                out1.print(ris1);
+
+                break;
+
+            case "getCorso":
+                response.setContentType("application/json");
+                PrintWriter out2 = response.getWriter();
+
+                // creo oggetto JSON con oggetto Coppia
+                String s2 = JSONMan.serializeJson(new Insegnamento("idInsegnamento", "idCorso", "idDocente"));
+                request.setAttribute("info", s2);
+
+
+                ArrayList<Insegnamento> ar2 = DAO.InsegnamentoDB();
+                String ris2 = JSONMan.serializeJson(ar2);
+                System.out.println(ris2);
+                out2.print(ris2);
+
+                break;
+
+            case "getMateria" :
+
+                response.setContentType("application/json");
+                PrintWriter out3 = response.getWriter();
+
+                // creo oggetto JSON con oggetto Coppia
+                String s3 = JSONMan.serializeJson(new Materia("TitoloCorso"));
+                request.setAttribute("info", s3);
+
+
+                ArrayList<Materia> ar3 = DAO.MateriaDB();
+                String ris3 = JSONMan.serializeJson(ar3);
+                System.out.println(ris3);
+                out3.print(ris3);
+
+                break;
+
+
+        }
+
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,6 +123,8 @@ public class ServletJSON extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+
     }
 
     /**

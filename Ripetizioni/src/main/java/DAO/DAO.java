@@ -62,7 +62,7 @@ public class DAO {
             Statement st = conn1.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE WHERE idUtente!='null';");
             while (rs.next()) {
-                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"));
+                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"));
                 out.add(p);
             }
         } catch (SQLException e) {
@@ -119,9 +119,9 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE WHERE idCorso='"+nome+"' AND idUtente='null' ;" );
+            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE WHERE idCorso='"+nome+"' AND idUtente='null' AND Stato='Libera' ;" );
             while (rs.next()) {
-                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"));
+                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"));
                 out.add(p);
             }
         } catch (SQLException e) {
@@ -303,26 +303,26 @@ public class DAO {
             }
 
             Statement stmt2 = conn1.createStatement();
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Lunedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Lunedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Lunedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Lunedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Martedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Martedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Martedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Martedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Mercoledì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Mercoledì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Mercoledì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Mercoledì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Giovedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Giovedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Giovedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Giovedì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Venerdì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Venerdì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Venerdì')");
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Venerdì')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Lunedì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Lunedì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Lunedì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Lunedì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Martedì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Martedì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Martedì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Martedì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Mercoledì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Mercoledì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Mercoledì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Mercoledì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Giovedì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Giovedì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Giovedì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Giovedì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Venerdì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Venerdì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Venerdì', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Venerdì', 'Libera')");
 
             System.out.println(s);
         } catch (SQLException e) {
@@ -398,7 +398,7 @@ public class DAO {
             //   st.setString(1, Utente);
             while (rs.next()) {
                 Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
-                        rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"));
+                        rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"));
                 out.add(p);
             }
         } catch (SQLException e) {
@@ -421,6 +421,32 @@ public class DAO {
         System.out.println(Docente + Orario + Giorno + Corso + Utente + "Dentro prenota");
         PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "' WHERE idDocente = '" + Docente + "' AND Orario = '" + Orario + "' AND Giorno = '" + Giorno + "' AND idCorso = '" + Corso + "';");
         stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+
+    }
+
+    public static void disdici(String idPrenotazione, String idUtente, String idDocente, String idCorso, String orario1, String giorno1, String utente2)  throws SQLException {
+        Connection conn = DriverManager.getConnection(url1, user, password);
+        Statement st = conn.createStatement();
+        System.out.println(utente2 + idPrenotazione + idUtente + idDocente + idCorso  + orario1 + giorno1 + utente2);
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET stato = 'Disdetta' WHERE idDocente = '" + idDocente + "' AND Orario = '" + orario1 + "' AND Giorno = '" + giorno1 + "' AND idUtente = '" + utente2 + "' AND idCorso = '"+ idCorso+"' AND idPrenotazione = '"+ idPrenotazione +"';");
+        stmt.executeUpdate();
+        Statement stmt2 = conn.createStatement();
+        stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocente+"', '"+idCorso+"', '"+orario1+"', '"+giorno1+"', 'Libera')");
+        stmt.close();
+        conn.close();
+
+    }
+
+    public static void svolta(String idPrenotazione, String idUtente, String idDocente, String idCorso, String orario1, String giorno1, String utente2)  throws SQLException {
+        Connection conn = DriverManager.getConnection(url1, user, password);
+        Statement st = conn.createStatement();
+        System.out.println(utente2 + idPrenotazione + idUtente + idDocente + idCorso  + orario1 + giorno1 + utente2);
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET stato = 'Svolta' WHERE idDocente = '" + idDocente + "' AND Orario = '" + orario1 + "' AND Giorno = '" + giorno1 + "' AND idUtente = '" + utente2 + "' AND idCorso = '"+ idCorso+"' AND idPrenotazione = '"+ idPrenotazione +"';");
+        stmt.executeUpdate();
+        Statement stmt2 = conn.createStatement();
+        stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocente+"', '"+idCorso+"', '"+orario1+"', '"+giorno1+"', 'Libera')");
         stmt.close();
         conn.close();
 

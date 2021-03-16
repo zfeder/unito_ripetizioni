@@ -137,9 +137,9 @@
                                 </h6>
                                 <li class="nav-item">
                                     <p> </p>
-                                    <button type="button" v-on:click="getUtente" id="getUtente" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Utenti</button>
+                                    <button type="button" v-on:click="getUtente('getUtente')" id="getUtente" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Utenti</button>
                                     <p> </p>
-                                    <button type="button" v-on:click="getPrenotazione" id="getPrenotazioni" class="btn btn-outline-secondary btn-sm costumbutt">Prenotazioni </button>
+                                    <button type="button" v-on:click="getPrenotazione('allPrenotazioni')" id="getPrenotazioni" class="btn btn-outline-secondary btn-sm costumbutt">Prenotazioni </button>
                                     <p> </p>
                                     <button type="button" v-on:click="AddDocShow" id="addDocente" class="btn btn-outline-secondary btn-sm costumbutt">Aggiungi Docente</button>
                                     <p> </p>
@@ -222,7 +222,7 @@
                                 </h6>
                                 <li class="nav-item">
                                     <p> </p>
-                                    <button type="button" v-on:click="getMiePrenotazioni" id="getMiePrenotazioni" class="btn btn-outline-secondary btn-sm costumbutt">Prenotazioni </button>
+                                    <button type="button" v-on:click="getMiePrenotazioni('miePrenotazioni')" id="getMiePrenotazioni" class="btn btn-outline-secondary btn-sm costumbutt">Prenotazioni </button>
                                      <p> </p>
                                 </li>
                             </span>
@@ -237,9 +237,9 @@
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         Calendario Lezioni
-                        <button type="button"  v-on:click="getMats" id="Matss" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Materie</button>
+                        <button type="button"  v-on:click="getMats('getMateria')" id="Matss" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Materie</button>
                         <div v-for="materia in mats">
-                            <button type="button"  v-on:click="passMat(materia.titoloCorso)"  id="calendar" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
+                            <button type="button"  v-on:click="passMat(materia.titoloCorso, 'getCalendario')"  id="calendar" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
 
                         </div>
 
@@ -249,7 +249,7 @@
                     </div>
 
                     <span v-show="showPrenotazioni">
-                        <di v-for="prenotazione in prenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}}</p></di>
+                        <di v-for="prenotazione in prenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}} Stato: {{prenotazione.stato}}</p></di>
                     </span>
 
                     <span v-show="showUtenti">
@@ -257,7 +257,11 @@
                     </span>
 
                     <span v-show="showMiePrenotazioni">
-                        <di v-for="prenotazione in Mieprenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}}</p></di>
+                        <di v-for="prenotazione in Mieprenotazioni"><p> ID Prenotazione: {{prenotazione.idPrenotazione}} ID Utente: {{prenotazione.idUtente}} ID Docente: {{prenotazione.idDocente}} ID Corso:{{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}} Stato: {{prenotazione.stato}}</p>
+                            <button type="button"  v-on:click="disdici(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonDisdici')" class="btn btn-outline-secondary btn-sm costumbutt">DISDICI</button>
+                            <button type="button"  v-on:click="svolta(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonSvolta')" class="btn btn-outline-secondary btn-sm costumbutt">SVOLTA</button>
+
+                        </di>
                     </span>
 
                     <div v-for="insegnamento in calendario">
@@ -265,7 +269,7 @@
                         Materia: {{insegnamento.idCorso}}
                         Giorno: {{insegnamento.giorno}}
                         Orario: {{insegnamento.orario}}
-                        <button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso)" class="btn btn-outline-secondary btn-sm costumbutt">PRENOTA</button>
+                        <button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, 'buttonPrenotazioni')" class="btn btn-outline-secondary btn-sm costumbutt">PRENOTA</button>
                     </div>
 
 
@@ -310,18 +314,12 @@
                 AddMateria : false,
                 removeMat : false,
                 confermaAzione : '',
-                link1 : '/Ripetizioni/ServletJSON',
-                link2 : '/Ripetizioni/ServletPrenotazioni',
-                link5 : '/Ripetizioni/ServletRemoveDoc',
-                link6 : '/Ripetizioni/ServletRemoveCorso',
-                link8 : '/Ripetizioni/ServletRemoveMateria',
-                link9 : '/Ripetizioni/ServletJSONMateria',
-                link10 : '/Ripetizioni/ServletMiePrenotazioni',
-                link11 : '/Ripetizioni/ServletJSONCalendario',
-                link12 : '/Ripetizioni/ServletPrenota',
                 LinkLogin : '/Ripetizioni/ServletLogin',
                 LinkAdd : '/Ripetizioni/ServletAdd',
                 LinkRemove : '/Ripetizioni/ServletRemove',
+                LinkShow : '/Ripetizioni/ServletShow',
+                LinkJSON : '/Ripetizioni/ServletJSON',
+
 
 
             },
@@ -369,17 +367,17 @@
                     });
                 },
 
-                getUtente: function () {
+                getUtente: function (azione) {
                     var self = this;
-                    $.get(this.link1, function (data2) {
+                    $.get(this.LinkJSON, {azione:azione}, function (data2) {
                         self.showUtenti = true;
                         self.utenti = data2;
                     });
                 },
 
-                getPrenotazione: function () {
+                getPrenotazione: function (azione) {
                     var self1 = this;
-                    $.get(this.link2, function (data3) {
+                    $.get(this.LinkShow, {azione:azione},  function (data3) {
                         self1.showPrenotazioni = true;
                         self1.prenotazioni = data3;
                     });
@@ -433,34 +431,50 @@
                     });
                 },
 
-                getMats: function () {
+                getMats: function (azione) {
                     var self1 = this;
-                    $.get(this.link9, function (data3) {
+                    $.get(this.LinkJSON, {azione:azione}, function (data3) {
                         self1.mats = data3;
                     });
                 },
 
-                getMiePrenotazioni: function () {
+                getMiePrenotazioni: function (azione) {
                     var self1 = this;
-                    $.get(this.link10, function (data3) {
+                    $.get(this.LinkShow, {azione:azione}, function (data3) {
                         self1.showMiePrenotazioni = true;
                         self1.Mieprenotazioni = data3;
                     });
                 },
 
-                passMat: function (e) {
+                passMat: function (e, azione) {
                     var self1 = this;
                     var value = e;
-                    $.post(this.link11, {value:value}, function(data4) {
+                    $.post(this.LinkJSON, {value:value, azione:azione}, function(data4) {
                         self1.calendario = data4;
 
                     });
 
                 },
 
-                prenota: function (orario, giorno, docente, corso) {
+                prenota: function (orario, giorno, docente, corso, azione) {
                     var self1 = this;
-                    $.post(this.link12, {orario:orario, giorno:giorno, docente:docente, corso:corso}, function(data) {
+                    $.post(this.LinkShow, {orario:orario, giorno:giorno, docente:docente, corso:corso, azione:azione}, function(data) {
+
+                    });
+
+                },
+
+                disdici: function (idPrenotazione, idUtente, idDocente, idCorso, orario, giorno, stato, azione) {
+                    var self1 = this;
+                    $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
+
+                    });
+
+                },
+
+                svolta: function (idPrenotazione, idUtente, idDocente, idCorso, orario, giorno, stato, azione) {
+                    var self1 = this;
+                    $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
 
                     });
 
