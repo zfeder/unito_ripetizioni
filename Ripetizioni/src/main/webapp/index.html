@@ -67,6 +67,9 @@
         .costumbutt {
             width: 150px !important;
         }
+
+
+
     </style>
 
 
@@ -253,16 +256,28 @@
                     </span>
 
                     <span v-show="showCalendario">
-                        <div v-for="insegnamento in calendario">
-                            Docente: {{insegnamento.idDocente}}
-                            Materia: {{insegnamento.idCorso}}
-                            Giorno: {{insegnamento.giorno}}
-                            Orario: {{insegnamento.orario}}
+                        <table id="firstTable">
+                              <thead>
+                                  <tr>
+                                       <th>Docente</th>
+                                       <th>Materia</th>
+                                       <th>Giorno</th>
+                                       <th>Orario</th>
+                                  </tr>
+                              </thead>
+                            <tbody>
+                        <tr v-for="insegnamento in calendario">
+                            <td>{{insegnamento.idDocente}}</td>
+                            <td>{{insegnamento.idCorso}}</td>
+                            <td>{{insegnamento.giorno}}</td>
+                            <td>{{insegnamento.orario}}</td>
                             <span v-show="autorizzazione">
-                                <button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, 'buttonPrenotazioni')" class="btn btn-outline-secondary btn-sm costumbutt">PRENOTA</button>
+                            <td> <button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, 'buttonPrenotazioni')" class="btn btn-outline-secondary btn-sm costumbutt">PRENOTA</button></td>
                             </span>
                             <p> </p>
-                        </div>
+                        </tr>
+                            </tbody>
+                        </table>
                     </span>
 
 
