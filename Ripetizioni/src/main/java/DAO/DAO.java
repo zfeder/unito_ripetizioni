@@ -419,7 +419,7 @@ public class DAO {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
         System.out.println(Docente + Orario + Giorno + Corso + Utente + "Dentro prenota");
-        PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "' AND Stato = 'Prenotata'  WHERE idDocente = '" + Docente + "' AND Orario = '" + Orario + "' AND Giorno = '" + Giorno + "' AND idCorso = '" + Corso + "';");
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "', stato = 'Prenotata' WHERE idDocente = '" + Docente + "' AND Orario = '" + Orario + "' AND Giorno = '" + Giorno + "' AND idCorso = '" + Corso + "';");
         stmt.executeUpdate();
         stmt.close();
         conn.close();
