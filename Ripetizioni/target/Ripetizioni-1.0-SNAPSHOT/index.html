@@ -68,6 +68,36 @@
             width: 150px !important;
         }
 
+        table {
+            font-family: 'Open Sans', sans-serif;
+            width: 750px;
+            border-collapse: collapse;
+            border: 3px solid #44475C;
+            margin: 10px 10px 0 10px;
+        }
+
+        table th {
+            text-transform: uppercase;
+            text-align: left;
+            background: #44475C;
+            color: #FFF;
+            padding: 8px;
+            min-width: 30px;
+        }
+
+        table td {
+            text-align: left;
+            padding: 8px;
+            border-right: 2px solid #7D82A8;
+        }
+        table td:last-child {
+            border-right: none;
+        }
+        table tbody tr:nth-child(2n) td {
+            background: #D4D8F9;
+        }
+
+
 
 
     </style>
@@ -124,6 +154,7 @@
         <div class="container-fluid">
             <div class="row">
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+
                     <!-- COMANDI UTENTI E ADMIN -->
                     <div class="position-sticky pt-3">
                         <ul class="nav flex-column">
@@ -239,43 +270,110 @@
                     </div>
 
                     <span v-show="showPrenotazioni">
-                        <di v-for="prenotazione in prenotazioni"><p> ID_Prenotazione: {{prenotazione.idPrenotazione}} ID_Utente: {{prenotazione.idUtente}} ID_Docente: {{prenotazione.idDocente}} ID_Corso: {{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}} Stato: {{prenotazione.stato}}</p></di>
-                    </span>
-
-                    <span v-show="showUtenti">
-                        <di v-for="utente in utenti"><p>Nome: {{utente.nome}} Cognome: {{utente.cognome}} Nome_Utente: {{utente.nomeUtente}} Password: {{utente.password}} Ruolo: {{utente.ruolo}}</p></di>
-                    </span>
-
-                    <span v-show="showMiePrenotazioni">
-                        <di v-for="prenotazione in Mieprenotazioni"><p> ID_Prenotazione: {{prenotazione.idPrenotazione}} ID_Utente: {{prenotazione.idUtente}} ID_Docente: {{prenotazione.idDocente}} ID_Corso: {{prenotazione.idCorso}} Orario: {{prenotazione.orario}} Data: {{prenotazione.giorno}} Stato: {{prenotazione.stato}}</p>
-                            <div v-if="prenotazione.stato === 'Prenotata'">
-                                <button type="button"  v-on:click="disdici(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonDisdici')" class="btn btn-outline-secondary btn-sm costumbutt">DISDICI</button>
-                                <button type="button"  v-on:click="svolta(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonSvolta')" class="btn btn-outline-secondary btn-sm costumbutt">SVOLTA</button>
-                            </div>
-                        </di>
-                    </span>
-
-                    <span v-show="showCalendario">
-                        <table id="firstTable">
+                        <table id="TablePrenotazioni">
                               <thead>
                                   <tr>
-                                       <th>Docente</th>
-                                       <th>Materia</th>
-                                       <th>Giorno</th>
-                                       <th>Orario</th>
+                                      <th>ID Prenotazione</th>
+                                      <th>ID Utente</th>
+                                      <th>ID Docente</th>
+                                      <th>ID Corso</th>
+                                      <th>Orario</th>
+                                      <th>Data</th>
+                                      <th>Stato</th>
                                   </tr>
                               </thead>
                             <tbody>
-                        <tr v-for="insegnamento in calendario">
-                            <td>{{insegnamento.idDocente}}</td>
-                            <td>{{insegnamento.idCorso}}</td>
-                            <td>{{insegnamento.giorno}}</td>
-                            <td>{{insegnamento.orario}}</td>
-                            <span v-show="autorizzazione">
-                            <td> <button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, 'buttonPrenotazioni')" class="btn btn-outline-secondary btn-sm costumbutt">PRENOTA</button></td>
-                            </span>
-                            <p> </p>
-                        </tr>
+                                <tr v-for="prenotazione in prenotazioni">
+                                    <td>{{prenotazione.idPrenotazione}}</td>
+                                    <td>{{prenotazione.idUtente}}</td>
+                                    <td>{{prenotazione.idDocente}}</td>
+                                    <td>{{prenotazione.idCorso}}</td>
+                                    <td>{{prenotazione.orario}}</td>
+                                    <td>{{prenotazione.giorno}}</td>
+                                    <td>{{prenotazione.stato}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </span>
+
+                    <span v-show="showUtenti">
+                        <table id="TableUtenti">
+                              <thead>
+                                  <tr>
+                                      <th>Nome</th>
+                                      <th>Cognome</th>
+                                      <th>Nome Utente</th>
+                                      <th>Password</th>
+                                      <th>Ruolo</th>
+                                  </tr>
+                              </thead>
+                            <tbody>
+                                <tr v-for="utente in utenti">
+                                    <td>{{utente.nome}}</td>
+                                    <td>{{utente.cognome}}</td>
+                                    <td>{{utente.nomeUtente}}</td>
+                                    <td>{{utente.password}}</td>
+                                    <td>{{utente.ruolo}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </span>
+
+                    <span v-show="showMiePrenotazioni">
+                        <table id="TableMiePrenotazioni">
+                              <thead>
+                                  <tr>
+                                      <th>ID Prenotazione</th>
+                                      <th>ID Utente</th>
+                                      <th>ID Docente</th>
+                                      <th>ID Corso</th>
+                                      <th>Orario</th>
+                                      <th>Data</th>
+                                      <th>Stato</th>
+                                      <th>Disdici</th>
+                                      <th>Svolta</th>
+                                  </tr>
+                              </thead>
+                            <tbody>
+                                <tr v-for="prenotazione in Mieprenotazioni">
+                                    <td>{{prenotazione.idPrenotazione}}</td>
+                                    <td>{{prenotazione.idUtente}}</td>
+                                    <td>{{prenotazione.idDocente}}</td>
+                                    <td>{{prenotazione.idCorso}}</td>
+                                    <td>{{prenotazione.orario}}</td>
+                                    <td>{{prenotazione.giorno}}</td>
+                                    <td>{{prenotazione.stato}}</td>
+
+                                        <td><button type="button"  v-on:click="disdici(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonDisdici')" class="btn btn-outline-danger btn-sm costumbutt">DISDICI</button></td>
+                                        <td><button type="button"  v-on:click="svolta(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonSvolta')" class="btn btn-outline-success btn-sm costumbutt">SVOLTA</button></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </span>
+
+                    <span v-show="showCalendario">
+                        <table id="TableCalendario">
+                              <thead>
+                                  <tr>
+                                      <th>Docente</th>
+                                      <th>Materia</th>
+                                      <th>Giorno</th>
+                                      <th>Orario</th>
+                                      <th>Prenota</th>
+                                  </tr>
+                              </thead>
+                            <tbody>
+                                <tr v-for="insegnamento in calendario">
+                                    <td>{{insegnamento.idDocente}}</td>
+                                    <td>{{insegnamento.idCorso}}</td>
+                                    <td>{{insegnamento.giorno}}</td>
+                                    <td>{{insegnamento.orario}}</td>
+                                    <span v-show="autorizzazione">
+                                        <td> <button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, 'buttonPrenotazioni')" class="btn btn-outline-primary btn-sm costumbutt">PRENOTA</button></td>
+                                    </span>
+                                    <p> </p>
+                                </tr>
                             </tbody>
                         </table>
                     </span>
