@@ -59,7 +59,7 @@ public class ServletJSON extends HttpServlet {
                 // creo oggetto JSON con oggetto Coppia
                 String nome = request.getParameter("value");
                 System.out.println("CIAO" + nome);
-                String s1 = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Giorno", "Stato"));
+                String s1 = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Giorno", "Stato", "nome", "cognome"));
                 request.setAttribute("info", s1);
 
 

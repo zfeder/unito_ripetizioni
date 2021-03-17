@@ -8,9 +8,11 @@ public class Prenotazione {
     private String Orario;
     private String Giorno;
     private String Stato;
+    private String nome;
+    private String cognome;
 
 
-    public Prenotazione(String idPrenotazione, String idUtente, String idDocente, String idCorso, String Orario, String Giorno, String Stato) {
+    public Prenotazione(String idPrenotazione, String idUtente, String idDocente, String idCorso, String Orario, String Giorno, String Stato, String nome, String cognome) {
         this.idPrenotazione = idPrenotazione;
         this.idUtente = idUtente;
         this.idDocente = idDocente;
@@ -18,6 +20,8 @@ public class Prenotazione {
         this.Orario = Orario;
         this.Giorno = Giorno;
         this.Stato = Stato;
+        this.nome = nome;
+        this.cognome = cognome;
 
 
     }
@@ -47,8 +51,17 @@ public class Prenotazione {
     }
 
     public String getStato() {
-            return Stato;
+        return Stato;
     }
+
+    public String getNomeP() {
+        return nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
 
 
 

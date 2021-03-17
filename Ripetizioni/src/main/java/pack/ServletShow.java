@@ -44,7 +44,7 @@ public class ServletShow extends HttpServlet {
                 PrintWriter out = response.getWriter();
                 HttpSession s = request.getSession();
                 System.out.println(s.getAttribute("provaaaa"));
-                String l = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Data", "Stato") );
+                String l = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Data", "Stato", "nome", "cognome") );
                 request.setAttribute("info", l);
                 String Utente = String.valueOf(s.getAttribute("utente"));
                 ArrayList<Prenotazione> ar = DAO.MiaPrenotazione(Utente);
@@ -79,7 +79,7 @@ public class ServletShow extends HttpServlet {
                 PrintWriter out2 = response.getWriter();
 
                 // creo oggetto JSON con oggetto Coppia
-                String s2 = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Data", "Stato") );
+                String s2 = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Data", "Stato", "nome", "cognome") );
                 request.setAttribute("info", s2);
 
 

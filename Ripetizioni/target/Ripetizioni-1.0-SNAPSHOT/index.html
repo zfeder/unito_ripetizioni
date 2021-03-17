@@ -190,6 +190,8 @@
                                       <th>Prenotazione</th>
                                       <th>Utente</th>
                                       <th>Docente</th>
+                                      <th>Nome</th>
+                                      <th>Cognome</th>
                                       <th>Corso</th>
                                       <th>Orario</th>
                                       <th>Data</th>
@@ -201,6 +203,8 @@
                                     <td>{{prenotazione.idPrenotazione}}</td>
                                     <td>{{prenotazione.idUtente}}</td>
                                     <td>{{prenotazione.idDocente}}</td>
+                                    <td>{{prenotazione.nomeP}}</td>
+                                    <td>{{prenotazione.cognome}}</td>
                                     <td>{{prenotazione.idCorso}}</td>
                                     <td>{{prenotazione.orario}}</td>
                                     <td>{{prenotazione.giorno}}</td>
@@ -239,6 +243,8 @@
                                   <tr>
                                       <th>Prenotazione</th>
                                       <th>Docente</th>
+                                      <th>Nome</th>
+                                      <th>Cognome</th>
                                       <th>Corso</th>
                                       <th>Orario</th>
                                       <th>Data</th>
@@ -252,6 +258,8 @@
                                     <template v-if="prenotazione.stato === 'Prenotata'">
                                         <td>{{prenotazione.idPrenotazione}}</td>
                                         <td>{{prenotazione.idDocente}}</td>
+                                        <td>{{prenotazione.nomeP}}</td>
+                                        <td>{{prenotazione.cognome}}</td>
                                         <td>{{prenotazione.idCorso}}</td>
                                         <td>{{prenotazione.orario}}</td>
                                         <td>{{prenotazione.giorno}}</td>
@@ -270,6 +278,8 @@
                                   <tr>
                                       <th>Prenotazione</th>
                                       <th>Docente</th>
+                                      <th>Nome</th>
+                                      <th>Cognome</th>
                                       <th>Corso</th>
                                       <th>Orario</th>
                                       <th>Data</th>
@@ -281,6 +291,8 @@
                                     <template v-if="prenotazione.stato !== 'Prenotata'">
                                         <td>{{prenotazione.idPrenotazione}}</td>
                                         <td>{{prenotazione.idDocente}}</td>
+                                        <td>{{prenotazione.nomeP}}</td>
+                                        <td>{{prenotazione.cognome}}</td>
                                         <td>{{prenotazione.idCorso}}</td>
                                         <td>{{prenotazione.orario}}</td>
                                         <td>{{prenotazione.giorno}}</td>
@@ -299,6 +311,8 @@
                               <thead>
                                   <tr>
                                           <th>Docente</th>
+                                          <th>Nome</th>
+                                          <th>Cognome</th>
                                           <th>Materia</th>
                                           <th>Giorno</th>
                                           <th>Orario</th>
@@ -311,6 +325,8 @@
                             <tbody>
                                 <tr v-for="insegnamento in calendario">
                                     <td>{{insegnamento.idDocente}}</td>
+                                    <td>{{insegnamento.nomeP}}</td>
+                                    <td>{{insegnamento.cognome}}</td>
                                     <td>{{insegnamento.idCorso}}</td>
                                     <td>{{insegnamento.giorno}}</td>
                                     <td>{{insegnamento.orario}}</td>

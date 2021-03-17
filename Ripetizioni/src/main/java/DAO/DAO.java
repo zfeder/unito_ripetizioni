@@ -60,9 +60,9 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE WHERE idUtente!='null';");
+            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE JOIN DOCENTE ON PRENOTAZIONE.idDocente = DOCENTE.idDocente WHERE idUtente!='null';");
             while (rs.next()) {
-                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"));
+                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), rs.getString("nome"), rs.getString("cognome"));
                 out.add(p);
             }
         } catch (SQLException e) {
@@ -119,9 +119,9 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE WHERE idCorso='"+nome+"' AND idUtente='null' AND Stato='Libera' ;" );
+            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE JOIN DOCENTE ON PRENOTAZIONE.idDocente = DOCENTE.idDocente WHERE idCorso='"+nome+"' AND idUtente='null' AND Stato='Libera'" );
             while (rs.next()) {
-                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"));
+                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), rs.getString("nome"), rs.getString("cognome"));
                 out.add(p);
             }
         } catch (SQLException e) {
@@ -394,11 +394,11 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE WHERE idUtente='"+Utente+"';");
+            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE JOIN DOCENTE ON PRENOTAZIONE.idDocente = DOCENTE.idDocente WHERE idUtente='"+Utente+"';");
             //   st.setString(1, Utente);
             while (rs.next()) {
                 Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
-                        rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"));
+                        rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), rs.getString("nome"), rs.getString("Cognome"));
                 out.add(p);
             }
         } catch (SQLException e) {
