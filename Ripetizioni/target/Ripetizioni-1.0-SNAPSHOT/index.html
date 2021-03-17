@@ -11,94 +11,10 @@
     <link href="sticky-footer-navbar.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
-    <style>
-        .navbar {
-            color: white;
-        }
-
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-
-        .container {
-            padding: 2rem 0rem;
-        }
-
-        @media (min-width: 100px){
-            .modal-dialog {
-                max-width: 300px;
-            }
-            .modal-content {
-                padding: 1rem;
-            }
-        }
-
-        .modal-header .close {
-            margin-top: -1.5rem;
-        }
-
-
-        .form-title {
-            margin: -2rem 0rem 2rem;
-        }
-
-        .btn-round {
-            border-radius: 3rem;
-        }
-
-        footer {
-            background-color: #555;
-            color: white;
-            padding: 15px;
-        }
-
-        .costumbutt {
-            width: 150px !important;
-        }
-
-        table {
-            font-family: 'Open Sans', sans-serif;
-            width: 750px;
-            border-collapse: collapse;
-            border: 3px solid #555;
-            margin: 10px 10px 0 10px;
-        }
-
-        table th {
-            text-transform: uppercase;
-            text-align: left;
-            background: #555;
-            color: #FFF;
-            padding: 8px;
-            min-width: 30px;
-        }
-
-        table td {
-            text-align: left;
-            padding: 8px;
-            border-right: 2px solid #555;
-        }
-        table td:last-child {
-            border-right: none;
-        }
+    <link rel="stylesheet" href="style.css">
 
 
 
-
-
-    </style>
 
 
 </head>
@@ -382,13 +298,14 @@
                         <table id="TableCalendario">
                               <thead>
                                   <tr>
-                                      <th>Docente</th>
-                                      <th>Materia</th>
-                                      <th>Giorno</th>
-                                      <th>Orario</th>
-                                      <template v-show="autorizzazione">
-                                        <th>Prenota</th>
-                                      </template>
+                                          <th>Docente</th>
+                                          <th>Materia</th>
+                                          <th>Giorno</th>
+                                          <th>Orario</th>
+                                         <template v-if="autorizzazione">
+                                             <th>Prenota</th>
+                                          </template>
+
                                   </tr>
                               </thead>
                             <tbody>
@@ -397,13 +314,17 @@
                                     <td>{{insegnamento.idCorso}}</td>
                                     <td>{{insegnamento.giorno}}</td>
                                     <td>{{insegnamento.orario}}</td>
-                                    <template v-show="autorizzazione">
+                                    <template v-if="autorizzazione">
                                         <td><button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, 'buttonPrenotazioni')" class="btn btn-outline-success btn-sm costumbutt">PRENOTA</button></td>
+                                    </template>
+                                    <template v-else>
                                     </template>
                                 </tr>
                             </tbody>
                         </table>
                     </span>
+
+
 
 
                     <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
@@ -638,6 +559,11 @@
                     var auto = this;
                     if (auto.AddDocente === false) {
                         auto.AddDocente = true;
+                        auto.AddCorso = false;
+                        auto.AddMateria = false;
+                        auto.removeCor = false;
+                        auto.removeDoc = false;
+                        auto.removeMat = false;
                     } else {
                         auto.AddDocente = false;
                     }
@@ -648,6 +574,11 @@
                     var auto = this;
                     if (auto.removeDoc === false) {
                         auto.removeDoc = true;
+                        auto.AddDocente = false;
+                        auto.AddCorso = false;
+                        auto.AddMateria = false;
+                        auto.removeCor = false;
+                        auto.removeMat = false;
                     } else {
                         auto.removeDoc = false;
                     }
@@ -658,6 +589,11 @@
                     var auto = this;
                     if (auto.AddCorso === false) {
                         auto.AddCorso = true;
+                        auto.AddDocente = false;
+                        auto.AddMateria = false;
+                        auto.removeCor = false;
+                        auto.removeDoc = false;
+                        auto.removeMat = false;
                     } else {
                         auto.AddCorso = false;
                     }
@@ -668,6 +604,11 @@
                     var auto = this;
                     if (auto.removeCor === false) {
                         auto.removeCor = true;
+                        auto.AddDocente = false;
+                        auto.AddCorso = false;
+                        auto.AddMateria = false;
+                        auto.removeDoc = false;
+                        auto.removeMat = false;
                     } else {
                         auto.removeCor = false;
                     }
@@ -678,6 +619,11 @@
                     var auto = this;
                     if (auto.AddMateria === false) {
                         auto.AddMateria = true;
+                        auto.AddDocente = false;
+                        auto.AddCorso = false;
+                        auto.removeCor = false;
+                        auto.removeDoc = false;
+                        auto.removeMat = false;
                     } else {
                         auto.AddMateria = false;
                     }
@@ -688,6 +634,11 @@
                     var auto = this;
                     if (auto.removeMat === false) {
                         auto.removeMat = true;
+                        auto.AddDocente = false;
+                        auto.AddCorso = false;
+                        auto.AddMateria = false;
+                        auto.removeCor = false;
+                        auto.removeDoc = false;
                     } else {
                         auto.removeMat = false;
                     }
