@@ -72,14 +72,14 @@
             font-family: 'Open Sans', sans-serif;
             width: 750px;
             border-collapse: collapse;
-            border: 3px solid #44475C;
+            border: 3px solid #555;
             margin: 10px 10px 0 10px;
         }
 
         table th {
             text-transform: uppercase;
             text-align: left;
-            background: #44475C;
+            background: #555;
             color: #FFF;
             padding: 8px;
             min-width: 30px;
@@ -88,14 +88,12 @@
         table td {
             text-align: left;
             padding: 8px;
-            border-right: 2px solid #7D82A8;
+            border-right: 2px solid #555;
         }
         table td:last-child {
             border-right: none;
         }
-        table tbody tr:nth-child(2n) td {
-            background: #D4D8F9;
-        }
+
 
 
 
@@ -388,7 +386,9 @@
                                       <th>Materia</th>
                                       <th>Giorno</th>
                                       <th>Orario</th>
-                                      <th>Prenota</th>
+                                      <template v-show="autorizzazione">
+                                        <th>Prenota</th>
+                                      </template>
                                   </tr>
                               </thead>
                             <tbody>
@@ -397,10 +397,9 @@
                                     <td>{{insegnamento.idCorso}}</td>
                                     <td>{{insegnamento.giorno}}</td>
                                     <td>{{insegnamento.orario}}</td>
-                                    <span v-show="autorizzazione">
-                                        <td> <button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, 'buttonPrenotazioni')" class="btn btn-outline-primary btn-sm costumbutt">PRENOTA</button></td>
-                                    </span>
-                                    <p> </p>
+                                    <template v-show="autorizzazione">
+                                        <td><button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, 'buttonPrenotazioni')" class="btn btn-outline-success btn-sm costumbutt">PRENOTA</button></td>
+                                    </template>
                                 </tr>
                             </tbody>
                         </table>
