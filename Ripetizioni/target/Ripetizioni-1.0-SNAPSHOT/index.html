@@ -320,7 +320,7 @@
                     </span>
 
                     <span v-show="showMiePrenotazioni">
-                        <table id="TableMiePrenotazioni">
+                        <table id="TableMiePrenotazioniPrenotate">
                               <thead>
                                   <tr>
                                       <th>Prenotazione</th>
@@ -335,18 +335,49 @@
                               </thead>
                             <tbody>
                                 <tr v-for="prenotazione in Mieprenotazioni">
-                                    <td>{{prenotazione.idPrenotazione}}</td>
-                                    <td>{{prenotazione.idDocente}}</td>
-                                    <td>{{prenotazione.idCorso}}</td>
-                                    <td>{{prenotazione.orario}}</td>
-                                    <td>{{prenotazione.giorno}}</td>
-                                    <td>{{prenotazione.stato}}</td>
-                                    <td><button type="button"  v-on:click="disdici(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonDisdici')" class="btn btn-outline-danger btn-sm costumbutt">DISDICI</button></td>
-                                    <td><button type="button"  v-on:click="svolta(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonSvolta')" class="btn btn-outline-success btn-sm costumbutt">SVOLTA</button></td>
+                                    <template v-if="prenotazione.stato === 'Prenotata'">
+                                        <td>{{prenotazione.idPrenotazione}}</td>
+                                        <td>{{prenotazione.idDocente}}</td>
+                                        <td>{{prenotazione.idCorso}}</td>
+                                        <td>{{prenotazione.orario}}</td>
+                                        <td>{{prenotazione.giorno}}</td>
+                                        <td>{{prenotazione.stato}}</td>
+                                        <td><button type="button"  v-on:click="disdici(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonDisdici')" class="btn btn-outline-danger btn-sm costumbutt">DISDICI</button></td>
+                                        <td><button type="button"  v-on:click="svolta(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonSvolta')" class="btn btn-outline-success btn-sm costumbutt">SVOLTA</button></td>
+                                    </template>
+                                    <template v-else>
+                                    </template>
+                                </tr>
+                            </tbody>
+                        </table> <br>
 
+                        <table id="TableMiePrenotazioniDisdiciSvolta">
+                              <thead>
+                                  <tr>
+                                      <th>Prenotazione</th>
+                                      <th>Docente</th>
+                                      <th>Corso</th>
+                                      <th>Orario</th>
+                                      <th>Data</th>
+                                      <th>Stato</th>
+                                  </tr>
+                              </thead>
+                            <tbody>
+                                <tr v-for="prenotazione in Mieprenotazioni">
+                                    <template v-if="prenotazione.stato !== 'Prenotata'">
+                                        <td>{{prenotazione.idPrenotazione}}</td>
+                                        <td>{{prenotazione.idDocente}}</td>
+                                        <td>{{prenotazione.idCorso}}</td>
+                                        <td>{{prenotazione.orario}}</td>
+                                        <td>{{prenotazione.giorno}}</td>
+                                        <td>{{prenotazione.stato}}</td>
+                                    </template>
+                                    <template v-else>
+                                    </template>
                                 </tr>
                             </tbody>
                         </table>
+
                     </span>
 
                     <span v-show="showCalendario">
