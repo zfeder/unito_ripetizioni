@@ -119,7 +119,7 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE JOIN DOCENTE ON PRENOTAZIONE.idDocente = DOCENTE.idDocente WHERE idCorso='"+nome+"' AND idUtente='null' AND Stato='Libera'" );
+            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE JOIN DOCENTE ON PRENOTAZIONE.idDocente = DOCENTE.idDocente WHERE idCorso='"+nome+"' AND idUtente='null' AND Stato='Libera' ORDER BY CASE WHEN Giorno = 'Lunedì' THEN 1 WHEN Giorno = 'Martedì' THEN 2 WHEN Giorno = 'Mercoledì' THEN 3 WHEN Giorno = 'Giovedì' THEN 4 WHEN Giorno = 'Venerdì' THEN 5 END, orario");
             while (rs.next()) {
                 Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"), rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), rs.getString("nome"), rs.getString("cognome"));
                 out.add(p);
