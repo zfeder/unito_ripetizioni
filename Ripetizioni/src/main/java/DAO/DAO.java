@@ -224,7 +224,7 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM CORSO");
+            ResultSet rs = st.executeQuery("SELECT * FROM CORSO WHERE corsoAttivo = 'True'");
             while (rs.next()) {
                 Materia p = new Materia(rs.getString("titoloCorso"));
                 out.add(p);
@@ -363,19 +363,29 @@ public class DAO {
 
     public static void insertMateria(Materia m) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
-        Statement st = conn.createStatement();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO CORSO (TITOLOCORSO) VALUES (?)");
-        stmt.setString(1, m.getTitoloCorso());
-        stmt.executeUpdate();
-        stmt.close();
+        PreparedStatement st = conn.prepareStatement("SELECT corsoAttivo FROM CORSO WHERE TITOLOCORSO=?;");
+        st.setString(1, m.getTitoloCorso());
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            st.close();
+            PreparedStatement stmt = conn.prepareStatement(("UPDATE CORSO SET CORSOATTIVO = 'True' WHERE titolocorso=?"));
+            stmt.setString(1, m.getTitoloCorso());
+            stmt.executeUpdate();
+            stmt.close();
+        } else  {
+            st.close();
+            System.out.println("Sono entrato nell'else");
+            PreparedStatement stmt1 = conn.prepareStatement("INSERT INTO CORSO (TITOLOCORSO, CORSOATTIVO) VALUES (?,'True') ");
+            stmt1.setString(1, m.getTitoloCorso());
+            stmt1.executeUpdate();
+          }
         conn.close();
-
     }
 
     public static void removeMateria(MateriaREM i) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM CORSO WHERE titolocorso=?;");
+        PreparedStatement stmt = conn.prepareStatement("UPDATE CORSO SET CORSOATTIVO = 'False' WHERE titolocorso=?");
         stmt.setString(1, i.getMateriaREM());
         stmt.executeUpdate();
         stmt.close();
