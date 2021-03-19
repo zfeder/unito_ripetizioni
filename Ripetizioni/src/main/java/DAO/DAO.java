@@ -108,6 +108,35 @@ public class DAO {
         return out;
     }
 
+    public static ArrayList<Insegnamento> InsegnamentoAttivoDB() {
+        Connection conn1 = null;
+        ArrayList<Insegnamento> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            if (conn1 != null) {
+                System.out.println("Connected to the database test");
+            }
+
+            Statement st = conn1.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM INSEGNAMENTO WHERE INSEGNAMENTOATTIVO ='True'");
+            while (rs.next()) {
+                Insegnamento p = new Insegnamento(rs.getString("idInsegnamento"), rs.getString("idDocente"), rs.getString("idCorso"));
+                out.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+    }
+
     public static ArrayList<Prenotazione> prenotazioneDB(String s) {
         Connection conn1 = null;
         ArrayList<Prenotazione> out = new ArrayList<>();
@@ -322,7 +351,7 @@ public class DAO {
             }
 
             Statement stmt = conn1.createStatement();
-            stmt.executeUpdate("INSERT INTO INSEGNAMENTO (IDDOCENTE, IDCORSO) VALUES ('"+idDocenteC+"','"+idCorso+"')", Statement.RETURN_GENERATED_KEYS);
+            stmt.executeUpdate("INSERT INTO INSEGNAMENTO (IDDOCENTE, IDCORSO, INSEGNAMENTOATTIVO) VALUES ('"+idDocenteC+"','"+idCorso+"', 'True')", Statement.RETURN_GENERATED_KEYS);
             rs = stmt.getGeneratedKeys();
 
             if (rs.next()) {
@@ -385,7 +414,7 @@ public class DAO {
     public static void removeCorso(CorsoREM i) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM INSEGNAMENTO WHERE idinsegnamento=?;");
+        PreparedStatement stmt = conn.prepareStatement(("UPDATE INSEGNAMENTO SET INSEGNAMENTOATTIVO = 'False' WHERE idInsegnamento=?"));
         stmt.setString(1, i.getCorsoREM());
         stmt.executeUpdate();
         // Statement stmt2 = conn.createStatement();

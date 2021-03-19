@@ -88,7 +88,7 @@
                                     <p> </p>
                                     <button type="button" v-on:click="AddCorsoShow" id="addCorso" class="btn btn-outline-secondary btn-sm costumbutt">Aggiungi Corso</button>
                                     <p> </p>
-                                    <button type="button" v-on:click="removeCorShow" id="removeCorso" class="btn btn-outline-secondary btn-sm costumbutt">Rimuovi Corso</button>
+                                    <button type="button" v-on:click="removeCorShow('getCorsoAttivo')" id="removeCorso" class="btn btn-outline-secondary btn-sm costumbutt">Rimuovi Corso</button>
                                     <p> </p>
                                     <button type="button" v-on:click="AddMateriaShow" id="addMateria" class="btn btn-outline-secondary btn-sm costumbutt">Aggiungi Materia</button>
                                     <p> </p>
@@ -146,7 +146,15 @@
                                     <span v-show="removeCor">
                                         <label for="idCorRem">RIMUOVI CORSO</label>
                                         <p> </p>
-                                        <input type="text" id="idCorRem" name="idCorRem" placeholder="ID Corso">
+
+                                        <select v-model="selected" id="idCorRem">
+                                             <option v-for="corso in corsi" v-bind:value="corso.idInsegnamento">
+                                             {{ corso.idInsegnamento}}
+                                             {{ corso.idDocente }}
+                                             {{ corso.idCorso }}
+                                             </option>
+                                        </select>
+
                                         <p> </p>
                                         <input type="submit"  v-on:click="remCor('removeCorso')" id="RemCor" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI CORSO"/>
                                         <p> </p>
@@ -385,6 +393,7 @@
                 utenti : [],
                 prenotazioni : [],
                 mats : [],
+                corsi : [],
                 docs : [],
                 calendario : [],
                 AddCorso : false,
@@ -639,8 +648,9 @@
 
                 },
 
-                removeCorShow: function () {
+                removeCorShow: function (azione) {
                     var auto = this;
+                    $.get(this.LinkJSON, {azione:azione}, function (data3) {auto.corsi = data3;});
                     if (auto.removeCor === false) {
                         auto.removeCor = true;
                         auto.AddDocente = false;
@@ -651,6 +661,7 @@
                     } else {
                         auto.removeCor = false;
                     }
+                    auto.corsi = data3;
 
                 },
 
