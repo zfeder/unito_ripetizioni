@@ -243,6 +243,36 @@ public class DAO {
         return out;
     }
 
+    public static ArrayList<Docente> DocenteDB() {
+        Connection conn1 = null;
+        ArrayList<Docente> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            if (conn1 != null) {
+                System.out.println("Connected to the database test");
+            }
+
+            Statement st = conn1.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM DOCENTE");
+            while (rs.next()) {
+                Docente d = new Docente(rs.getString("nome"), rs.getString("cognome"), rs.getString("idDocente"));
+                out.add(d);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+    }
+
+
     public static int insertDocente(String nome, String cognome) {
         Connection conn1 = null;
         ResultSet rs = null;

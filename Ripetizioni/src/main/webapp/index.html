@@ -84,7 +84,7 @@
                                     <p> </p>
                                     <button type="button" v-on:click="AddDocShow" id="addDocente" class="btn btn-outline-secondary btn-sm costumbutt">Aggiungi Docente</button>
                                     <p> </p>
-                                    <button type="button" v-on:click="removeDocShow" id="removeDocente" class="btn btn-outline-secondary btn-sm costumbutt">Rimuovi Docente</button>
+                                    <button type="button" v-on:click="removeDocShow('getDocente')" id="removeDocente" class="btn btn-outline-secondary btn-sm costumbutt">Rimuovi Docente</button>
                                     <p> </p>
                                     <button type="button" v-on:click="AddCorsoShow" id="addCorso" class="btn btn-outline-secondary btn-sm costumbutt">Aggiungi Corso</button>
                                     <p> </p>
@@ -129,7 +129,21 @@
                                     <span v-show="removeDoc">
                                         <label for="idDocRem">RIMUOVI DOCENTE</label>
                                         <p> </p>
-                                        <input type="text" id="idDocRem" name="idDocRem" placeholder="ID Docente">
+                                        <select v-model="selected" multiple>
+                                            <option>A</option>
+                                            <option>B</option>
+                                             <option>C</option>
+                                        </select>
+                                        <br>
+                                        <span>Selected: {{ selected }}</span>
+
+                                        <select v-model="selected" id="idDocRem">
+                                            <option value=""></option>
+                                             <option v-for="docente in docs" :value="docente.nome">
+                                             @{{ docente.nome }}
+                                             </option>
+                                        </select>
+
                                         <p> </p>
                                         <input type="submit"  v-on:click="remDoc('removeDocente')" id="RemDoc" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI DOCENTE"/>
                                         <p> </p>
@@ -178,7 +192,7 @@
                         <button type="button"  v-on:click="getMats('getMateria')" id="Matss" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Materie</button>
 
 
-                            <div v-for="materia in mats">
+                        <div v-for="materia in mats">
                                 <button type="button"  v-on:click="passMat(materia.titoloCorso, 'getCalendario')"  id="calendar" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
                             </div>
                     </div>
@@ -374,6 +388,7 @@
                 utenti : [],
                 prenotazioni : [],
                 mats : [],
+                docs : [],
                 calendario : [],
                 AddCorso : false,
                 removeDoc : false,
@@ -522,6 +537,15 @@
 
                 },
 
+                getDocente: function (azione) {
+                    var self1 = this;
+                    var auto = this;
+                    $.get(this.LinkJSON, {azione:azione}, function (data3) {
+                        self1.docs = data3;
+                    });
+
+                },
+
                 getMiePrenotazioni: function (azione) {
                     var self1 = this;
                     $.get(this.LinkShow, {azione:azione}, function (data3) {
@@ -587,8 +611,9 @@
 
                 },
 
-                removeDocShow: function () {
+                removeDocShow: function (azione) {
                     var auto = this;
+                    $.get(this.LinkJSON, {azione:azione}, function (data3) {self1.docs = data3;});
                     if (auto.removeDoc === false) {
                         auto.removeDoc = true;
                         auto.AddDocente = false;
@@ -667,6 +692,7 @@
 
             }
         });
+
     </script>
 </body>
 </html>
