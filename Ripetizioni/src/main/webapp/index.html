@@ -92,7 +92,7 @@
                                     <p> </p>
                                     <button type="button" v-on:click="AddMateriaShow" id="addMateria" class="btn btn-outline-secondary btn-sm costumbutt">Aggiungi Materia</button>
                                     <p> </p>
-                                    <button type="button" v-on:click="removeMatShow" id="removeMateria" class="btn btn-outline-secondary btn-sm costumbutt">Rimuovi Materia</button>
+                                    <button type="button" v-on:click="removeMatShow('getMateria')" id="removeMateria" class="btn btn-outline-secondary btn-sm costumbutt">Rimuovi Materia</button>
                                     <p> </p>
 
                                     <span v-show="AddDocente">
@@ -129,18 +129,12 @@
                                     <span v-show="removeDoc">
                                         <label for="idDocRem">RIMUOVI DOCENTE</label>
                                         <p> </p>
-                                        <select v-model="selected" multiple>
-                                            <option>A</option>
-                                            <option>B</option>
-                                             <option>C</option>
-                                        </select>
-                                        <br>
-                                        <span>Selected: {{ selected }}</span>
 
                                         <select v-model="selected" id="idDocRem">
-                                            <option value=""></option>
-                                             <option v-for="docente in docs" :value="docente.nome">
-                                             @{{ docente.nome }}
+                                             <option v-for="docente in docs" v-bind:value="docente.idDocente">
+                                             {{ docente.idDocente}}
+                                             {{ docente.nome }}
+                                             {{ docente.cognome }}
                                              </option>
                                         </select>
 
@@ -159,10 +153,13 @@
                                     </span>
 
                                     <span v-show="removeMat">
-                                        <label for="idCorRem">RIMUOVI MATERIA</label>
+                                        <label for="idMatRem">RIMUOVI MATERIA</label>
                                         <p> </p>
-                                        <input type="text" id="idMatRem" name="idMatRem" placeholder="Titolo Corso">
-                                        <p> </p>
+                                        <select v-model="selected" id="idMatRem">
+                                             <option v-for="materia in mats" v-bind:value="materia.titoloCorso">
+                                             {{ materia.titoloCorso}}
+                                             </option>
+                                        </select>                                        <p> </p>
                                         <input type="submit"  v-on:click="remMat('removeMateria')" id="RemMat" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI MATERIA"/>
                                         <p> </p>
                                     </span>
@@ -613,7 +610,7 @@
 
                 removeDocShow: function (azione) {
                     var auto = this;
-                    $.get(this.LinkJSON, {azione:azione}, function (data3) {self1.docs = data3;});
+                    $.get(this.LinkJSON, {azione:azione}, function (data3) {auto.docs = data3;});
                     if (auto.removeDoc === false) {
                         auto.removeDoc = true;
                         auto.AddDocente = false;
@@ -624,7 +621,7 @@
                     } else {
                         auto.removeDoc = false;
                     }
-
+                    auto.docs = data3;
                 },
 
                 AddCorsoShow: function () {
@@ -672,8 +669,9 @@
 
                 },
 
-                removeMatShow: function () {
+                removeMatShow: function (azione) {
                     var auto = this;
+                    $.get(this.LinkJSON, {azione:azione}, function (data3) {auto.mats = data3;});
                     if (auto.removeMat === false) {
                         auto.removeMat = true;
                         auto.AddDocente = false;
@@ -684,6 +682,7 @@
                     } else {
                         auto.removeMat = false;
                     }
+                    auto.mats = data3;
 
                 }
 
@@ -692,7 +691,6 @@
 
             }
         });
-
     </script>
 </body>
 </html>
