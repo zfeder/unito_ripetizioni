@@ -342,10 +342,12 @@ public class DAO {
     public static void removeDocente(DocenteREM i) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM DOCENTE WHERE iddocente=?;");
-        stmt.setString(1, i.getidDocenteREM());
-        stmt.executeUpdate();
-        stmt.close();
+        // PreparedStatement stmt = conn.prepareStatement("DELETE FROM DOCENTE WHERE iddocente=?;");
+        // stmt.setString(1, i.getidDocenteREM());
+        // stmt.executeUpdate();
+        Statement stmt2 = conn.createStatement();
+        stmt2.executeUpdate("DELETE FROM PRENOTAZIONE WHERE idUtente='null' AND idDocente = '"+i.getidDocenteREM()+"'");
+        // stmt.close();
         conn.close();
 
     }
@@ -356,6 +358,8 @@ public class DAO {
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM INSEGNAMENTO WHERE idinsegnamento=?;");
         stmt.setString(1, i.getCorsoREM());
         stmt.executeUpdate();
+        // Statement stmt2 = conn.createStatement();
+        //  stmt2.executeUpdate("DELETE FROM PRENOTAZIONE WHERE idUtente='null' AND idDocente = '"+d+"'");
         stmt.close();
         conn.close();
 

@@ -310,15 +310,15 @@
                         <table id="TableCalendario">
                               <thead>
                                   <tr>
-                                          <th>Docente</th>
-                                          <th>Nome</th>
-                                          <th>Cognome</th>
-                                          <th>Materia</th>
-                                          <th>Giorno</th>
-                                          <th>Orario</th>
-                                         <template v-if="autorizzazione">
-                                             <th>Prenota</th>
-                                          </template>
+                                      <th>Docente</th>
+                                      <th>Nome</th>
+                                      <th>Cognome</th>
+                                      <th>Materia</th>
+                                      <th>Giorno</th>
+                                      <th>Orario</th>
+                                      <template v-if="autorizzazione">
+                                          <th>Prenota</th>
+                                      </template>
 
                                   </tr>
                               </thead>
@@ -384,6 +384,7 @@
                 removeCor : false,
                 AddMateria : false,
                 removeMat : false,
+                stampa1 : 'Le mie prenotazioni',
                 confermaAzione : '',
                 LinkLogin : '/Ripetizioni/ServletLogin',
                 LinkAdd : '/Ripetizioni/ServletAdd',
