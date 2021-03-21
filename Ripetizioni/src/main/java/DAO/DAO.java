@@ -168,7 +168,7 @@ public class DAO {
     }
 
 
-    //CONTROL
+    //CONTROLLO UTENTI
     public static boolean checkDB(String futente, String fpassword) {
         Connection conn1 = null;
         boolean t = false;

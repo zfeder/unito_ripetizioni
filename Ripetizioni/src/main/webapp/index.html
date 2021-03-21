@@ -109,9 +109,18 @@
                                     <span v-show="AddCorso">
                                         <label for="idDocenteC">INSERISCI CORSO</label>
                                         <p> </p>
-                                        <input type="text" id="idDocenteC" name="idDocenteC" placeholder="ID Docente">
-                                        <p> </p>
-                                        <input type="text" id="idCorso" name="idCorso" placeholder="Nome Materia">
+                                        <select v-model="selected" id="idDocenteC">
+                                             <option v-for="docente in docs" v-bind:value="docente.idDocente">
+                                             {{docente.idDocente}}
+                                             {{ docente.nome }}
+                                             {{ docente.cognome }}
+                                             </option>
+                                        </select>
+                                        <select v-model="selected">
+                                            <option v-for="materia in mats" v-bind:value="materia.titoloCorso">
+                                             {{ materia.titoloCorso}}
+                                             </option>
+                                        </select>
                                         <p> </p>
                                         <input type="submit" v-on:click="addCor('addCorso')" id="AddCor" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI CORSO"/>
                                         <p> </p>
@@ -193,14 +202,16 @@
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        Calendario Lezioni
-                        <button type="button"  v-on:click="getMats('getMateria')" id="Matss" class="btn btn-outline-secondary btn-sm costumbutt">Visualizza Materie</button>
+                        <img src="logobook.jpg" height="50" width="50">
+                        <button type="button"  v-on:click="getMats('getMateria')" id="Matss" class="btn btn-secondary btn-sm costumbutt">Visualizza Materie</button>
 
 
                         <div v-for="materia in mats">
                                 <button type="button"  v-on:click="passMat(materia.titoloCorso, 'getCalendario')"  id="calendar" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
                             </div>
                     </div>
+
+                    <p><img src="homepage.JPG"></p>
 
                     <span v-show="showPrenotazioni">
                         <table id="TablePrenotazioni">
@@ -645,7 +656,20 @@
                     } else {
                         auto.AddCorso = false;
                     }
+                    this.showDocenti("getDocente");
+                    this.showMaterie("getMateria");
+                },
 
+                showDocenti: function (azione){
+                    var auto = this;
+                    $.get(this.LinkJSON, {azione:azione}, function (data3) {auto.docs = data3;});
+                    auto.docs = data3;
+                },
+
+                showMaterie: function (azione){
+                    var auto = this;
+                    $.get(this.LinkJSON, {azione:azione}, function (data3) {auto.mats = data3;});
+                    auto.mats = data3;
                 },
 
                 removeCorShow: function (azione) {
