@@ -52,10 +52,14 @@ public class ServletRemove extends HttpServlet {
                 String stato = "Errore nel rimuovere il corso";
 
                 if (idCorRem != null) {
-                    CorsoREM p = new CorsoREM(idCorRem);
                     System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
-                    System.out.println(p.getCorsoREM());
+                    String[] result = idCorRem.split(",");
+                    System.out.println("idcorso"+ result[0]);
+                    System.out.println("iddoc"+result[1]);
+                    System.out.println("materia"+result[2]);
+                    CorsoREM p = new CorsoREM(result[0]);
                     DAO.removeCorso(p);
+                    DAO.removeCalendario(result[1], result[2]);
                     stato = "Corso rimosso correttamente";
                 }
                 out.print(stato);

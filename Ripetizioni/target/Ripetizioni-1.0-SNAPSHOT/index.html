@@ -148,9 +148,9 @@
                                         <p> </p>
 
                                         <select v-model="selected" id="idCorRem">
-                                             <option v-for="corso in corsi" v-bind:value="corso.idInsegnamento">
+                                             <option v-for="corso in corsi" v-bind:value="corso.idInsegnamento + ',' + corso.idDocenteC + ',' + corso.idCorso">
                                              {{ corso.idInsegnamento}}
-                                             {{ corso.idDocente }}
+                                             {{ corso.idDocenteC }}
                                              {{ corso.idCorso }}
                                              </option>
                                         </select>

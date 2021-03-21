@@ -411,6 +411,20 @@ public class DAO {
 
     }
 
+    public static void removeCalendario(String idDocente, String Materia) throws SQLException {
+        Connection conn = DriverManager.getConnection(url1, user, password);
+        Statement st = conn.createStatement();
+        // PreparedStatement stmt = conn.prepareStatement("DELETE FROM DOCENTE WHERE iddocente=?;");
+        // stmt.setString(1, i.getidDocenteREM());
+        // stmt.executeUpdate();
+        Statement stmt2 = conn.createStatement();
+        stmt2.executeUpdate("DELETE FROM PRENOTAZIONE WHERE idUtente='null' AND idDocente = '"+idDocente+"' AND idCorso = '"+Materia+"'");
+        // stmt.close();
+        conn.close();
+
+    }
+
+
     public static void removeCorso(CorsoREM i) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
