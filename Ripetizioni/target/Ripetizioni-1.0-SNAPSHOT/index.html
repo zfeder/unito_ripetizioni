@@ -111,14 +111,13 @@
                                         <p> </p>
                                         <select v-model="selected" id="idDocenteC">
                                              <option v-for="docente in docs" v-bind:value="docente.idDocente">
-                                             {{docente.idDocente}}
-                                             {{docente.nome}}
-                                             {{docente.cognome}}
+                                                {{docente.idDocente}}
+                                                {{docente.nome}}
+                                                {{docente.cognome}}
                                              </option>
                                         </select>
                                         <p> </p>
-                                        <br>
-                                        <input type="submit" v-on:click="showMaterie('getMateria', value)" name="submit" class="btn btn-success btn-sm costumbutt" value="VISUALIZZA MATERIE"/>
+                                        <input type="submit" v-on:click="showMaterie('getMateria', value)" name="submit" class="btn btn-secondary btn-sm " value=">>"/>
                                         <p> </p>
                                     </span>
 
@@ -127,11 +126,11 @@
                                         <p> </p>
                                         <select v-model="selected">
                                             <option v-for="materia in mats2" v-bind:value="materia.titoloCorso">
-                                             {{ materia.titoloCorso}}
+                                                {{ materia.titoloCorso}}
                                              </option>
                                         </select>
-                                          <br>
-                                    <input type="submit" v-on:click="addCor('addCorso')" id="AddCor" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI CORSO"/>
+                                        <p> </p>
+                                        <input type="submit" v-on:click="addCor('addCorso')" id="AddCor" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI CORSO"/>
                                     </span>
 
                                     <span v-show="AddMateria">
@@ -658,8 +657,10 @@
                         auto.removeCor = false;
                         auto.removeDoc = false;
                         auto.removeMat = false;
+                        auto.AddCorsoMat = false;
                     } else {
                         auto.AddCorso = false;
+                        auto.AddCorsoMat = false;
                     }
                     this.showDocenti('getDocente');
                 },
