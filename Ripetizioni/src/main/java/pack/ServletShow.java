@@ -21,7 +21,6 @@ public class ServletShow extends HttpServlet {
         DAO.registerDriver();
     }
 
-    // creo il traduttore da e verso JSON; si puo' usare Gson in alternativa.
     private JSONManager JSONMan = new JSONManager();
 
     /**
@@ -33,6 +32,7 @@ public class ServletShow extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException      if an I/O error occurs
      */
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -52,6 +52,7 @@ public class ServletShow extends HttpServlet {
                 System.out.println(ris);
                 out.print(ris);
                 break;
+
             case "buttonPrenotazioni":
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out1 = response.getWriter();
@@ -71,27 +72,20 @@ public class ServletShow extends HttpServlet {
                 //System.out.println("INSERIMENTO DEI PARAMETRI");
                 String stato1 = "Prenotazione avvenuta con successo";
                 out1.println(stato1);
-
                 break;
 
             case "allPrenotazioni":
                 response.setContentType("application/json");
                 PrintWriter out2 = response.getWriter();
-
-                // creo oggetto JSON con oggetto Coppia
                 String s2 = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Data", "Stato", "nome", "cognome") );
                 request.setAttribute("info", s2);
-
-
                 ArrayList<Prenotazione> ar2 = DAO.PrenotazioneDB();
                 String ris2 = JSONMan.serializeJson(ar2);
                 System.out.println(ris2);
                 out2.print(ris2);
-
                 break;
 
             case "buttonDisdici" :
-
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out3 = response.getWriter();
                 System.out.println("Collegato alla servlet Prenota");
@@ -113,12 +107,10 @@ public class ServletShow extends HttpServlet {
                 //System.out.println("INSERIMENTO DEI PARAMETRI");
                 String stato3 = "Prenotazione disdetta con successo";
                 out3.println(stato3);
-
                 break;
 
 
             case "buttonSvolta" :
-
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out4 = response.getWriter();
                 System.out.println("Collegato alla servlet Prenota");
@@ -140,14 +132,8 @@ public class ServletShow extends HttpServlet {
                 //System.out.println("INSERIMENTO DEI PARAMETRI");
                 String stato4 = "Prenotazione svolta con successo";
                 out4.println(stato4);
-
                 break;
-
-
-
         }
-
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

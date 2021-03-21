@@ -61,6 +61,7 @@ public class ServletAdd extends HttpServlet {
                 }
                 out.print(finale);
                 break;
+
             case "addDocente":
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out1 = response.getWriter();
@@ -96,13 +97,8 @@ public class ServletAdd extends HttpServlet {
                     stato2 = "Materia aggiunta correttamente";
                 }
                 out2.print(stato2);
-
                 break;
-
-
         }
-
-
     }
 }
 

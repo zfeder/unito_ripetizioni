@@ -50,7 +50,6 @@ public class ServletRemove extends HttpServlet {
                 String idCorRem = request.getParameter("idCorRem");
                 System.out.println(idCorRem);
                 String stato = "Errore nel rimuovere il corso";
-
                 if (idCorRem != null) {
                     System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
                     String[] result = idCorRem.split(",");
@@ -64,13 +63,13 @@ public class ServletRemove extends HttpServlet {
                 }
                 out.print(stato);
                 break;
+
             case "removeDocente":
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out1 = response.getWriter();
                 String idDocRem = request.getParameter("idDocRem");
                 System.out.println(idDocRem);
                 String stato1 = "Errore nel rimuovere docente";
-
                 if (idDocRem != null) {
                     DocenteREM p = new DocenteREM(idDocRem);
                     System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
@@ -87,7 +86,6 @@ public class ServletRemove extends HttpServlet {
                 String idMatRem = request.getParameter("idMatRem");
                 System.out.println(idMatRem);
                 String stato2 = "Errore nel rimuovere il corso";
-
                 if (idMatRem != null) {
                     MateriaREM p = new MateriaREM(idMatRem);
                     System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
@@ -96,13 +94,8 @@ public class ServletRemove extends HttpServlet {
                     stato2 = "Materia rimossa correttamente";
                 }
                 out2.print(stato2);
-
                 break;
-
-
         }
-
-
     }
 }
 

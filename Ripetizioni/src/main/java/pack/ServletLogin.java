@@ -55,6 +55,7 @@ public class ServletLogin extends HttpServlet {
 
                 out.println(stato);
                 break;
+
             case "logout":
                 response.setContentType("text/html;charset=UTF-8");
                 HttpSession s = request.getSession();
@@ -63,10 +64,7 @@ public class ServletLogin extends HttpServlet {
                 PrintWriter out1 = response.getWriter();
                 out1.println("Logout effettuato con successo");
                 break;
-
         }
-
-
     }
 }
 
