@@ -27,6 +27,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+
                     <!-- LOGIN E LOGOUT -->
                     {{ login }}
                     <button type="button" v-show="!autorizzazione" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</button>
@@ -34,11 +35,11 @@
                         <button type="button" v-on:click=getLogout('logout') id="logoutt" class="btn btn-outline-primary">Logout</button>
                     </span>
 
-
                     <!-- MENU DI LOGIN CON USER E PASS -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content text-center">
+
                                 <!-- FORM DI UTENTE E PASSWORD -->
                                 <div class="modal-body">
                                     <div class="modal-header justify-content-center">
@@ -145,15 +146,13 @@
                                     <span v-show="removeDoc">
                                         <label for="idDocRem">RIMUOVI DOCENTE</label>
                                         <p> </p>
-
                                         <select v-model="selected" id="idDocRem">
                                              <option v-for="docente in docs" v-bind:value="docente.idDocente">
-                                             {{ docente.idDocente}}
-                                             {{ docente.nome }}
-                                             {{ docente.cognome }}
+                                                {{ docente.idDocente}}
+                                                {{ docente.nome }}
+                                                {{ docente.cognome }}
                                              </option>
                                         </select>
-
                                         <p> </p>
                                         <input type="submit"  v-on:click="remDoc('removeDocente')" id="RemDoc" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI DOCENTE"/>
                                         <p> </p>
@@ -162,15 +161,13 @@
                                     <span v-show="removeCor">
                                         <label for="idCorRem">RIMUOVI CORSO</label>
                                         <p> </p>
-
                                         <select v-model="selected" id="idCorRem">
                                              <option v-for="corso in corsi" v-bind:value="corso.idInsegnamento + ',' + corso.idDocenteC + ',' + corso.idCorso">
-                                             {{ corso.idInsegnamento}}
-                                             {{ corso.idDocenteC }}
-                                             {{ corso.idCorso }}
+                                                {{ corso.idInsegnamento}}
+                                                {{ corso.idDocenteC }}
+                                                {{ corso.idCorso }}
                                              </option>
                                         </select>
-
                                         <p> </p>
                                         <input type="submit"  v-on:click="remCor('removeCorso')" id="RemCor" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI CORSO"/>
                                         <p> </p>
@@ -180,8 +177,9 @@
                                         <label for="idMatRem">RIMUOVI MATERIA</label>
                                         <p> </p>
                                         <select v-model="selected" id="idMatRem">
+                                             <option disabled value="">Seleziona una materia</option>
                                              <option v-for="materia in mats2" v-bind:value="materia.titoloCorso">
-                                             {{ materia.titoloCorso}}
+                                                {{ materia.titoloCorso}}
                                              </option>
                                         </select>                                        <p> </p>
                                         <input type="submit"  v-on:click="remMat('removeMateria')" id="RemMat" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI MATERIA"/>
@@ -207,18 +205,23 @@
 
                 <!-- MAIN CON CALENDARIO -->
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <img src="logobook.jpg" height="50" width="50">
+
+
                         <button type="button"  v-on:click="getMats('getMateria')" id="Matss" class="btn btn-secondary btn-sm costumbutt">Visualizza Materie</button>
 
-
                         <div v-for="materia in mats">
-                                <button type="button"  v-on:click="passMat(materia.titoloCorso, 'getCalendario')"  id="calendar" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
-                            </div>
+                            <button type="button"  v-on:click="passMat(materia.titoloCorso, 'getCalendario')"  id="calendar" class="btn btn-outline-secondary btn-sm costumbutt">{{materia.titoloCorso}}</button>
+                        </div>
+
+                        <button type="button"  v-on:click="getHomePage()" id="HomePage" class="btn btn-secondary btn-sm costumbutt">Home</button>
+
                     </div>
 
-                    <p><img src="homepage.JPG"></p>
+                    <span v-show="showhomepage">
+                        <p><img src="homepage.JPG"></p>
+                    </span>
 
                     <span v-show="showPrenotazioni">
                         <table id="TablePrenotazioni">
@@ -340,7 +343,6 @@
                                 </tr>
                             </tbody>
                         </table>
-
                     </span>
 
                     <span v-show="showCalendario">
@@ -376,25 +378,25 @@
                             </tbody>
                         </table>
                     </span>
-
-
-
-
                     <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
                 </main>
-
-
             </div>
         </div>
-        <!-- FOOTER PER STAMPE -->
 
+        <!-- FOOTER PER STAMPE -->
         <footer class="footer mt-auto py-3 bg-dark text-center">
-            <span v-show="AddDocente">  <div id="ADDEDDOC" class="outputTextArea"></div> </span>
+            <span v-show="AddDocente">
+                <div id="ADDEDDOC" class="outputTextArea"></div>
+            </span>
             {{confermaAzione}}
             {{logout}}
             {{idDoc}}
-            <span v-show="AddCorso">  <div id="ADDEDCORSO" class="outputTextArea"></div> </span>
-            <span v-show="removeDoc">  <div id="REMOVEDDOC" class="outputTextArea"></div> </span>
+            <span v-show="AddCorso">
+                <div id="ADDEDCORSO" class="outputTextArea"></div>
+            </span>
+            <span v-show="removeDoc">
+                <div id="REMOVEDDOC" class="outputTextArea"></div>
+            </span>
         </footer>
     </div>
 
@@ -424,6 +426,7 @@
                 showMiePrenotazioni : false,
                 showCalendario : false,
                 showUtenti : false,
+                showhomepage : true,
                 removeCor : false,
                 AddMateria : false,
                 removeMat : false,
@@ -434,9 +437,6 @@
                 LinkRemove : '/Ripetizioni/ServletRemove',
                 LinkShow : '/Ripetizioni/ServletShow',
                 LinkJSON : '/Ripetizioni/ServletJSON',
-
-
-
             },
 
             methods:{
@@ -489,6 +489,7 @@
                         self.showMiePrenotazioni = false;
                         self.showPrenotazioni = false;
                         self.showCalendario = false;
+                        self.showhomepage = false;
                         self.utenti = data2;
                     });
                 },
@@ -500,6 +501,7 @@
                         self1.showUtenti = false;
                         self1.showMiePrenotazioni = false;
                         self1.showCalendario = false;
+                        self1.showhomepage = false;
                         self1.prenotazioni = data3;
                     });
                 },
@@ -580,6 +582,7 @@
                         self1.showPrenotazioni = false;
                         self1.showUtenti = false;
                         self1.showCalendario = false;
+                        self1.showhomepage = false;
                         self1.Mieprenotazioni = data3;
                     });
                 },
@@ -593,6 +596,7 @@
                         self1.showMiePrenotazioni = false;
                         self1.showPrenotazioni = false;
                         self1.showUtenti = false;
+                        self1.showhomepage = false;
 
                     });
                 },
@@ -727,11 +731,23 @@
                     }
                     auto.mats2 = data3;
 
+                },
+
+                getHomePage: function () {
+                    var self = this;
+                    self.showhomepage = true;
+                    self.showMiePrenotazioni = false;
+                    self.showPrenotazioni = false;
+                    self.showUtenti = false;
+                    self.showCalendario = false;
+                    self.AddDocente = false;
+                    self.AddCorso = false;
+                    self.AddCorsoMat = false;
+                    self.AddMateria = false;
+                    self.removeCor = false;
+                    self.removeDoc = false;
+                    self.removeMat = false;
                 }
-
-
-
-
             }
         });
     </script>
