@@ -52,6 +52,7 @@ public class ServletJSON extends HttpServlet {
                 System.out.println(ris);
                 out.print(ris);
                 break;
+
             case "getCalendario":
                 response.setContentType("application/json");
                 PrintWriter out1 = response.getWriter();
@@ -116,6 +117,8 @@ public class ServletJSON extends HttpServlet {
                 System.out.println(ris4);
                 out4.print(ris4);
 
+
+
                 break;
 
             case "getCorsoAttivo":
@@ -133,7 +136,6 @@ public class ServletJSON extends HttpServlet {
                 out5.print(ris5);
 
                 break;
-
 
 
 

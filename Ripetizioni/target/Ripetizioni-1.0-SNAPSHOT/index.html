@@ -112,18 +112,26 @@
                                         <select v-model="selected" id="idDocenteC">
                                              <option v-for="docente in docs" v-bind:value="docente.idDocente">
                                              {{docente.idDocente}}
-                                             {{ docente.nome }}
-                                             {{ docente.cognome }}
+                                             {{docente.nome}}
+                                             {{docente.cognome}}
                                              </option>
                                         </select>
+                                        <p> </p>
+                                        <br>
+                                        <input type="submit" v-on:click="showMaterie('getMateria', value)" name="submit" class="btn btn-success btn-sm costumbutt" value="VISUALIZZA MATERIE"/>
+                                        <p> </p>
+                                    </span>
+
+                                    <span v-show="AddCorsoMat">
+                                        <label>INSERISCI CORSO</label>
+                                        <p> </p>
                                         <select v-model="selected">
-                                            <option v-for="materia in mats" v-bind:value="materia.titoloCorso">
+                                            <option v-for="materia in mats2" v-bind:value="materia.titoloCorso">
                                              {{ materia.titoloCorso}}
                                              </option>
                                         </select>
-                                        <p> </p>
-                                        <input type="submit" v-on:click="addCor('addCorso')" id="AddCor" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI CORSO"/>
-                                        <p> </p>
+                                          <br>
+                                    <input type="submit" v-on:click="addCor('addCorso')" id="AddCor" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI CORSO"/>
                                     </span>
 
                                     <span v-show="AddMateria">
@@ -173,7 +181,7 @@
                                         <label for="idMatRem">RIMUOVI MATERIA</label>
                                         <p> </p>
                                         <select v-model="selected" id="idMatRem">
-                                             <option v-for="materia in mats" v-bind:value="materia.titoloCorso">
+                                             <option v-for="materia in mats2" v-bind:value="materia.titoloCorso">
                                              {{ materia.titoloCorso}}
                                              </option>
                                         </select>                                        <p> </p>
@@ -385,6 +393,7 @@
             <span v-show="AddDocente">  <div id="ADDEDDOC" class="outputTextArea"></div> </span>
             {{confermaAzione}}
             {{logout}}
+            {{idDoc}}
             <span v-show="AddCorso">  <div id="ADDEDCORSO" class="outputTextArea"></div> </span>
             <span v-show="removeDoc">  <div id="REMOVEDDOC" class="outputTextArea"></div> </span>
         </footer>
@@ -396,6 +405,7 @@
             data: {
                 login: ' ',
                 logout: ' ',
+                idDoc: '',
                 autori: 'prova',
                 autorizzazione: false,
                 utente: false,
@@ -404,10 +414,12 @@
                 utenti : [],
                 prenotazioni : [],
                 mats : [],
+                mats2 : [],
                 corsi : [],
                 docs : [],
                 calendario : [],
                 AddCorso : false,
+                AddCorsoMat : false,
                 removeDoc : false,
                 showPrenotazioni : false,
                 showMiePrenotazioni : false,
@@ -503,7 +515,7 @@
 
                 addCor: function(azione){
                     var cor = this;
-                    $.post(this.LinkAdd, {idDocenteC:$("#idDocenteC").val(), idCorso:$("#idCorso").val(), azione:azione}, function(data) {
+                    $.post(this.LinkAdd, {idDoc:idDocenteC, idCorso:$("#idCorso").val(), azione:azione}, function(data) {
                         cor.confermaAzione = data;
 
                     });
@@ -556,7 +568,6 @@
 
                 getDocente: function (azione) {
                     var self1 = this;
-                    var auto = this;
                     $.get(this.LinkJSON, {azione:azione}, function (data3) {
                         self1.docs = data3;
                     });
@@ -585,8 +596,6 @@
                         self1.showUtenti = false;
 
                     });
-
-
                 },
 
                 prenota: function (orario, giorno, docente, corso, azione) {
@@ -594,7 +603,6 @@
                     $.post(this.LinkShow, {orario:orario, giorno:giorno, docente:docente, corso:corso, azione:azione}, function(data) {
                         self1.confermaAzione = data;
                     });
-
                 },
 
                 disdici: function (idPrenotazione, idUtente, idDocente, idCorso, orario, giorno, stato, azione) {
@@ -602,7 +610,6 @@
                     $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
                         self1.confermaAzione = data;
                     });
-
                 },
 
                 svolta: function (idPrenotazione, idUtente, idDocente, idCorso, orario, giorno, stato, azione) {
@@ -610,7 +617,6 @@
                     $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
                         self1.confermaAzione = data;
                     });
-
                 },
 
                 AddDocShow: function () {
@@ -625,7 +631,6 @@
                     } else {
                         auto.AddDocente = false;
                     }
-
                 },
 
                 removeDocShow: function (azione) {
@@ -656,8 +661,7 @@
                     } else {
                         auto.AddCorso = false;
                     }
-                    this.showDocenti("getDocente");
-                    this.showMaterie("getMateria");
+                    this.showDocenti('getDocente');
                 },
 
                 showDocenti: function (azione){
@@ -666,10 +670,13 @@
                     auto.docs = data3;
                 },
 
-                showMaterie: function (azione){
+                showMaterie: function (azione, idDocenteC){
                     var auto = this;
-                    $.get(this.LinkJSON, {azione:azione}, function (data3) {auto.mats = data3;});
-                    auto.mats = data3;
+                    auto.AddCorsoMat = true;
+                    auto.idDoc = idDocenteC;
+                    auto.AddCorso = false;
+                    $.get(this.LinkJSON, {azione:azione}, function (data3) {auto.mats2 = data3;});
+                    auto.mats2 = data3;
                 },
 
                 removeCorShow: function (azione) {
@@ -706,7 +713,7 @@
 
                 removeMatShow: function (azione) {
                     var auto = this;
-                    $.get(this.LinkJSON, {azione:azione}, function (data3) {auto.mats = data3;});
+                    $.get(this.LinkJSON, {azione:azione}, function (data3) {auto.mats2 = data3;});
                     if (auto.removeMat === false) {
                         auto.removeMat = true;
                         auto.AddDocente = false;
@@ -717,7 +724,7 @@
                     } else {
                         auto.removeMat = false;
                     }
-                    auto.mats = data3;
+                    auto.mats2 = data3;
 
                 }
 
