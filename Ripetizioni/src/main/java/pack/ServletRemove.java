@@ -56,7 +56,7 @@ public class ServletRemove extends HttpServlet {
                     System.out.println("idcorso"+ result[0]);
                     System.out.println("iddoc"+result[1]);
                     System.out.println("materia"+result[2]);
-                    CorsoREM p = new CorsoREM(result[0]);
+                    InsegnamentoRemove p = new InsegnamentoRemove(result[0]);
                     DAO.removeCorso(p);
                     DAO.removeCalendario(result[1], result[2]);
                     stato = "Corso rimosso correttamente";
@@ -71,9 +71,9 @@ public class ServletRemove extends HttpServlet {
                 System.out.println(idDocRem);
                 String stato1 = "Errore nel rimuovere docente";
                 if (idDocRem != null) {
-                    DocenteREM p = new DocenteREM(idDocRem);
+                    DocenteRemove p = new DocenteRemove(idDocRem);
                     System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
-                    System.out.println(p.getidDocenteREM() + "idocente");
+                    System.out.println(p.getidDocenteRemove() + "idocente");
                     DAO.removeDocente(p);
                     stato1 = "Docente rimosso correttamente";
                 }
@@ -87,9 +87,9 @@ public class ServletRemove extends HttpServlet {
                 System.out.println(idMatRem);
                 String stato2 = "Errore nel rimuovere il corso";
                 if (idMatRem != null) {
-                    MateriaREM p = new MateriaREM(idMatRem);
+                    MateriaRemove p = new MateriaRemove(idMatRem);
                     System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
-                    System.out.println(p.getMateriaREM());
+                    System.out.println(p.getMateriaRemove());
                     DAO.removeMateria(p);
                     stato2 = "Materia rimossa correttamente";
                 }

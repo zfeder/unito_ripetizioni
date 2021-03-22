@@ -398,14 +398,14 @@ public class DAO {
         return s;
     }
 
-    public static void removeDocente(DocenteREM i) throws SQLException {
+    public static void removeDocente(DocenteRemove i) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
         // PreparedStatement stmt = conn.prepareStatement("DELETE FROM DOCENTE WHERE iddocente=?;");
-        // stmt.setString(1, i.getidDocenteREM());
+        // stmt.setString(1, i.getidDocenteRemove());
         // stmt.executeUpdate();
         Statement stmt2 = conn.createStatement();
-        stmt2.executeUpdate("DELETE FROM PRENOTAZIONE WHERE idUtente='null' AND idDocente = '"+i.getidDocenteREM()+"'");
+        stmt2.executeUpdate("DELETE FROM PRENOTAZIONE WHERE idUtente='null' AND idDocente = '"+i.getidDocenteRemove()+"'");
         // stmt.close();
         conn.close();
 
@@ -415,7 +415,7 @@ public class DAO {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
         // PreparedStatement stmt = conn.prepareStatement("DELETE FROM DOCENTE WHERE iddocente=?;");
-        // stmt.setString(1, i.getidDocenteREM());
+        // stmt.setString(1, i.getidDocenteRemove());
         // stmt.executeUpdate();
         Statement stmt2 = conn.createStatement();
         stmt2.executeUpdate("DELETE FROM PRENOTAZIONE WHERE idUtente='null' AND idDocente = '"+idDocente+"' AND idCorso = '"+Materia+"'");
@@ -425,11 +425,11 @@ public class DAO {
     }
 
 
-    public static void removeCorso(CorsoREM i) throws SQLException {
+    public static void removeCorso(InsegnamentoRemove i) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
         PreparedStatement stmt = conn.prepareStatement(("UPDATE INSEGNAMENTO SET INSEGNAMENTOATTIVO = 'False' WHERE idInsegnamento=?"));
-        stmt.setString(1, i.getCorsoREM());
+        stmt.setString(1, i.getInsegnamentoRemove());
         stmt.executeUpdate();
         // Statement stmt2 = conn.createStatement();
         //  stmt2.executeUpdate("DELETE FROM PRENOTAZIONE WHERE idUtente='null' AND idDocente = '"+d+"'");
@@ -459,11 +459,11 @@ public class DAO {
         conn.close();
     }
 
-    public static void removeMateria(MateriaREM i) throws SQLException {
+    public static void removeMateria(MateriaRemove i) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
         PreparedStatement stmt = conn.prepareStatement("UPDATE CORSO SET CORSOATTIVO = 'False' WHERE titolocorso=?");
-        stmt.setString(1, i.getMateriaREM());
+        stmt.setString(1, i.getMateriaRemove());
         stmt.executeUpdate();
         stmt.close();
         conn.close();
