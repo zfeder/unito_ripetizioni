@@ -443,21 +443,19 @@
             </div>
         </div>
 
-        <!-- FOOTER PER STAMPE -->
-        <footer class="footer mt-auto py-3 bg-dark text-center">
-            <span v-show="AddDocente">
-                <div id="ADDEDDOC" class="outputTextArea"></div>
-            </span>
-            {{confermaAzione}}
-            {{logout}}
-            {{idDoc}}
-            <span v-show="AddCorso">
-                <div id="ADDEDCORSO" class="outputTextArea"></div>
-            </span>
-            <span v-show="removeDoc">
-                <div id="REMOVEDDOC" class="outputTextArea"></div>
-            </span>
-        </footer>
+        <!-- FOOTER -->
+        <div class="footer-dark">
+            <footer>
+                <div class="container">
+                    <div class="footer mt-auto py-3 bg-dark text-center">
+                        {{confermaAzione}}
+                        {{logout}}
+                        {{idDoc}}
+                    </div>
+                    <p class="copyright">Ripetizioni © 2021</p>
+                </div>
+            </footer>
+        </div>
     </div>
 
     <script>
