@@ -79,7 +79,19 @@ table td:last-child {
     border-right: none;
 }
 
+#materiaErrore {
+    color: darkred;
+    font-weight: bold;
+}
 
+#loginErrore {
+    color: darkred;
+    font-weight: bold;
+}
 
+#docErrore {
+    color: darkred;
+    font-weight: bold;
+}
 
 

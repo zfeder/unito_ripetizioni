@@ -48,7 +48,7 @@ public class ServletAdd extends HttpServlet {
                 PrintWriter out = response.getWriter();
                 String finale = null;
                 String idDocenteC = request.getParameter("idDocenteC");
-                String idMateriaC= request.getParameter("idMateriaC");
+                String idMateriaC = request.getParameter("idMateriaC");
                 System.out.println("Valore Docente: " + idDocenteC);
                 System.out.println("Valore Materia: " + idMateriaC);
                 //System.out.println("INSERIMENTO DEI PARAMETRI");

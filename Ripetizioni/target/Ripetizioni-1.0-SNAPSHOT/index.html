@@ -14,6 +14,67 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
+<script>
+
+    function myFunction() {
+        var x, text;
+        var alfabeto  = /^[a-z\u00C0-\u00ff]+$/;
+
+        x = document.getElementById("idMateria").value;
+
+        if (alfabeto.test(x)) {
+            app.addMat('addMateria');
+            text = " ";
+        } else {
+            text = "Errore: Valore nullo o contenente numeri";
+        }
+        document.getElementById("materiaErrore").innerHTML = text;
+    }
+
+</script>
+
+<script>
+
+    function myFunction2() {
+        var x, y, text;
+        var alfabeto  = /^[a-z\u00C0-\u00ff]+$/;
+
+        x = document.getElementById("nome").value;
+        y = document.getElementById("cognome").value;
+
+        if (alfabeto.test(x) && alfabeto.test(y)) {
+            app.addDoc('addDocente');
+            text = " ";
+        } else {
+            text = "Errore: Valore nullo o contenente numeri";
+        }
+        document.getElementById("docErrore").innerHTML = text;
+    }
+
+</script>
+
+<script>
+
+    function myFunction3() {
+        var x, y, text;
+
+        x = document.getElementById("utente").value;
+        y = document.getElementById("password").value;
+
+        if (x && y) {
+            app.getInfo('login');
+            text = " ";
+            $('#exampleModal').modal('hide');
+        } else {
+            text = "Errore: Valore nullo";
+        }
+        document.getElementById("loginErrore").innerHTML = text;
+    }
+
+</script>
+
+
+
 <body class="d-flex flex-column h-100">
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-light bg-dark">
@@ -50,8 +111,9 @@
                                         <div class="mb-3">
                                             <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
                                         </div>
+                                        <p id="loginErrore"></p>
                                         <p> </p>
-                                        <button type="button" v-on:click="getInfo('login')" id="go" class="btn btn-primary" data-bs-dismiss="modal" >Login</button> <br><br>
+                                        <button type="button" onclick="myFunction3()" id="go" class="btn btn-primary" data-bs="modal" >Login</button> <br><br>
                                     </form>
                                 </div>
                             </div>
@@ -99,7 +161,8 @@
                                         <p> </p>
                                         <input type="text" id="cognome" name="cognome" class="form-control costumbutt" placeholder="Cognome">
                                         <p> </p>
-                                        <input type="submit" v-on:click="addDoc('addDocente')" id="AddDoc" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI DOCENTE"/>
+                                        <p id="docErrore"></p>
+                                        <input type="submit" onclick="myFunction2()" id="AddDoc" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI DOCENTE"/>
                                         <p> </p>
                                     </span>
 
@@ -134,8 +197,9 @@
                                         <label for="idMateria">INSERISCI MATERIA</label>
                                         <p> </p>
                                         <input type="text" id="idMateria" name="idMateria" class="form-control costumbutt" placeholder="Nome Materia">
+                                        <p id="materiaErrore"></p>
                                         <p> </p>
-                                        <input type="submit" v-on:click="addMat('addMateria')" id="AddMat" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI MATERIA"/>
+                                        <input type="submit" onclick="myFunction()" id="AddMat" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI MATERIA"/>
                                         <p> </p>
                                     </span>
 
