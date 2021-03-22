@@ -95,9 +95,9 @@
                                     <span v-show="AddDocente">
                                         <label for="nome">INSERISCI DOCENTE</label>
                                         <p> </p>
-                                        <input type="text" id="nome" name="nome" placeholder="Nome">
+                                        <input type="text" id="nome" name="nome" class="form-control costumbutt" placeholder="Nome">
                                         <p> </p>
-                                        <input type="text" id="cognome" name="cognome" placeholder="Cognome">
+                                        <input type="text" id="cognome" name="cognome" class="form-control costumbutt" placeholder="Cognome">
                                         <p> </p>
                                         <input type="submit" v-on:click="addDoc('addDocente')" id="AddDoc" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI DOCENTE"/>
                                         <p> </p>
@@ -133,7 +133,7 @@
                                     <span v-show="AddMateria">
                                         <label for="idMateria">INSERISCI MATERIA</label>
                                         <p> </p>
-                                        <input type="text" id="idMateria" name="idMateria" placeholder="Nome Materia">
+                                        <input type="text" id="idMateria" name="idMateria" class="form-control costumbutt" placeholder="Nome Materia">
                                         <p> </p>
                                         <input type="submit" v-on:click="addMat('addMateria')" id="AddMat" name="submit" class="btn btn-success btn-sm costumbutt" value="INSERISCI MATERIA"/>
                                         <p> </p>
