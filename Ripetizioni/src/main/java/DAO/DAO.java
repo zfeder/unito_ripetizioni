@@ -282,7 +282,7 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM DOCENTE");
+            ResultSet rs = st.executeQuery("SELECT * FROM DOCENTE WHERE DOCENTEATTIVO = 'True'");
             while (rs.next()) {
                 Docente d = new Docente(rs.getString("nome"), rs.getString("cognome"), rs.getString("idDocente"));
                 out.add(d);
@@ -313,7 +313,7 @@ public class DAO {
             }
 
             Statement stmt = conn1.createStatement();
-            stmt.executeUpdate("INSERT INTO DOCENTE (NOME, COGNOME) VALUES ('"+nome+"','"+cognome+"')", Statement.RETURN_GENERATED_KEYS);
+            stmt.executeUpdate("INSERT INTO DOCENTE (NOME, COGNOME, DOCENTEATTIVO) VALUES ('"+nome+"','"+cognome+"','True')", Statement.RETURN_GENERATED_KEYS);
             rs = stmt.getGeneratedKeys();
 
             if (rs.next()) {
@@ -337,6 +337,7 @@ public class DAO {
         }
         return s;
     }
+
 
 
 
@@ -406,6 +407,7 @@ public class DAO {
         // stmt.executeUpdate();
         Statement stmt2 = conn.createStatement();
         stmt2.executeUpdate("DELETE FROM PRENOTAZIONE WHERE idUtente='null' AND idDocente = '"+i.getidDocenteRemove()+"'");
+        stmt2.executeUpdate("UPDATE DOCENTE SET DOCENTEATTIVO = 'False' WHERE idDocente= '"+i.getidDocenteRemove()+"'");
         // stmt.close();
         conn.close();
 
