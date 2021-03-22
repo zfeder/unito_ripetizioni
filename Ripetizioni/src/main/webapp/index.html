@@ -176,7 +176,8 @@
                                              <option v-for="materia in mats2" v-bind:value="materia.titoloCorso">
                                                 {{ materia.titoloCorso}}
                                              </option>
-                                        </select>                                        <p> </p>
+                                        </select>
+                                        <p> </p>
                                         <input type="submit"  v-on:click="remMat('removeMateria')" id="RemMat" name="submit" class="btn btn-danger btn-sm costumbutt" value="RIMUOVI MATERIA"/>
                                         <p> </p>
                                     </span>
@@ -474,6 +475,7 @@
                         self.removeCor = false;
                         self.logout = "Logout effettuato con successo";
                         self.login = " ";
+                        self.confermaAzione = " ";
                     });
                 },
 

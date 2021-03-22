@@ -49,8 +49,8 @@ public class ServletAdd extends HttpServlet {
                 String finale = null;
                 String idDocenteC = request.getParameter("idDocenteC");
                 String idMateriaC= request.getParameter("idMateriaC");
-                System.out.println(idDocenteC);
-                System.out.println(idMateriaC);
+                System.out.println("Valore Docente: " + idDocenteC);
+                System.out.println("Valore Materia: " + idMateriaC);
                 //System.out.println("INSERIMENTO DEI PARAMETRI");
                 int stato = 33;
                 if ( idDocenteC!= null  && idMateriaC != null) {
