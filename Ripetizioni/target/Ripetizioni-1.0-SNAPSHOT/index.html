@@ -114,14 +114,14 @@
                                              </option>
                                         </select>
                                         <p> </p>
-                                        <input type="submit" v-on:click="showMaterie('getMateria', value)" name="submit" class="btn btn-secondary btn-sm " value=">>"/>
+                                        <input type="submit" v-on:click="showMaterie('getMateria')" name="submit" class="btn btn-secondary btn-sm " value=">>"/>
                                         <p> </p>
                                     </span>
 
                                     <span v-show="AddCorsoMat">
-                                        <label>INSERISCI CORSO</label>
+                                        <label for="idMateriaC">INSERISCI CORSO</label>
                                         <p> </p>
-                                        <select v-model="selected">
+                                        <select v-model="selected" id="idMateriaC">
                                             <option v-for="materia in mats2" v-bind:value="materia.titoloCorso">
                                                 {{ materia.titoloCorso}}
                                              </option>
@@ -401,7 +401,7 @@
             data: {
                 login: ' ',
                 logout: ' ',
-                idDoc: '',
+                idDoc: ' ',
                 autori: 'prova',
                 autorizzazione: false,
                 utente: false,
@@ -511,7 +511,7 @@
 
                 addCor: function(azione){
                     var cor = this;
-                    $.post(this.LinkAdd, {idDoc:idDocenteC, idCorso:$("#idCorso").val(), azione:azione}, function(data) {
+                    $.post(this.LinkAdd, {idDocenteC:$("#idDocenteC").val(), idMateriaC:$("#idMateriaC").val(), azione:azione}, function(data) {
                         cor.confermaAzione = data;
 
                     });

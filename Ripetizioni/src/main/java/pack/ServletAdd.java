@@ -48,14 +48,16 @@ public class ServletAdd extends HttpServlet {
                 PrintWriter out = response.getWriter();
                 String finale = null;
                 String idDocenteC = request.getParameter("idDocenteC");
-                String idCorso = request.getParameter("idCorso");
+                String idMateriaC= request.getParameter("idMateriaC");
+                System.out.println(idDocenteC);
+                System.out.println(idMateriaC);
                 //System.out.println("INSERIMENTO DEI PARAMETRI");
                 int stato = 33;
-                if ( idDocenteC!= null  && idCorso != null) {
+                if ( idDocenteC!= null  && idMateriaC != null) {
                     String s = "Corso aggiunto correttamente con ID: ";
                     System.out.println(idDocenteC);
-                    System.out.println(idCorso);
-                    stato =  (DAO.insertInsegnamento(idDocenteC, idCorso));
+                    System.out.println(idMateriaC);
+                    stato =  (DAO.insertInsegnamento(idDocenteC, idMateriaC));
                     String ss = "" + stato;
                     finale = s.concat(ss);
                 }
