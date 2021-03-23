@@ -64,6 +64,7 @@ public class ServletLogin extends HttpServlet {
                 PrintWriter out1 = response.getWriter();
                 out1.println("Logout effettuato con successo");
                 break;
+
         }
     }
 }
