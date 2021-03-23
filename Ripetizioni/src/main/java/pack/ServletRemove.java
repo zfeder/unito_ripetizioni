@@ -45,55 +45,76 @@ public class ServletRemove extends HttpServlet {
         System.out.println(azione);
         switch (azione) {
             case "removeCorso":
-                response.setContentType("text/html;charset=UTF-8");
+                HttpSession s3 = request.getSession();
+                String utente3 = (String) s3.getAttribute("utente");
+                String stato3 = " ";
                 PrintWriter out = response.getWriter();
-                String idCorRem = request.getParameter("idCorRem");
-                System.out.println(idCorRem);
-                String stato = "Errore nel rimuovere il corso";
-                if (idCorRem != null) {
-                    System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
-                    String[] result = idCorRem.split(",");
-                    System.out.println("idcorso"+ result[0]);
-                    System.out.println("iddoc"+result[1]);
-                    System.out.println("materia"+result[2]);
-                    InsegnamentoRemove p = new InsegnamentoRemove(result[0]);
-                    DAO.removeCorso(p);
-                    DAO.removeCalendario(result[1], result[2]);
-                    stato = "Corso rimosso correttamente";
-                }
-                out.print(stato);
+                if (utente3 != null) {
+                    response.setContentType("text/html;charset=UTF-8");
+                    String idCorRem = request.getParameter("idCorRem");
+                    System.out.println(idCorRem);
+                    stato3 = "Errore nel rimuovere il corso";
+                    if (idCorRem != null) {
+                        System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
+                        String[] result = idCorRem.split(",");
+                        System.out.println("idcorso" + result[0]);
+                        System.out.println("iddoc" + result[1]);
+                        System.out.println("materia" + result[2]);
+                        InsegnamentoRemove p = new InsegnamentoRemove(result[0]);
+                        DAO.removeCorso(p);
+                        DAO.removeCalendario(result[1], result[2]);
+                        stato3 = "Corso rimosso correttamente";
+                    }
+                } else {
+                        stato3 = "Sessione scaduta";
+                    }
+                    out.print(stato3);
                 break;
 
             case "removeDocente":
-                response.setContentType("text/html;charset=UTF-8");
+                HttpSession s4 = request.getSession();
+                String utente4 = (String) s4.getAttribute("utente");
+                String stato4 = " ";
                 PrintWriter out1 = response.getWriter();
-                String idDocRem = request.getParameter("idDocRem");
-                System.out.println(idDocRem);
-                String stato1 = "Errore nel rimuovere docente";
-                if (idDocRem != null) {
-                    DocenteRemove p = new DocenteRemove(idDocRem);
-                    System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
-                    System.out.println(p.getidDocenteRemove() + "idocente");
-                    DAO.removeDocente(p);
-                    stato1 = "Docente rimosso correttamente";
-                }
-                out1.print(stato1);
+                if (utente4 != null) {
+                    response.setContentType("text/html;charset=UTF-8");
+                    String idDocRem = request.getParameter("idDocRem");
+                    System.out.println(idDocRem);
+                    stato4 = "Errore nel rimuovere docente";
+                    if (idDocRem != null) {
+                        DocenteRemove p = new DocenteRemove(idDocRem);
+                        System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
+                        System.out.println(p.getidDocenteRemove() + "idocente");
+                        DAO.removeDocente(p);
+                        stato4 = "Docente rimosso correttamente";
+                    }
+                } else {
+                        stato4 = "Sessione scaduta";
+                    }
+                out1.print(stato4);
                 break;
 
             case "removeMateria":
-                response.setContentType("text/html;charset=UTF-8");
+                HttpSession s5 = request.getSession();
+                String utente5 = (String) s5.getAttribute("utente");
+                String stato5 = " ";
                 PrintWriter out2 = response.getWriter();
-                String idMatRem = request.getParameter("idMatRem");
-                System.out.println(idMatRem);
-                String stato2 = "Errore nel rimuovere il corso";
-                if (idMatRem != null) {
-                    MateriaRemove p = new MateriaRemove(idMatRem);
-                    System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
-                    System.out.println(p.getMateriaRemove());
-                    DAO.removeMateria(p);
-                    stato2 = "Materia rimossa correttamente";
-                }
-                out2.print(stato2);
+                if (utente5 != null) {
+                    response.setContentType("text/html;charset=UTF-8");
+                    String idMatRem = request.getParameter("idMatRem");
+                    System.out.println(idMatRem);
+                    stato5 = "Errore nel rimuovere il corso";
+                    if (idMatRem != null) {
+                        MateriaRemove p = new MateriaRemove(idMatRem);
+                        System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
+                        System.out.println(p.getMateriaRemove());
+                        DAO.removeMateria(p);
+                        stato5 = "Materia rimossa correttamente";
+                    }
+                } else {
+                        stato5 = "Sessione scaduta";
+                    }
+                out2.print(stato5);
                 break;
         }
     }
