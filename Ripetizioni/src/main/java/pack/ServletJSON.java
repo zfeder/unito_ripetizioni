@@ -40,14 +40,22 @@ public class ServletJSON extends HttpServlet {
         System.out.println(azione);
         switch (azione) {
             case "getUtente":
-                response.setContentType("application/json");
+                HttpSession b = request.getSession();
+                String utente2 = (String) b.getAttribute("utente");
                 PrintWriter out = response.getWriter();
-                String s = JSONMan.serializeJson(new Utente("nome", "cognome", "nomeutente", "password", "ruolo"));
-                request.setAttribute("info", s);
-                ArrayList<Utente> ar = DAO.selectDB();
-                String ris = JSONMan.serializeJson(ar);
-                System.out.println(ris);
+                String ris;
+                if (utente2 != null) {
+                    response.setContentType("application/json");
+                    String s = JSONMan.serializeJson(new Utente("nome", "cognome", "nomeutente", "password", "ruolo"));
+                    request.setAttribute("info", s);
+                    ArrayList<Utente> ar = DAO.selectDB();
+                    ris = JSONMan.serializeJson(ar);
+                    System.out.println(ris);
+                } else {
+                    ris = "Sessione scaduta";
+                }
                 out.print(ris);
+
                 break;
 
             case "getCalendario":
@@ -64,13 +72,20 @@ public class ServletJSON extends HttpServlet {
                 break;
 
             case "getCorso":
-                response.setContentType("application/json");
+                HttpSession d = request.getSession();
+                String utente4 = (String) d.getAttribute("utente");
                 PrintWriter out2 = response.getWriter();
-                String s2 = JSONMan.serializeJson(new Insegnamento("idInsegnamento", "idCorso", "idDocente"));
-                request.setAttribute("info", s2);
-                ArrayList<Insegnamento> ar2 = DAO.InsegnamentoDB();
-                String ris2 = JSONMan.serializeJson(ar2);
-                System.out.println(ris2);
+                String ris2;
+                if (utente4 != null) {
+                    response.setContentType("application/json");
+                    String s2 = JSONMan.serializeJson(new Insegnamento("idInsegnamento", "idCorso", "idDocente"));
+                    request.setAttribute("info", s2);
+                    ArrayList<Insegnamento> ar2 = DAO.InsegnamentoDB();
+                    ris2 = JSONMan.serializeJson(ar2);
+                    System.out.println(ris2);
+                } else {
+                    ris2 = "Sessione scaduta";
+                }
                 out2.print(ris2);
                 break;
 
@@ -86,36 +101,57 @@ public class ServletJSON extends HttpServlet {
                 break;
 
             case "getMateria2" :
-                response.setContentType("application/json");
+                HttpSession e = request.getSession();
+                String utente5 = (String) e.getAttribute("utente");
                 PrintWriter out6 = response.getWriter();
-                String s6 = JSONMan.serializeJson(new Materia("TitoloCorso"));
-                request.setAttribute("info", s6);
-                String idDocenteC = request.getParameter("idDocenteC");
-                ArrayList<Materia> ar6 = DAO.Materia2DB(idDocenteC);
-                String ris6 = JSONMan.serializeJson(ar6);
-                System.out.println(ris6);
+                String ris6;
+                if (utente5 != null) {
+                    response.setContentType("application/json");
+                    String s6 = JSONMan.serializeJson(new Materia("TitoloCorso"));
+                    request.setAttribute("info", s6);
+                    String idDocenteC = request.getParameter("idDocenteC");
+                    ArrayList<Materia> ar6 = DAO.Materia2DB(idDocenteC);
+                    ris6 = JSONMan.serializeJson(ar6);
+                    System.out.println(ris6);
+                } else {
+                    ris6 ="Sessione scaduta";
+                }
                 out6.print(ris6);
                 break;
 
             case "getDocente" :
-                response.setContentType("application/json");
+                HttpSession f = request.getSession();
+                String utente6 = (String) f.getAttribute("utente");
                 PrintWriter out4 = response.getWriter();
-                String s4 = JSONMan.serializeJson(new Docente("nome", "cognome", "idDocente"));
-                request.setAttribute("info", s4);
-                ArrayList<Docente> ar4 = DAO.DocenteDB();
-                String ris4 = JSONMan.serializeJson(ar4);
-                System.out.println(ris4);
+                String ris4;
+                if (utente6 != null) {
+                    response.setContentType("application/json");
+                    String s4 = JSONMan.serializeJson(new Docente("nome", "cognome", "idDocente"));
+                    request.setAttribute("info", s4);
+                    ArrayList<Docente> ar4 = DAO.DocenteDB();
+                    ris4 = JSONMan.serializeJson(ar4);
+                    System.out.println(ris4);
+                } else {
+                    ris4 = "Sessione scaduta";
+                }
                 out4.print(ris4);
                 break;
 
             case "getCorsoAttivo":
-                response.setContentType("application/json");
+                HttpSession g = request.getSession();
+                String utente7 = (String) g.getAttribute("utente");
                 PrintWriter out5 = response.getWriter();
-                String s5 = JSONMan.serializeJson(new Insegnamento("idInsegnamento", "idCorso", "idDocente"));
-                request.setAttribute("info", s5);
-                ArrayList<Insegnamento> ar5 = DAO.InsegnamentoAttivoDB();
-                String ris5 = JSONMan.serializeJson(ar5);
-                System.out.println(ris5);
+                String ris5;
+                if (utente7 != null) {
+                    response.setContentType("application/json");
+                    String s5 = JSONMan.serializeJson(new Insegnamento("idInsegnamento", "idCorso", "idDocente"));
+                    request.setAttribute("info", s5);
+                    ArrayList<Insegnamento> ar5 = DAO.InsegnamentoAttivoDB();
+                    ris5 = JSONMan.serializeJson(ar5);
+                    System.out.println(ris5);
+                } else {
+                    ris5 = "Sessione scaduta";
+                }
                 out5.print(ris5);
                 break;
         }

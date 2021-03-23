@@ -44,46 +44,58 @@ public class ServletAdd extends HttpServlet {
         System.out.println(azione);
         switch (azione) {
             case "addCorso":
-                response.setContentType("text/html;charset=UTF-8");
-                PrintWriter out = response.getWriter();
+                HttpSession s6 = request.getSession();
+                String utente4 = (String) s6.getAttribute("utente");
                 String finale = null;
-                String idDocenteC = request.getParameter("idDocenteC");
-                String idMateriaC = request.getParameter("idMateriaC");
-                System.out.println("Valore Docente: " + idDocenteC);
-                System.out.println("Valore Materia: " + idMateriaC);
-                //System.out.println("INSERIMENTO DEI PARAMETRI");
-                int stato = 33;
-                if ( idDocenteC!= null  && idMateriaC != null) {
-                    String s = "Corso aggiunto correttamente con ID: ";
-                    System.out.println(idDocenteC);
-                    System.out.println(idMateriaC);
-                    stato =  (DAO.insertInsegnamento(idDocenteC, idMateriaC));
-                    String ss = "" + stato;
-                    finale = s.concat(ss);
+                PrintWriter out = response.getWriter();
+                if (utente4 != null) {
+                    response.setContentType("text/html;charset=UTF-8");
+                    String idDocenteC = request.getParameter("idDocenteC");
+                    String idMateriaC = request.getParameter("idMateriaC");
+                    System.out.println("Valore Docente: " + idDocenteC);
+                    System.out.println("Valore Materia: " + idMateriaC);
+                    //System.out.println("INSERIMENTO DEI PARAMETRI");
+                    int stato = 33;
+                    if (idDocenteC != null && idMateriaC != null) {
+                        String s = "Corso aggiunto correttamente con ID: ";
+                        System.out.println(idDocenteC);
+                        System.out.println(idMateriaC);
+                        stato = (DAO.insertInsegnamento(idDocenteC, idMateriaC));
+                        String ss = "" + stato;
+                        finale = s.concat(ss);
+                    }
+                } else {
+                  finale = "Sessione scaduta";
                 }
                 out.print(finale);
                 break;
 
             case "addDocente":
-
-                response.setContentType("text/html;charset=UTF-8");
-                PrintWriter out1 = response.getWriter();
-                String nome = request.getParameter("nome");
+                HttpSession s5 = request.getSession();
+                String utente3 = (String) s5.getAttribute("utente");
                 String finale1 = null;
-                String cognome = request.getParameter("cognome");
-                //System.out.println("INSERIMENTO DEI PARAMETRI");
-                int stato1 = 33;
-                if (nome != null && cognome != null) {
-                    Docente p = new Docente(nome, cognome, null);
-                    System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
-                    System.out.println(p.getNome());
-                    System.out.println(p.getCognome());
-                    String s = "Docente aggiunto correttamente con ID: ";
-                    stato1 = (DAO.insertDocente(p.getNome(), p.getCognome()));
-                    String ss = "" + stato1;
-                    finale1 = s.concat(ss);
+                PrintWriter out1 = response.getWriter();
+                if (utente3 != null) {
+                    response.setContentType("text/html;charset=UTF-8");
+                    String nome = request.getParameter("nome");
+                    String cognome = request.getParameter("cognome");
+                    //System.out.println("INSERIMENTO DEI PARAMETRI");
+                    int stato1 = 33;
+                    if (nome != null && cognome != null) {
+                        Docente p = new Docente(nome, cognome, null);
+                        System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
+                        System.out.println(p.getNome());
+                        System.out.println(p.getCognome());
+                        String s = "Docente aggiunto correttamente con ID: ";
+                        stato1 = (DAO.insertDocente(p.getNome(), p.getCognome()));
+                        String ss = "" + stato1;
+                        finale1 = s.concat(ss);
+                    }
+                } else {
+                    finale1 = "Sessione scaduta";
                 }
                 out1.print(finale1);
+
                 break;
 
             case "addMateria":
