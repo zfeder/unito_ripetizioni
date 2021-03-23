@@ -92,11 +92,15 @@ public class ServletAdd extends HttpServlet {
                 //System.out.println("INSERIMENTO DEI PARAMETRI");
                 String stato2 = "Errore inserimento";
                 if (titolocorso != null) {
-                    Materia m = new Materia(titolocorso);
-                    System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
-                    System.out.println(m.getTitoloCorso());
-                    DAO.insertMateria(m);
-                    stato2 = "Materia aggiunta correttamente";
+                    if (DAO.checkMateria((titolocorso))) {
+                        stato2 = "Materia già esistente";
+                    } else {
+                            Materia m = new Materia(titolocorso);
+                            System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
+                            System.out.println(m.getTitoloCorso());
+                            DAO.insertMateria(m);
+                            stato2 = "Materia aggiunta correttamente";
+                    }
                 }
                 out2.print(stato2);
                 break;

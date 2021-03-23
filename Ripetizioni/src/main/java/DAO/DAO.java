@@ -243,6 +243,43 @@ public class DAO {
         return b;
     }
 
+    public static boolean checkMateria(String corso) {
+        Connection conn1 = null;
+        boolean b = false;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            if (conn1 != null) {
+                //System.out.println("Connected to the database test");
+            }
+            Statement st = conn1.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM CORSO WHERE TITOLOCORSO = '"+corso+"' AND CORSOATTIVO = 'True'");
+            String s = "True";
+            while (rs.next() && b == false) {
+                String corsoc = rs.getString("TITOLOCORSO");
+                String attivo = rs.getString("CORSOATTIVO");
+                if(corsoc.equals(corso) && attivo.equals(s)) {
+                    System.out.println("corso  già esistente");
+                    b = true;
+                }
+                else
+                    System.out.println("corso non esistente");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return b;
+    }
+
+
+
     public static ArrayList<Materia> MateriaDB() {
         Connection conn1 = null;
         ArrayList<Materia> out = new ArrayList<>();
@@ -271,6 +308,37 @@ public class DAO {
         }
         return out;
     }
+
+    public static ArrayList<Materia> Materia2DB(String idDocenteC) {
+        Connection conn1 = null;
+        ArrayList<Materia> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            if (conn1 != null) {
+                System.out.println("Connected to the database test");
+            }
+
+            Statement st = conn1.createStatement();
+            System.out.println(idDocenteC);
+            ResultSet rs = st.executeQuery("SELECT DISTINCT titoloCorso FROM INSEGNAMENTO RIGHT JOIN CORSO ON insegnamento.idCorso = corso.titoloCorso WHERE corsoAttivo = 'True' AND (idDocente IS NULL OR idDocente !='"+idDocenteC+"')");
+            while (rs.next()) {
+                Materia p = new Materia(rs.getString("titoloCorso"));
+                out.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+    }
+
 
     public static ArrayList<Docente> DocenteDB() {
         Connection conn1 = null;

@@ -85,6 +85,18 @@ public class ServletJSON extends HttpServlet {
                 out3.print(ris3);
                 break;
 
+            case "getMateria2" :
+                response.setContentType("application/json");
+                PrintWriter out6 = response.getWriter();
+                String s6 = JSONMan.serializeJson(new Materia("TitoloCorso"));
+                request.setAttribute("info", s6);
+                String idDocenteC = request.getParameter("idDocenteC");
+                ArrayList<Materia> ar6 = DAO.Materia2DB(idDocenteC);
+                String ris6 = JSONMan.serializeJson(ar6);
+                System.out.println(ris6);
+                out6.print(ris6);
+                break;
+
             case "getDocente" :
                 response.setContentType("application/json");
                 PrintWriter out4 = response.getWriter();

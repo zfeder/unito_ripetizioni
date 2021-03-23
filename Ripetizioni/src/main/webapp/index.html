@@ -177,7 +177,7 @@
                                              </option>
                                         </select>
                                         <p> </p>
-                                        <input type="submit" v-on:click="showMaterie('getMateria')" name="submit" class="btn btn-secondary btn-sm " value=">>"/>
+                                        <input type="submit" v-on:click="showMaterie('getMateria2')" name="submit" class="btn btn-secondary btn-sm " value=">>"/>
                                         <p> </p>
                                     </span>
 
@@ -744,7 +744,7 @@
                     auto.AddCorsoMat = true;
                     auto.idDoc = idDocenteC;
                     auto.AddCorso = false;
-                    $.get(this.LinkJSON, {azione:azione}, function (data3) {auto.mats2 = data3;});
+                    $.get(this.LinkJSON, {azione:azione, idDocenteC:$("#idDocenteC").val()}, function (data3) {auto.mats2 = data3;});
                     auto.mats2 = data3;
                 },
 
