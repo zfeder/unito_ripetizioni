@@ -45,6 +45,7 @@ public class ServletLogin extends HttpServlet {
                     HttpSession s = request.getSession();
                     s.setAttribute("utente", utente);
                     s.setAttribute("password", password);
+                    s.setMaxInactiveInterval(10);
                     if (DAO.checkAdmin(utente)) {
                         stato = "Admin";
                     } else {

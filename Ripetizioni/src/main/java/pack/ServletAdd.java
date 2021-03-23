@@ -65,6 +65,7 @@ public class ServletAdd extends HttpServlet {
                 break;
 
             case "addDocente":
+
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out1 = response.getWriter();
                 String nome = request.getParameter("nome");
@@ -86,22 +87,29 @@ public class ServletAdd extends HttpServlet {
                 break;
 
             case "addMateria":
-                response.setContentType("text/html;charset=UTF-8");
+                HttpSession s3 = request.getSession();
+                String utente2 = (String) s3.getAttribute("utente");
+                String stato2 = " ";
                 PrintWriter out2 = response.getWriter();
-                String titolocorso = request.getParameter("idMateria");
-                //System.out.println("INSERIMENTO DEI PARAMETRI");
-                String stato2 = "Errore inserimento";
-                if (titolocorso != null) {
-                    if (DAO.checkMateria((titolocorso))) {
-                        stato2 = "Materia già esistente";
-                    } else {
+                if (utente2 != null) {
+                    response.setContentType("text/html;charset=UTF-8");
+                    String titolocorso = request.getParameter("idMateria");
+                    //System.out.println("INSERIMENTO DEI PARAMETRI");
+                     stato2 = "Errore inserimento";
+                    if (titolocorso != null) {
+                        if (DAO.checkMateria((titolocorso))) {
+                            stato2 = "Materia già esistente";
+                        } else {
                             Materia m = new Materia(titolocorso);
                             System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
                             System.out.println(m.getTitoloCorso());
                             DAO.insertMateria(m);
                             stato2 = "Materia aggiunta correttamente";
+                        }
                     }
-                }
+                } else {
+                        stato2 = "Sessione scaduta";
+                    }
                 out2.print(stato2);
                 break;
         }
