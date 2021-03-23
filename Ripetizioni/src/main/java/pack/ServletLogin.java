@@ -32,12 +32,11 @@ public class ServletLogin extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String azione = request.getParameter("azione");
-        System.out.println(azione);
         switch (azione) {
             case "login":
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = response.getWriter();
-                System.out.println("Collegato alla servlet02");
+                System.out.println("Collegato alla ServletLogin - login");
                 String utente = request.getParameter("utente");
                 String password = request.getParameter("password");
                 String stato = "Nonloggato";
@@ -45,6 +44,7 @@ public class ServletLogin extends HttpServlet {
                     HttpSession s = request.getSession();
                     s.setAttribute("utente", utente);
                     s.setAttribute("password", password);
+                    System.out.println("Login effettuato con successo!");
                     s.setMaxInactiveInterval(10);
                     if (DAO.checkAdmin(utente)) {
                         stato = "Admin";
@@ -60,7 +60,8 @@ public class ServletLogin extends HttpServlet {
             case "logout":
                 response.setContentType("text/html;charset=UTF-8");
                 HttpSession s = request.getSession();
-                System.out.println("Logout effettuato con successo");
+                System.out.println("Collegato alla ServletLogin - logout");
+                System.out.println("Logout effettuato con successo!");
                 s.invalidate();
                 PrintWriter out1 = response.getWriter();
                 out1.println("Logout effettuato con successo");

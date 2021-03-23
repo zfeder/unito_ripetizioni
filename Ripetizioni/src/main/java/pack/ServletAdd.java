@@ -41,7 +41,6 @@ public class ServletAdd extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         String azione = request.getParameter("azione");
-        System.out.println(azione);
         switch (azione) {
             case "addCorso":
                 HttpSession s6 = request.getSession();
@@ -52,14 +51,12 @@ public class ServletAdd extends HttpServlet {
                     response.setContentType("text/html;charset=UTF-8");
                     String idDocenteC = request.getParameter("idDocenteC");
                     String idMateriaC = request.getParameter("idMateriaC");
+                    System.out.println("Collegato alla ServletAdd - addCorso");
                     System.out.println("Valore Docente: " + idDocenteC);
                     System.out.println("Valore Materia: " + idMateriaC);
-                    //System.out.println("INSERIMENTO DEI PARAMETRI");
                     int stato = 33;
                     if (idDocenteC != null && idMateriaC != null) {
                         String s = "Corso aggiunto correttamente con ID: ";
-                        System.out.println(idDocenteC);
-                        System.out.println(idMateriaC);
                         stato = (DAO.insertInsegnamento(idDocenteC, idMateriaC));
                         String ss = "" + stato;
                         finale = s.concat(ss);
@@ -79,13 +76,12 @@ public class ServletAdd extends HttpServlet {
                     response.setContentType("text/html;charset=UTF-8");
                     String nome = request.getParameter("nome");
                     String cognome = request.getParameter("cognome");
-                    //System.out.println("INSERIMENTO DEI PARAMETRI");
                     int stato1 = 33;
                     if (nome != null && cognome != null) {
                         Docente p = new Docente(nome, cognome, null);
-                        System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
-                        System.out.println(p.getNome());
-                        System.out.println(p.getCognome());
+                        System.out.println("Collegato alla ServletAdd - addDocente");
+                        System.out.println("Nome Docente: " + p.getNome());
+                        System.out.println("Cognome Docente: " + p.getCognome());
                         String s = "Docente aggiunto correttamente con ID: ";
                         stato1 = (DAO.insertDocente(p.getNome(), p.getCognome()));
                         String ss = "" + stato1;
@@ -106,15 +102,14 @@ public class ServletAdd extends HttpServlet {
                 if (utente2 != null) {
                     response.setContentType("text/html;charset=UTF-8");
                     String titolocorso = request.getParameter("idMateria");
-                    //System.out.println("INSERIMENTO DEI PARAMETRI");
                      stato2 = "Errore inserimento";
                     if (titolocorso != null) {
                         if (DAO.checkMateria((titolocorso))) {
                             stato2 = "Materia già esistente";
                         } else {
                             Materia m = new Materia(titolocorso);
-                            System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
-                            System.out.println(m.getTitoloCorso());
+                            System.out.println("Collegato alla ServletAdd - addMateria");
+                            System.out.println("Nome Materia: " + m.getTitoloCorso());
                             DAO.insertMateria(m);
                             stato2 = "Materia aggiunta correttamente";
                         }

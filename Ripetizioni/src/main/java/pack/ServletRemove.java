@@ -42,7 +42,6 @@ public class ServletRemove extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         String azione = request.getParameter("azione");
-        System.out.println(azione);
         switch (azione) {
             case "removeCorso":
                 HttpSession s3 = request.getSession();
@@ -52,14 +51,13 @@ public class ServletRemove extends HttpServlet {
                 if (utente3 != null) {
                     response.setContentType("text/html;charset=UTF-8");
                     String idCorRem = request.getParameter("idCorRem");
-                    System.out.println(idCorRem);
                     stato3 = "Errore nel rimuovere il corso";
                     if (idCorRem != null) {
-                        System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
                         String[] result = idCorRem.split(",");
-                        System.out.println("idcorso" + result[0]);
-                        System.out.println("iddoc" + result[1]);
-                        System.out.println("materia" + result[2]);
+                        System.out.println("Collegato alla ServletRemove - removeCorso");
+                        System.out.println("ID Insegnamento: " + result[0]);
+                        System.out.println("ID Docente: " + result[1]);
+                        System.out.println("Nome Materia: " + result[2]);
                         InsegnamentoRemove p = new InsegnamentoRemove(result[0]);
                         DAO.removeCorso(p);
                         DAO.removeCalendario(result[1], result[2]);
@@ -79,12 +77,11 @@ public class ServletRemove extends HttpServlet {
                 if (utente4 != null) {
                     response.setContentType("text/html;charset=UTF-8");
                     String idDocRem = request.getParameter("idDocRem");
-                    System.out.println(idDocRem);
                     stato4 = "Errore nel rimuovere docente";
                     if (idDocRem != null) {
+                        System.out.println("Collegato alla ServletRemove - removeDocente");
                         DocenteRemove p = new DocenteRemove(idDocRem);
-                        System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
-                        System.out.println(p.getidDocenteRemove() + "idocente");
+                        System.out.println("ID Docente: " + p.getidDocenteRemove());
                         DAO.removeDocente(p);
                         stato4 = "Docente rimosso correttamente";
                     }
@@ -102,12 +99,11 @@ public class ServletRemove extends HttpServlet {
                 if (utente5 != null) {
                     response.setContentType("text/html;charset=UTF-8");
                     String idMatRem = request.getParameter("idMatRem");
-                    System.out.println(idMatRem);
                     stato5 = "Errore nel rimuovere il corso";
                     if (idMatRem != null) {
+                        System.out.println("Collegato alla ServletRemove - removeMateria");
                         MateriaRemove p = new MateriaRemove(idMatRem);
-                        System.out.println("PARAMETRI INSERITI CORRETTAMENTE");
-                        System.out.println(p.getMateriaRemove());
+                        System.out.println("Nome Materia" + p.getMateriaRemove());
                         DAO.removeMateria(p);
                         stato5 = "Materia rimossa correttamente";
                     }

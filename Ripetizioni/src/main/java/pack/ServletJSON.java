@@ -37,7 +37,6 @@ public class ServletJSON extends HttpServlet {
             throws ServletException, IOException {
 
         String azione = request.getParameter("azione");
-        System.out.println(azione);
         switch (azione) {
             case "getUtente":
                 HttpSession b = request.getSession();
@@ -50,7 +49,10 @@ public class ServletJSON extends HttpServlet {
                     request.setAttribute("info", s);
                     ArrayList<Utente> ar = DAO.selectDB();
                     ris = JSONMan.serializeJson(ar);
+                    System.out.println("Collegato alla ServletJSON - getUtente");
+                    System.out.println("---------------------------------------------------------");
                     System.out.println(ris);
+                    System.out.println("---------------------------------------------------------");
                 } else {
                     ris = "Sessione scaduta";
                 }
@@ -62,12 +64,15 @@ public class ServletJSON extends HttpServlet {
                 response.setContentType("application/json");
                 PrintWriter out1 = response.getWriter();
                 String nome = request.getParameter("value");
-                System.out.println("CIAO" + nome);
                 String s1 = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Giorno", "Stato", "nome", "cognome"));
                 request.setAttribute("info", s1);
                 ArrayList<Prenotazione> ar1 = DAO.prenotazioneDB(nome);
                 String ris1 = JSONMan.serializeJson(ar1);
+                System.out.println("Collegato alla ServletJSON - getCalendario");
+                System.out.println("Nome Materia: " + nome);
+                System.out.println("---------------------------------------------------------");
                 System.out.println(ris1);
+                System.out.println("---------------------------------------------------------");
                 out1.print(ris1);
                 break;
 
@@ -82,7 +87,10 @@ public class ServletJSON extends HttpServlet {
                     request.setAttribute("info", s2);
                     ArrayList<Insegnamento> ar2 = DAO.InsegnamentoDB();
                     ris2 = JSONMan.serializeJson(ar2);
+                    System.out.println("Collegato alla ServletJSON - getCorso");
+                    System.out.println("---------------------------------------------------------");
                     System.out.println(ris2);
+                    System.out.println("---------------------------------------------------------");
                 } else {
                     ris2 = "Sessione scaduta";
                 }
@@ -96,7 +104,10 @@ public class ServletJSON extends HttpServlet {
                 request.setAttribute("info", s3);
                 ArrayList<Materia> ar3 = DAO.MateriaDB();
                 String ris3 = JSONMan.serializeJson(ar3);
+                System.out.println("Collegato alla ServletJSON - getMateria");
+                System.out.println("---------------------------------------------------------");
                 System.out.println(ris3);
+                System.out.println("---------------------------------------------------------");
                 out3.print(ris3);
                 break;
 
@@ -112,7 +123,10 @@ public class ServletJSON extends HttpServlet {
                     String idDocenteC = request.getParameter("idDocenteC");
                     ArrayList<Materia> ar6 = DAO.Materia2DB(idDocenteC);
                     ris6 = JSONMan.serializeJson(ar6);
+                    System.out.println("Collegato alla ServletJSON - getMateria2");
+                    System.out.println("---------------------------------------------------------");
                     System.out.println(ris6);
+                    System.out.println("---------------------------------------------------------");
                 } else {
                     ris6 ="Sessione scaduta";
                 }
@@ -130,7 +144,10 @@ public class ServletJSON extends HttpServlet {
                     request.setAttribute("info", s4);
                     ArrayList<Docente> ar4 = DAO.DocenteDB();
                     ris4 = JSONMan.serializeJson(ar4);
+                    System.out.println("Collegato alla ServletJSON - getDocente");
+                    System.out.println("---------------------------------------------------------");
                     System.out.println(ris4);
+                    System.out.println("---------------------------------------------------------");
                 } else {
                     ris4 = "Sessione scaduta";
                 }
@@ -148,7 +165,10 @@ public class ServletJSON extends HttpServlet {
                     request.setAttribute("info", s5);
                     ArrayList<Insegnamento> ar5 = DAO.InsegnamentoAttivoDB();
                     ris5 = JSONMan.serializeJson(ar5);
+                    System.out.println("Collegato alla ServletJSON - getCorsoAttivo");
+                    System.out.println("---------------------------------------------------------");
                     System.out.println(ris5);
+                    System.out.println("---------------------------------------------------------");
                 } else {
                     ris5 = "Sessione scaduta";
                 }

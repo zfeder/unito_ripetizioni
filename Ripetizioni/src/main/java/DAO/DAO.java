@@ -186,10 +186,6 @@ public class DAO {
                 String utente = rs.getString("NOMEUTENTE");
                 String password = rs.getString("PASSWORD");
                 String ruolo = rs.getString("RUOLO");
-                //if(ruolo.equals(s))
-                    //System.out.println("Questo utente è un amministratore");
-                //else
-                    //System.out.println("Questo utente non è un amministratore");
                 if (utente.equals(futente) && password.equals(fpassword)) {
                     t = true;
                 }
@@ -208,13 +204,14 @@ public class DAO {
         return t;
     }
 
+    //CONTROLLO AMMINISTRATORE
     public static boolean checkAdmin(String futente) {
         Connection conn1 = null;
         boolean b = false;
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             if (conn1 != null) {
-                //System.out.println("Connected to the database test");
+                System.out.println("Connected to the database test");
             }
             Statement st = conn1.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM UTENTE");
@@ -223,11 +220,8 @@ public class DAO {
                 String utente = rs.getString("NOMEUTENTE");
                 String ruolo = rs.getString("RUOLO");
                 if(utente.equals(futente) && ruolo.equals(s)) {
-                    System.out.println("Amministratore");
                     b = true;
                 }
-                else
-                    System.out.println("Non Amministratore");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -249,7 +243,7 @@ public class DAO {
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             if (conn1 != null) {
-                //System.out.println("Connected to the database test");
+                System.out.println("Connected to the database test");
             }
             Statement st = conn1.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM CORSO WHERE TITOLOCORSO = '"+corso+"' AND CORSOATTIVO = 'True'");
@@ -319,7 +313,6 @@ public class DAO {
             }
 
             Statement st = conn1.createStatement();
-            System.out.println(idDocenteC);
             ResultSet rs = st.executeQuery("SELECT DISTINCT titoloCorso FROM INSEGNAMENTO RIGHT JOIN CORSO ON insegnamento.idCorso = corso.titoloCorso WHERE corsoAttivo = 'True' AND (idDocente IS NULL OR idDocente !='"+idDocenteC+"')");
             while (rs.next()) {
                 Materia p = new Materia(rs.getString("titoloCorso"));
@@ -470,13 +463,9 @@ public class DAO {
     public static void removeDocente(DocenteRemove i) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
-        // PreparedStatement stmt = conn.prepareStatement("DELETE FROM DOCENTE WHERE iddocente=?;");
-        // stmt.setString(1, i.getidDocenteRemove());
-        // stmt.executeUpdate();
         Statement stmt2 = conn.createStatement();
         stmt2.executeUpdate("DELETE FROM PRENOTAZIONE WHERE idUtente='null' AND idDocente = '"+i.getidDocenteRemove()+"'");
         stmt2.executeUpdate("UPDATE DOCENTE SET DOCENTEATTIVO = 'False' WHERE idDocente= '"+i.getidDocenteRemove()+"'");
-        // stmt.close();
         conn.close();
 
     }
@@ -484,12 +473,8 @@ public class DAO {
     public static void removeCalendario(String idDocente, String Materia) throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
-        // PreparedStatement stmt = conn.prepareStatement("DELETE FROM DOCENTE WHERE iddocente=?;");
-        // stmt.setString(1, i.getidDocenteRemove());
-        // stmt.executeUpdate();
         Statement stmt2 = conn.createStatement();
         stmt2.executeUpdate("DELETE FROM PRENOTAZIONE WHERE idUtente='null' AND idDocente = '"+idDocente+"' AND idCorso = '"+Materia+"'");
-        // stmt.close();
         conn.close();
 
     }
@@ -501,8 +486,6 @@ public class DAO {
         PreparedStatement stmt = conn.prepareStatement(("UPDATE INSEGNAMENTO SET INSEGNAMENTOATTIVO = 'False' WHERE idInsegnamento=?"));
         stmt.setString(1, i.getInsegnamentoRemove());
         stmt.executeUpdate();
-        // Statement stmt2 = conn.createStatement();
-        //  stmt2.executeUpdate("DELETE FROM PRENOTAZIONE WHERE idUtente='null' AND idDocente = '"+d+"'");
         stmt.close();
         conn.close();
 
@@ -521,7 +504,6 @@ public class DAO {
             stmt.close();
         } else  {
             st.close();
-            System.out.println("Sono entrato nell'else");
             PreparedStatement stmt1 = conn.prepareStatement("INSERT INTO CORSO (TITOLOCORSO, CORSOATTIVO) VALUES (?,'True') ");
             stmt1.setString(1, m.getTitoloCorso());
             stmt1.executeUpdate();
@@ -552,7 +534,6 @@ public class DAO {
 
             Statement st = conn1.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE JOIN DOCENTE ON PRENOTAZIONE.idDocente = DOCENTE.idDocente WHERE idUtente='"+Utente+"';");
-            //   st.setString(1, Utente);
             while (rs.next()) {
                 Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
                         rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), rs.getString("nome"), rs.getString("Cognome"));
@@ -575,7 +556,6 @@ public class DAO {
     public static void prenota(String Docente, String Giorno, String Orario, String Corso, String Utente)  throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
-        System.out.println(Docente + Orario + Giorno + Corso + Utente + "Dentro prenota");
         PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "', stato = 'Prenotata' WHERE idDocente = '" + Docente + "' AND Orario = '" + Orario + "' AND Giorno = '" + Giorno + "' AND idCorso = '" + Corso + "';");
         stmt.executeUpdate();
         stmt.close();
@@ -586,7 +566,6 @@ public class DAO {
     public static void disdici(String idPrenotazione, String idUtente, String idDocente, String idCorso, String orario1, String giorno1, String utente2)  throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
-        System.out.println(utente2 + idPrenotazione + idUtente + idDocente + idCorso  + orario1 + giorno1 + utente2);
         PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET stato = 'Disdetta' WHERE idDocente = '" + idDocente + "' AND Orario = '" + orario1 + "' AND Giorno = '" + giorno1 + "' AND idUtente = '" + utente2 + "' AND idCorso = '"+ idCorso+"' AND idPrenotazione = '"+ idPrenotazione +"';");
         stmt.executeUpdate();
         Statement stmt2 = conn.createStatement();
@@ -599,7 +578,6 @@ public class DAO {
     public static void svolta(String idPrenotazione, String idUtente, String idDocente, String idCorso, String orario1, String giorno1, String utente2)  throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
-        System.out.println(utente2 + idPrenotazione + idUtente + idDocente + idCorso  + orario1 + giorno1 + utente2);
         PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET stato = 'Svolta' WHERE idDocente = '" + idDocente + "' AND Orario = '" + orario1 + "' AND Giorno = '" + giorno1 + "' AND idUtente = '" + utente2 + "' AND idCorso = '"+ idCorso+"' AND idPrenotazione = '"+ idPrenotazione +"';");
         stmt.executeUpdate();
         Statement stmt2 = conn.createStatement();
