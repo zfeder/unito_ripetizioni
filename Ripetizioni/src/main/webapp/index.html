@@ -465,6 +465,7 @@
                 login: ' ',
                 logout: ' ',
                 idDoc: ' ',
+                checkSessione: ' ',
                 autori: 'prova',
                 autorizzazione: false,
                 utente: false,
@@ -490,7 +491,7 @@
                 removeMat : false,
                 stampa1 : 'Le mie prenotazioni',
                 confermaAzione : '',
-                LinkLogin : '/Ripetizioni/ServletLogin',
+                    LinkLogin : '/Ripetizioni/ServletLogin',
                 LinkAdd : '/Ripetizioni/ServletAdd',
                 LinkRemove : '/Ripetizioni/ServletRemove',
                 LinkShow : '/Ripetizioni/ServletShow',
@@ -553,6 +554,8 @@
                         self.showCalendario = false;
                         self.showhomepage = false;
                         self.utenti = data2;
+
+
                     });
                 },
 
@@ -565,6 +568,12 @@
                         self1.showCalendario = false;
                         self1.showhomepage = false;
                         self1.prenotazioni = data3;
+
+                        self1.checkSessione = data3;
+                        if (self1.checkSessione().trim() === "Sessione scaduta") {
+                            this.getHomePage();
+                        }
+
                     });
                 },
 
@@ -580,6 +589,7 @@
                     var cor = this;
                     $.post(this.LinkAdd, {idDocenteC:$("#idDocenteC").val(), idMateriaC:$("#idMateriaC").val(), azione:azione}, function(data) {
                         cor.confermaAzione = data;
+
 
                     });
                 },
@@ -597,6 +607,7 @@
                     $.post(this.LinkRemove, {idCorRem:$("#idCorRem").val(), azione:azione}, function(data) {
                         Cor.confermaAzione = data;
 
+
                     });
                 },
 
@@ -613,6 +624,7 @@
                     $.post(this.LinkRemove, {idMatRem:$("#idMatRem").val(), azione:azione}, function(data) {
                         Mat.confermaAzione = data;
 
+
                     });
                 },
 
@@ -625,6 +637,7 @@
                         self1.showPrenotazioni = false;
                         self1.showUtenti = false;
                         self1.mats = data3;
+
                     });
 
                 },
@@ -633,6 +646,7 @@
                     var self1 = this;
                     $.get(this.LinkJSON, {azione:azione}, function (data3) {
                         self1.docs = data3;
+
                     });
 
                 },
@@ -646,6 +660,7 @@
                         self1.showCalendario = false;
                         self1.showhomepage = false;
                         self1.Mieprenotazioni = data3;
+
                     });
                 },
 
@@ -660,20 +675,34 @@
                         self1.showUtenti = false;
                         self1.showhomepage = false;
 
+
+
                     });
                 },
 
                 prenota: function (orario, giorno, docente, corso, azione) {
                     var self1 = this;
                     $.post(this.LinkShow, {orario:orario, giorno:giorno, docente:docente, corso:corso, azione:azione}, function(data) {
+                        if (self1.checkSessione().trim() === "Sessione scaduta") {
+                            this.getHomePage();
+                        }
                         self1.confermaAzione = data;
+
+                        self1.checkSessione = data;
+
                     });
                 },
 
                 disdici: function (idPrenotazione, idUtente, idDocente, idCorso, orario, giorno, stato, azione) {
                     var self1 = this;
                     $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
+                        if (self1.checkSessione().trim() === "Sessione scaduta") {
+                            this.getHomePage();
+                        }
                         self1.confermaAzione = data;
+
+                        self1.checkSessione = data;
+
                     });
                 },
 
@@ -681,6 +710,8 @@
                     var self1 = this;
                     $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
                         self1.confermaAzione = data;
+
+
                     });
                 },
 
@@ -714,6 +745,8 @@
                         auto.removeDoc = false;
                     }
                     auto.docs = data3;
+
+
                 },
 
                 AddCorsoShow: function () {
@@ -737,6 +770,7 @@
                     var auto = this;
                     $.get(this.LinkJSON, {azione:azione}, function (data3) {auto.docs = data3;});
                     auto.docs = data3;
+
                 },
 
                 showMaterie: function (azione, idDocenteC){
@@ -746,6 +780,7 @@
                     auto.AddCorso = false;
                     $.get(this.LinkJSON, {azione:azione, idDocenteC:$("#idDocenteC").val()}, function (data3) {auto.mats2 = data3;});
                     auto.mats2 = data3;
+
                 },
 
                 removeCorShow: function (azione) {
@@ -764,6 +799,21 @@
                     }
                     auto.corsi = data3;
 
+                    auto.checkSessione = data3;
+                    if (auto.checkSessione().trim() === "Sessione scaduta") {
+                        auto.showhomepage = true;
+                        auto.showMiePrenotazioni = false;
+                        auto.showPrenotazioni = false;
+                        auto.showUtenti = false;
+                        auto.showCalendario = false;
+                        auto.AddDocente = false;
+                        auto.AddCorso = false;
+                        auto.AddCorsoMat = false;
+                        auto.AddMateria = false;
+                        auto.removeCor = false;
+                        auto.removeDoc = false;
+                        auto.removeMat = false;                    }
+
                 },
 
                 AddMateriaShow: function () {
@@ -779,6 +829,7 @@
                     } else {
                         auto.AddMateria = false;
                     }
+
 
                 },
 
@@ -797,6 +848,7 @@
                         auto.removeMat = false;
                     }
                     auto.mats2 = data3;
+
 
                 },
 

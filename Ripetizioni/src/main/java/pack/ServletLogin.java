@@ -45,6 +45,7 @@ public class ServletLogin extends HttpServlet {
                     s.setAttribute("utente", utente);
                     s.setAttribute("password", password);
                     System.out.println("Login effettuato con successo!");
+                    System.out.println("<p>ID di sessione: "+s.getId() + "</p>");
                     s.setMaxInactiveInterval(1000);
                     if (DAO.checkAdmin(utente)) {
                         stato = "Admin";
@@ -65,6 +66,7 @@ public class ServletLogin extends HttpServlet {
                 s.invalidate();
                 PrintWriter out1 = response.getWriter();
                 out1.println("Logout effettuato con successo");
+                System.out.println("<p>ID di sessione: "+s.getId() + "</p>");
                 break;
 
         }
