@@ -174,6 +174,24 @@ public class ServletJSON extends HttpServlet {
                 }
                 out5.print(ris5);
                 break;
+
+            case "getCalendario2":
+                response.setContentType("application/json");
+                PrintWriter out7 = response.getWriter();
+                String nome1 = request.getParameter("value");
+                String s6 = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Giorno", "Stato", "nome", "cognome"));
+                request.setAttribute("info", s6);
+                ArrayList<Prenotazione> ar2 = DAO.prenotazioneDB(nome1);
+                String s = JSONMan.serializeJson(ar2);
+                String vero = "{ \"prenotazioni\" :" + s + "}";
+                System.out.println("Collegato alla ServletJSON - getCalendario");
+                System.out.println("Nome Materia: " + nome1);
+                System.out.println("---------------------------------------------------------");
+                System.out.println(vero);
+                System.out.println("---------------------------------------------------------");
+                out7.print(vero);
+                break;
+
         }
     }
 
