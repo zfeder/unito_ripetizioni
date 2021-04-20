@@ -185,7 +185,7 @@ public class ServletJSON extends HttpServlet {
                 String s = JSONMan.serializeJson(ar2);
                 String vero = "{ \"prenotazioni\" :" + s + "}";
                 System.out.println("Collegato alla ServletJSON - getCalendario");
-                System.out.println("Nome Materia: " + nome1);
+                System.out.println("Nome Materiaaaa: " + nome1);
                 System.out.println("---------------------------------------------------------");
                 System.out.println(vero);
                 System.out.println("---------------------------------------------------------");
