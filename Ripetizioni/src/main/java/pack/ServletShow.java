@@ -174,7 +174,36 @@ public class ServletShow extends HttpServlet {
                 String stato4 = "Prenotazione svolta con successo";
                 out4.println(stato4);
                 break;
+
+            case "Prenota":
+                HttpSession s16 = request.getSession();
+                String utente16 = (String) s16.getAttribute("utente");
+                String stato16 = " ";
+                PrintWriter out16 = response.getWriter();
+                if (utente16 != null) {
+                    response.setContentType("text/html;charset=UTF-8");
+                    System.out.println("Collegato alla ServletShow - buttonPrenotazioni");
+                    String idPrenotazione16 = request.getParameter("idPrenotazione");
+                    HttpSession s1 = request.getSession();
+                    String utente = (String) s1.getAttribute("utente");
+                    System.out.println("Nome Utente: " + utente);
+                    System.out.println("idPrenotazione: " + idPrenotazione16);
+
+                    try {
+                        DAO.prenotaAndroid(idPrenotazione16, utente);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    String stato1 = "Prenotazione avvenuta con successo";
+                    out16.println(stato1);
+                } else {
+                    stato16 = "Sessione scaduta";
+                }
+                out16.println(stato16);
+                break;
         }
+
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

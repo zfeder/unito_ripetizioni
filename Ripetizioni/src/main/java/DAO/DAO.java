@@ -563,6 +563,16 @@ public class DAO {
 
     }
 
+    public static void prenotaAndroid(String idPrenotazione, String Utente)  throws SQLException {
+        Connection conn = DriverManager.getConnection(url1, user, password);
+        Statement st = conn.createStatement();
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "', stato = 'Prenotata' WHERE idPrenotazione = '" + idPrenotazione + "';");
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+
+    }
+
     public static void disdici(String idPrenotazione, String idUtente, String idDocente, String idCorso, String orario1, String giorno1, String utente2)  throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
