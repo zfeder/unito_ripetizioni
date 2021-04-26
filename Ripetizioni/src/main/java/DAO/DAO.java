@@ -553,6 +553,68 @@ public class DAO {
         return out;
     }
 
+    public static ArrayList<Prenotazione> MiaPrenotazioneAD(String Utente) {
+        Connection conn1 = null;
+        String u = Utente;
+        ArrayList<Prenotazione> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            if (conn1 != null) {
+                System.out.println("Connected to the database test");
+            }
+
+            Statement st = conn1.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE JOIN DOCENTE ON PRENOTAZIONE.idDocente = DOCENTE.idDocente WHERE idUtente='"+Utente+"' AND Stato = 'Prenotata';");
+            while (rs.next()) {
+                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
+                        rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), rs.getString("nome"), rs.getString("Cognome"));
+                out.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+    }
+
+    public static ArrayList<Prenotazione> StoricoAD(String Utente) {
+        Connection conn1 = null;
+        String u = Utente;
+        ArrayList<Prenotazione> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            if (conn1 != null) {
+                System.out.println("Connected to the database test");
+            }
+
+            Statement st = conn1.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM PRENOTAZIONE JOIN DOCENTE ON PRENOTAZIONE.idDocente = DOCENTE.idDocente WHERE idUtente='"+Utente+"' AND Stato = 'Disdetta' OR Stato = 'Svolta';");
+            while (rs.next()) {
+                Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
+                        rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), rs.getString("nome"), rs.getString("Cognome"));
+                out.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+    }
+
     public static void prenota(String Docente, String Giorno, String Orario, String Corso, String Utente)  throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
@@ -572,6 +634,27 @@ public class DAO {
         conn.close();
 
     }
+
+    public static void svoltaAndroid(String idPrenotazione, String Utente)  throws SQLException {
+        Connection conn = DriverManager.getConnection(url1, user, password);
+        Statement st = conn.createStatement();
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "', stato = 'Svolta' WHERE idPrenotazione = '" + idPrenotazione + "';");
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+
+    }
+
+    public static void disdiciAndroid(String idPrenotazione, String Utente)  throws SQLException {
+        Connection conn = DriverManager.getConnection(url1, user, password);
+        Statement st = conn.createStatement();
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "', stato = 'Disdetta' WHERE idPrenotazione = '" + idPrenotazione + "';");
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+
+    }
+
 
     public static void disdici(String idPrenotazione, String idUtente, String idDocente, String idCorso, String orario1, String giorno1, String utente2)  throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);

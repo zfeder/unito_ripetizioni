@@ -213,7 +213,7 @@ public class ServletShow extends HttpServlet {
                     String l = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Data", "Stato", "nome", "cognome"));
                     request.setAttribute("info", l);
                     String Utente = String.valueOf(s.getAttribute("utente"));
-                    ArrayList<Prenotazione> ar = DAO.MiaPrenotazione(Utente);
+                    ArrayList<Prenotazione> ar = DAO.MiaPrenotazioneAD(Utente);
                     String ris = JSONMan.serializeJson(ar);
                     String vero = "{ \"prenotazioni\" :" + ris + "}";
                     System.out.println("Collegato alla ServletShow - miePrenotazioni");
@@ -226,7 +226,89 @@ public class ServletShow extends HttpServlet {
                 }
                 out22.println(stato22);
                 break;
+
+            case "Storico":
+                HttpSession s44 = request.getSession();
+                String utente44 = (String) s44.getAttribute("utente");
+                String stato44 = " ";
+                PrintWriter out44 = response.getWriter();
+                if (utente44 != null) {
+                    response.setContentType("application/json");
+                    HttpSession s = request.getSession();
+                    String l = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Data", "Stato", "nome", "cognome"));
+                    request.setAttribute("info", l);
+                    String Utente = String.valueOf(s.getAttribute("utente"));
+                    ArrayList<Prenotazione> ar = DAO.StoricoAD(Utente);
+                    String ris = JSONMan.serializeJson(ar);
+                    String vero = "{ \"prenotazioni\" :" + ris + "}";
+                    System.out.println("Collegato alla ServletShow - miePrenotazioni");
+                    System.out.println("---------------------------------------------------------");
+                    System.out.println(ris);
+                    System.out.println("---------------------------------------------------------");
+                    out44.print(vero);
+                } else {
+                    stato44 = "Sessione scaduta";
+                }
+                out44.println(stato44);
+                break;
+
+            case "Svolta":
+                HttpSession s222 = request.getSession();
+                String utente222 = (String) s222.getAttribute("utente");
+                String stato222 = " ";
+                PrintWriter out222= response.getWriter();
+                if (utente222 != null) {
+                    response.setContentType("text/html;charset=UTF-8");
+                    System.out.println("Collegato alla ServletShow - buttonPrenotazioni");
+                    String idPrenotazione222 = request.getParameter("idPrenotazione");
+                    HttpSession s1 = request.getSession();
+                    String utente = (String) s1.getAttribute("utente");
+                    System.out.println("Nome Utente: " + utente);
+                    System.out.println("idPrenotazione: " + idPrenotazione222);
+
+                    try {
+                        DAO.svoltaAndroid(idPrenotazione222, utente);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    String stato1 = "Prenotazione avvenuta con successo";
+                    out222.println(stato1);
+                } else {
+                    stato222 = "Sessione scaduta";
+                }
+                out222.println(stato222);
+                break;
+
+            case "Disdici":
+                HttpSession s333 = request.getSession();
+                String utente333 = (String) s333.getAttribute("utente");
+                String stato333 = " ";
+                PrintWriter out333= response.getWriter();
+                if (utente333 != null) {
+                    response.setContentType("text/html;charset=UTF-8");
+                    System.out.println("Collegato alla ServletShow - buttonPrenotazioni");
+                    String idPrenotazione333 = request.getParameter("idPrenotazione");
+                    HttpSession s1 = request.getSession();
+                    String utente = (String) s1.getAttribute("utente");
+                    System.out.println("Nome Utente: " + utente);
+                    System.out.println("idPrenotazione: " + idPrenotazione333);
+
+                    try {
+                        DAO.disdiciAndroid(idPrenotazione333, utente);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    String stato1 = "Prenotazione avvenuta con successo";
+                    out333.println(stato1);
+                } else {
+                    stato333 = "Sessione scaduta";
+                }
+                out333.println(stato333);
+                break;
+
         }
+
+
 
 
     }
