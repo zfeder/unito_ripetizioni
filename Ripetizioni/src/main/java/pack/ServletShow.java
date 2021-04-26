@@ -201,6 +201,31 @@ public class ServletShow extends HttpServlet {
                 }
                 out16.println(stato16);
                 break;
+
+            case "miePrenotazioni2":
+                HttpSession s22 = request.getSession();
+                String utente22 = (String) s22.getAttribute("utente");
+                String stato22 = " ";
+                PrintWriter out22 = response.getWriter();
+                if (utente22 != null) {
+                    response.setContentType("application/json");
+                    HttpSession s = request.getSession();
+                    String l = JSONMan.serializeJson(new Prenotazione("idPrenotazione", "idUtente", "idDocente", "idCorso", "Orario", "Data", "Stato", "nome", "cognome"));
+                    request.setAttribute("info", l);
+                    String Utente = String.valueOf(s.getAttribute("utente"));
+                    ArrayList<Prenotazione> ar = DAO.MiaPrenotazione(Utente);
+                    String ris = JSONMan.serializeJson(ar);
+                    String vero = "{ \"prenotazioni\" :" + ris + "}";
+                    System.out.println("Collegato alla ServletShow - miePrenotazioni");
+                    System.out.println("---------------------------------------------------------");
+                    System.out.println(ris);
+                    System.out.println("---------------------------------------------------------");
+                    out22.print(vero);
+                } else {
+                    stato22 = "Sessione scaduta";
+                }
+                out22.println(stato22);
+                break;
         }
 
 
