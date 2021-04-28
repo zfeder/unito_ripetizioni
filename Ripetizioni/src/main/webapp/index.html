@@ -495,7 +495,7 @@
                 removeMat : false,
                 stampa1 : 'Le mie prenotazioni',
                 confermaAzione : '',
-                    LinkLogin : '/Ripetizioni/ServletLogin',
+                LinkLogin : '/Ripetizioni/ServletLogin',
                 LinkAdd : '/Ripetizioni/ServletAdd',
                 LinkRemove : '/Ripetizioni/ServletRemove',
                 LinkShow : '/Ripetizioni/ServletShow',
@@ -694,7 +694,12 @@
 
                         self1.checkSessione = data;
 
+
+
                     });
+
+                    this.getHomePagePrenota();
+
                 },
 
                 disdici: function (idPrenotazione, idUtente, idDocente, idCorso, orario, giorno, stato, azione) {
@@ -707,7 +712,14 @@
 
                         self1.checkSessione = data;
 
+
+
                     });
+
+                    this.getHomePageDisdici();
+
+
+
                 },
 
                 svolta: function (idPrenotazione, idUtente, idDocente, idCorso, orario, giorno, stato, azione) {
@@ -715,8 +727,11 @@
                     $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
                         self1.confermaAzione = data;
 
-
                     });
+
+                    this.getHomePageSvolta();
+
+
                 },
 
                 AddDocShow: function () {
@@ -870,7 +885,63 @@
                     self.removeCor = false;
                     self.removeDoc = false;
                     self.removeMat = false;
+                },
+
+
+                getHomePagePrenota: function () {
+                    var self = this;
+                    self.showhomepage = true;
+                    self.showMiePrenotazioni = false;
+                    self.showPrenotazioni = false;
+                    self.showUtenti = false;
+                    self.showCalendario = false;
+                    self.AddDocente = false;
+                    self.AddCorso = false;
+                    self.AddCorsoMat = false;
+                    self.AddMateria = false;
+                    self.removeCor = false;
+                    self.removeDoc = false;
+                    self.removeMat = false;
+                    self.confermaAzione = "Prenotazione Avvenuta con successo";
+
+                },
+
+                getHomePageDisdici: function () {
+                    var self = this;
+                    self.showhomepage = true;
+                    self.showMiePrenotazioni = false;
+                    self.showPrenotazioni = false;
+                    self.showUtenti = false;
+                    self.showCalendario = false;
+                    self.AddDocente = false;
+                    self.AddCorso = false;
+                    self.AddCorsoMat = false;
+                    self.AddMateria = false;
+                    self.removeCor = false;
+                    self.removeDoc = false;
+                    self.removeMat = false;
+                    self.confermaAzione = "Prenotazione disdetta con successo";
+
+                },
+
+                getHomePageSvolta: function () {
+                    var self = this;
+                    self.showhomepage = true;
+                    self.showMiePrenotazioni = false;
+                    self.showPrenotazioni = false;
+                    self.showUtenti = false;
+                    self.showCalendario = false;
+                    self.AddDocente = false;
+                    self.AddCorso = false;
+                    self.AddCorsoMat = false;
+                    self.AddMateria = false;
+                    self.removeCor = false;
+                    self.removeDoc = false;
+                    self.removeMat = false;
+                    self.confermaAzione = "Prenotazione segnata come svolta con successo";
+
                 }
+
             }
         });
     </script>
