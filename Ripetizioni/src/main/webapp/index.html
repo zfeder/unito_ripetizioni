@@ -81,17 +81,17 @@
 </script>
 
 <script>
-    $(document).on('click', '#success', function(e) {
-        swal({
-            title: "Success",
-            text: "Prenotazione avvenuta con successo!",
-            type: "success",
-            confirmButtonText: "OK",
-        })
-            .then((result) => {
-                app.getMiePrenotazioni('miePrenotazioni');
+    function PrenotazioneSuccess() {
+            swal({
+                title: "Success",
+                text: "Prenotazione avvenuta con successo!",
+                type: "success",
+                confirmButtonText: "OK",
             })
-    });
+                .then((result) => {
+                    app.getMiePrenotazioni('miePrenotazioni');
+                })
+    }
 </script>
 
 <script>
@@ -123,17 +123,31 @@
 </script>
 
 <script>
-    $(document).on('click', '#error', function(e) {
+    function PrenotazioneError() {
         swal({
             title: "Error",
-            text: 'La sessione è scaduta!',
+            text: 'Hai già effettuato una prenotazione lo stesso giorno nello stesso orario!',
             type: "error",
             confirmButtonText: "OK",
         })
             .then((result) => {
-                app.getHomePage();
+                app.getMiePrenotazioni('miePrenotazioni');
             })
-    });
+    }
+</script>
+
+<script>
+    function SessionScaduta() {
+        swal({
+            title: "Warning",
+            text: 'La sessione è scaduta!',
+            type: "warning",
+            confirmButtonText: "OK",
+        })
+            .then((result) => {
+                app.getHomePageScaduta();
+            })
+    }
 </script>
 
 
@@ -497,7 +511,7 @@
                                     <td>{{insegnamento.giorno}}</td>
                                     <td>{{insegnamento.orario}}</td>
                                     <template v-if="autorizzazione">
-                                        <td><button type="button" v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, insegnamento.idPrenotazione, 'buttonPrenotazioni')" class="btn btn-outline-success btn-sm costumbutt" id="success">PRENOTA</button></td>
+                                        <td><button type="button" v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, insegnamento.idPrenotazione, 'buttonPrenotazioni')" class="btn btn-outline-success btn-sm costumbutt">PRENOTA</button></td>
                                     </template>
                                     <template v-else>
                                     </template>
@@ -753,13 +767,14 @@
                 prenota: function (orario, giorno, docente, corso, idPrenotazione, azione) {
                     var self1 = this;
                     $.post(this.LinkShow, {orario:orario, giorno:giorno, docente:docente, corso:corso, idPrenotazione:idPrenotazione, azione:azione}, function(data) {
-                        if (self1.checkSessione().trim() === "Sessione scaduta") {
-                            this.getHomePage();
-                        }
                         self1.confermaAzione = data;
-
-                        self1.checkSessione = data;
-
+                        if(self1.confermaAzione.trim() === "Prenotazione avvenuta con successo") {
+                            PrenotazioneSuccess();
+                        } else if (self1.confermaAzione.trim() === "Hai già un altra prenotazione allo stesso giorno e data") {
+                            PrenotazioneError();
+                        } else if (self1.confermaAzione.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
 
 
@@ -929,6 +944,26 @@
                     self.removeCor = false;
                     self.removeDoc = false;
                     self.removeMat = false;
+                },
+
+                getHomePageScaduta: function () {
+                    var self = this;
+                    self.showhomepage = true;
+                    self.showMiePrenotazioni = false;
+                    self.showPrenotazioni = false;
+                    self.showUtenti = false;
+                    self.showCalendario = false;
+                    self.AddDocente = false;
+                    self.AddCorso = false;
+                    self.AddCorsoMat = false;
+                    self.AddMateria = false;
+                    self.removeCor = false;
+                    self.removeDoc = false;
+                    self.removeMat = false;
+                    self.autorizzazione = false;
+                    self.utente = false;
+                    self.admin = false;
+                    self.login = "";
                 },
 
 

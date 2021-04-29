@@ -98,6 +98,7 @@ public class ServletShow extends HttpServlet {
                     stato11 = "Sessione scaduta";
                 }
                 out1.println(stato11);
+                System.out.println("Stato Prenotazione: " + stato11);
                 break;
 
             case "allPrenotazioni":
