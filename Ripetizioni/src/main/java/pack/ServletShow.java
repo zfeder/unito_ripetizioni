@@ -74,15 +74,17 @@ public class ServletShow extends HttpServlet {
                     String orario = request.getParameter("orario");
                     String giorno = request.getParameter("giorno");
                     String corso = request.getParameter("corso");
+                    String idPrenotazione = request.getParameter("idPrenotazione");
                     HttpSession s1 = request.getSession();
                     String utente = (String) s1.getAttribute("utente");
                     System.out.println("Nome Utente: " + utente);
                     System.out.println("ID Docente: " + docente);
+                    System.out.println("ID Prenotazione: " + idPrenotazione);
                     System.out.println("Orario: " + orario);
                     System.out.println("Giorno: " + giorno);
                     System.out.println("Nome Materia: : " + corso);
                     try {
-                        DAO.prenota(docente, orario, giorno, corso, utente);
+                        DAO.prenota(docente, orario, giorno, corso, utente, idPrenotazione);
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }

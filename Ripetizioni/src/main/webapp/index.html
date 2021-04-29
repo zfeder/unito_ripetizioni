@@ -11,6 +11,13 @@
     <link href="sticky-footer-navbar.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -71,6 +78,62 @@
         document.getElementById("loginErrore").innerHTML = text;
     }
 
+</script>
+
+<script>
+    $(document).on('click', '#success', function(e) {
+        swal({
+            title: "Success",
+            text: "Prenotazione avvenuta con successo!",
+            type: "success",
+            confirmButtonText: "OK",
+        })
+            .then((result) => {
+                app.getMiePrenotazioni('miePrenotazioni');
+            })
+    });
+</script>
+
+<script>
+    $(document).on('click', '#success1', function(e) {
+        swal({
+            title: "Success",
+            text: 'Prenotazione disdetta con successo!',
+            type: "success",
+            confirmButtonText: "OK",
+        })
+            .then((result) => {
+                app.getMiePrenotazioni('miePrenotazioni');
+            })
+    });
+</script>
+
+<script>
+    $(document).on('click', '#success2', function(e) {
+        swal({
+            title: "Success",
+            text: "Prenotazione svolta con successo!",
+            type: "success",
+            confirmButtonText: "OK",
+        })
+            .then((result) => {
+                    app.getMiePrenotazioni('miePrenotazioni');
+            })
+    });
+</script>
+
+<script>
+    $(document).on('click', '#error', function(e) {
+        swal({
+            title: "Error",
+            text: 'La sessione è scaduta!',
+            type: "error",
+            confirmButtonText: "OK",
+        })
+            .then((result) => {
+                app.getHomePage();
+            })
+    });
 </script>
 
 
@@ -365,8 +428,8 @@
                                         <td>{{prenotazione.orario}}</td>
                                         <td>{{prenotazione.giorno}}</td>
                                         <td>{{prenotazione.stato}}</td>
-                                        <td><button type="button"  v-on:click="disdici(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonDisdici')" class="btn btn-outline-danger btn-sm costumbutt">DISDICI</button></td>
-                                        <td><button type="button"  v-on:click="svolta(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonSvolta')" class="btn btn-outline-success btn-sm costumbutt">SVOLTA</button></td>
+                                        <td><button type="button"  v-on:click="disdici(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonDisdici')" class="btn btn-outline-danger btn-sm costumbutt" id="success1">DISDICI</button></td>
+                                        <td><button type="button"  v-on:click="svolta(prenotazione.idPrenotazione, prenotazione.idUtente, prenotazione.idDocente, prenotazione.idCorso, prenotazione.orario, prenotazione.giorno, prenotazione.stato, 'buttonSvolta')" class="btn btn-outline-success btn-sm costumbutt" id="success2">SVOLTA</button></td>
                                     </template>
                                     <template v-else>
                                     </template>
@@ -434,7 +497,7 @@
                                     <td>{{insegnamento.giorno}}</td>
                                     <td>{{insegnamento.orario}}</td>
                                     <template v-if="autorizzazione">
-                                        <td><button type="button"  v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, 'buttonPrenotazioni')" class="btn btn-outline-success btn-sm costumbutt">PRENOTA</button></td>
+                                        <td><button type="button" v-on:click="prenota(insegnamento.giorno, insegnamento.orario, insegnamento.idDocente, insegnamento.idCorso, insegnamento.idPrenotazione, 'buttonPrenotazioni')" class="btn btn-outline-success btn-sm costumbutt" id="success">PRENOTA</button></td>
                                     </template>
                                     <template v-else>
                                     </template>
@@ -658,15 +721,20 @@
                 getMiePrenotazioni: function (azione) {
                     var self1 = this;
                     $.get(this.LinkShow, {azione:azione}, function (data3) {
+                        if(self1.showMiePrenotazioni === false) {
+                            self1.showMiePrenotazioni = true;
+                            self1.showPrenotazioni = false;
+                            self1.showUtenti = false;
+                            self1.showCalendario = false;
+                            self1.showhomepage = false;
+                        } else {
+                            self1.showMiePrenotazioni = false;
+                        }
                         self1.showMiePrenotazioni = true;
-                        self1.showPrenotazioni = false;
-                        self1.showUtenti = false;
-                        self1.showCalendario = false;
-                        self1.showhomepage = false;
                         self1.Mieprenotazioni = data3;
-
                     });
                 },
+
 
                 passMat: function (e, azione) {
                     var self1 = this;
@@ -679,14 +747,12 @@
                         self1.showUtenti = false;
                         self1.showhomepage = false;
 
-
-
                     });
                 },
 
-                prenota: function (orario, giorno, docente, corso, azione) {
+                prenota: function (orario, giorno, docente, corso, idPrenotazione, azione) {
                     var self1 = this;
-                    $.post(this.LinkShow, {orario:orario, giorno:giorno, docente:docente, corso:corso, azione:azione}, function(data) {
+                    $.post(this.LinkShow, {orario:orario, giorno:giorno, docente:docente, corso:corso, idPrenotazione:idPrenotazione, azione:azione}, function(data) {
                         if (self1.checkSessione().trim() === "Sessione scaduta") {
                             this.getHomePage();
                         }
@@ -694,44 +760,23 @@
 
                         self1.checkSessione = data;
 
-
-
                     });
 
-                    this.getHomePagePrenota();
 
                 },
 
                 disdici: function (idPrenotazione, idUtente, idDocente, idCorso, orario, giorno, stato, azione) {
                     var self1 = this;
                     $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
-                        if (self1.checkSessione().trim() === "Sessione scaduta") {
-                            this.getHomePage();
-                        }
                         self1.confermaAzione = data;
-
-                        self1.checkSessione = data;
-
-
-
                     });
-
-                    this.getHomePageDisdici();
-
-
-
                 },
 
                 svolta: function (idPrenotazione, idUtente, idDocente, idCorso, orario, giorno, stato, azione) {
                     var self1 = this;
                     $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
                         self1.confermaAzione = data;
-
                     });
-
-                    this.getHomePageSvolta();
-
-
                 },
 
                 AddDocShow: function () {
@@ -764,8 +809,6 @@
                         auto.removeDoc = false;
                     }
                     auto.docs = data3;
-
-
                 },
 
                 AddCorsoShow: function () {
@@ -831,7 +874,8 @@
                         auto.AddMateria = false;
                         auto.removeCor = false;
                         auto.removeDoc = false;
-                        auto.removeMat = false;                    }
+                        auto.removeMat = false;
+                    }
 
                 },
 
@@ -887,60 +931,6 @@
                     self.removeMat = false;
                 },
 
-
-                getHomePagePrenota: function () {
-                    var self = this;
-                    self.showhomepage = true;
-                    self.showMiePrenotazioni = false;
-                    self.showPrenotazioni = false;
-                    self.showUtenti = false;
-                    self.showCalendario = false;
-                    self.AddDocente = false;
-                    self.AddCorso = false;
-                    self.AddCorsoMat = false;
-                    self.AddMateria = false;
-                    self.removeCor = false;
-                    self.removeDoc = false;
-                    self.removeMat = false;
-                    self.confermaAzione = "Prenotazione Avvenuta con successo";
-
-                },
-
-                getHomePageDisdici: function () {
-                    var self = this;
-                    self.showhomepage = true;
-                    self.showMiePrenotazioni = false;
-                    self.showPrenotazioni = false;
-                    self.showUtenti = false;
-                    self.showCalendario = false;
-                    self.AddDocente = false;
-                    self.AddCorso = false;
-                    self.AddCorsoMat = false;
-                    self.AddMateria = false;
-                    self.removeCor = false;
-                    self.removeDoc = false;
-                    self.removeMat = false;
-                    self.confermaAzione = "Prenotazione disdetta con successo";
-
-                },
-
-                getHomePageSvolta: function () {
-                    var self = this;
-                    self.showhomepage = true;
-                    self.showMiePrenotazioni = false;
-                    self.showPrenotazioni = false;
-                    self.showUtenti = false;
-                    self.showCalendario = false;
-                    self.AddDocente = false;
-                    self.AddCorso = false;
-                    self.AddCorsoMat = false;
-                    self.AddMateria = false;
-                    self.removeCor = false;
-                    self.removeDoc = false;
-                    self.removeMat = false;
-                    self.confermaAzione = "Prenotazione segnata come svolta con successo";
-
-                }
 
             }
         });
