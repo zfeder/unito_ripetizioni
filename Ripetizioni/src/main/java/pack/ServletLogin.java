@@ -46,7 +46,7 @@ public class ServletLogin extends HttpServlet {
                     s.setAttribute("password", password);
                     System.out.println("Login effettuato con successo!");
                     System.out.println("<p>ID di sessione: "+s.getId() + "</p>");
-                    s.setMaxInactiveInterval(1000);
+                    s.setMaxInactiveInterval(10);
                     if (DAO.checkAdmin(utente)) {
                         stato = "Admin";
                     } else {

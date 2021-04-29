@@ -424,7 +424,7 @@ public class DAO {
             }
 
             Statement stmt2 = conn1.createStatement();
-            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Lunedi', 'Libera')");
+            stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '15-16', 'Lunedi' , 'Libera')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '16-17', 'Lunedi', 'Libera')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '17-18', 'Lunedi', 'Libera')");
             stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocenteC+"', '"+idCorso+"', '18-19', 'Lunedi', 'Libera')");
@@ -615,10 +615,10 @@ public class DAO {
         return out;
     }
 
-    public static void prenota(String Docente, String Giorno, String Orario, String Corso, String Utente, String idPrenotazione)  throws SQLException {
+    public static void prenota(String Docente, String Giorno, String Orario, String Corso, String Utente)  throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
         Statement st = conn.createStatement();
-        PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "', stato = 'Prenotata' WHERE idDocente = '" + Docente + "' AND Orario = '" + Orario + "' AND Giorno = '" + Giorno + "' AND idCorso = '" + Corso + "' AND idPrenotazione = '" + idPrenotazione + "';");
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "', stato = 'Prenotata' WHERE idDocente = '" + Docente + "' AND Orario = '" + Orario + "' AND Giorno = '" + Giorno + "' AND idCorso = '" + Corso + "';");
         stmt.executeUpdate();
         stmt.close();
         conn.close();
