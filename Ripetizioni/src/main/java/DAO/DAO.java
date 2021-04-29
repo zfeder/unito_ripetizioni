@@ -615,15 +615,24 @@ public class DAO {
         return out;
     }
 
-    public static void prenota(String Docente, String Giorno, String Orario, String Corso, String Utente)  throws SQLException {
+    public static boolean prenota(String Docente, String Giorno, String Orario, String Corso, String idUtente, String idPrenotazione)  throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
-        Statement st = conn.createStatement();
-        PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "', stato = 'Prenotata' WHERE idDocente = '" + Docente + "' AND Orario = '" + Orario + "' AND Giorno = '" + Giorno + "' AND idCorso = '" + Corso + "';");
-        stmt.executeUpdate();
-        stmt.close();
-        conn.close();
+        Boolean stato = false;
 
-    }
+        PreparedStatement st = conn.prepareStatement("SELECT idPrenotazione FROM Prenotazione WHERE Orario = '" + Orario + "' AND Giorno = '" + Giorno + "' AND idUtente = '" + idUtente + "' AND Stato = 'Prenotata';");
+        ResultSet rs = st.executeQuery();
+        if (!rs.next()) {
+            st.close();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" + idUtente + "', stato = 'Prenotata' WHERE idDocente = '" + Docente + "' AND Orario = '" + Orario + "' AND Giorno = '" + Giorno + "' AND idCorso = '" + Corso + "'AND idPrenotazione = '" + idPrenotazione + "';");
+            stmt.executeUpdate();
+            stmt.close();
+            conn.close();
+            stato = true;
+        }
+
+        return stato;
+
+        }
 
     public static void prenotaAndroid(String idPrenotazione, String Utente)  throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);

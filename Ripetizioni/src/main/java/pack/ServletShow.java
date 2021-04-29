@@ -66,6 +66,7 @@ public class ServletShow extends HttpServlet {
                 HttpSession s11 = request.getSession();
                 String utente11 = (String) s11.getAttribute("utente");
                 String stato11 = " ";
+                Boolean flag = false;
                 PrintWriter out1 = response.getWriter();
                 if (utente11 != null) {
                     response.setContentType("text/html;charset=UTF-8");
@@ -79,17 +80,20 @@ public class ServletShow extends HttpServlet {
                     String utente = (String) s1.getAttribute("utente");
                     System.out.println("Nome Utente: " + utente);
                     System.out.println("ID Docente: " + docente);
-                    System.out.println("ID Prenotazione: " + idPrenotazione);
                     System.out.println("Orario: " + orario);
                     System.out.println("Giorno: " + giorno);
+
                     System.out.println("Nome Materia: : " + corso);
                     try {
-                        DAO.prenota(docente, orario, giorno, corso, utente, idPrenotazione);
+                         flag = (DAO.prenota(docente, orario, giorno, corso, utente, idPrenotazione)) ;
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
-                    String stato1 = "Prenotazione avvenuta con successo";
-                    out1.println(stato1);
+                    if (flag) {
+                        stato11 = "Prenotazione avvenuta con successo";
+                    } else {
+                        stato11 = "Hai già un altra prenotazione allo stesso giorno e data";
+                    }
                 } else {
                     stato11 = "Sessione scaduta";
                 }
