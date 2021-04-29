@@ -134,21 +134,27 @@ public class ServletShow extends HttpServlet {
                 String orario1 = request.getParameter("orario");
                 String giorno1 = request.getParameter("giorno");
                 String stato = request.getParameter("stato");
+                String stato3;
                 HttpSession s3 = request.getSession();
                 String utente2 = (String) s3.getAttribute("utente");
-                System.out.println("Nome Utente: " + idUtente);
-                System.out.println("ID Prenotazione: " + idPrenotazione);
-                System.out.println("ID Docente: " + idDocente);
-                System.out.println("ID Corso: " + idCorso);
-                System.out.println("Orario: " + orario1);
-                System.out.println("Giorno: " + giorno1);
-                System.out.println("Stato: " + stato);
-                try {
-                    DAO.disdici(idPrenotazione, idUtente, idDocente, idCorso, orario1, giorno1, utente2);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                if (utente2 != null) {
+                    System.out.println("Nome Utente: " + idUtente);
+                    System.out.println("ID Prenotazione: " + idPrenotazione);
+                    System.out.println("ID Docente: " + idDocente);
+                    System.out.println("ID Corso: " + idCorso);
+                    System.out.println("Orario: " + orario1);
+                    System.out.println("Giorno: " + giorno1);
+                    System.out.println("Stato: " + stato);
+                    try {
+                        DAO.disdici(idPrenotazione, idUtente, idDocente, idCorso, orario1, giorno1, utente2);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                     stato3 = "Prenotazione disdetta con successo";
+                } else {
+                    stato3 = "Sessione scaduta";
                 }
-                String stato3 = "Prenotazione disdetta con successo";
+
                 out3.println(stato3);
                 break;
 
@@ -164,21 +170,26 @@ public class ServletShow extends HttpServlet {
                 String orario2 = request.getParameter("orario");
                 String giorno2 = request.getParameter("giorno");
                 String stato2 = request.getParameter("stato");
+                String stato4;
                 HttpSession s4 = request.getSession();
                 String utente3 = (String) s4.getAttribute("utente");
-                System.out.println("Nome Utente: " + idUtente2);
-                System.out.println("ID Prenotazione: " + idPrenotazione2);
-                System.out.println("ID Docente: " + idDocente2);
-                System.out.println("ID Corso: " + idCorso2);
-                System.out.println("Orario: " + orario2);
-                System.out.println("Giorno: " + giorno2);
-                System.out.println("Stato: " + stato2);
-                try {
-                    DAO.svolta(idPrenotazione2, idUtente2, idDocente2, idCorso2, orario2, giorno2, utente3);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                if (utente3 != null) {
+                    System.out.println("Nome Utente: " + idUtente2);
+                    System.out.println("ID Prenotazione: " + idPrenotazione2);
+                    System.out.println("ID Docente: " + idDocente2);
+                    System.out.println("ID Corso: " + idCorso2);
+                    System.out.println("Orario: " + orario2);
+                    System.out.println("Giorno: " + giorno2);
+                    System.out.println("Stato: " + stato2);
+                    try {
+                        DAO.svolta(idPrenotazione2, idUtente2, idDocente2, idCorso2, orario2, giorno2, utente3);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                     stato4 = "Prenotazione svolta con successo";
+                } else {
+                    stato4 = "Sessione scaduta";
                 }
-                String stato4 = "Prenotazione svolta con successo";
                 out4.println(stato4);
                 break;
 
