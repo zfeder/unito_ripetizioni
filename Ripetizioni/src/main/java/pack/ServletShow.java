@@ -289,7 +289,7 @@ public class ServletShow extends HttpServlet {
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
-                    String stato1 = "Prenotazione avvenuta con successo";
+                    String stato1 = "Prenotazione svolta";
                     out222.println(stato1);
                 } else {
                     stato222 = "Sessione scaduta";
@@ -316,7 +316,7 @@ public class ServletShow extends HttpServlet {
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
-                    String stato1 = "Prenotazione avvenuta con successo";
+                    String stato1 = "Prenotazione disdetta";
                     out333.println(stato1);
                 } else {
                     stato333 = "Sessione scaduta";

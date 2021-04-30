@@ -646,19 +646,22 @@ public class DAO {
 
     public static void svoltaAndroid(String idPrenotazione, String Utente)  throws SQLException {
         Connection conn = DriverManager.getConnection(url1, user, password);
-        Statement st = conn.createStatement();
         PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "', stato = 'Svolta' WHERE idPrenotazione = '" + idPrenotazione + "';");
         stmt.executeUpdate();
+        stmt.close();
+        Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM Prenotazione WHERE idPrenotazione = '" + idPrenotazione + "';");
+        rs.next();
         Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
-                rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), rs.getString("nome"), rs.getString("Cognome"));
+                rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), null , null);
         String idDocente = p.getIdDocente();
         String idCorso = p.getIdCorso();
         String orario = p.getOrario();
         String giorno = p.getGiorno();
+        System.out.println(idCorso + idDocente + orario + giorno + "SVOLTA ------------------------------");
         Statement stmt2 = conn.createStatement();
         stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocente+"', '"+idCorso+"', '"+orario+"', '"+giorno+"', 'Libera')");
-        stmt.close();
+        stmt2.close();
         conn.close();
 
     }
@@ -669,12 +672,14 @@ public class DAO {
         PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "', stato = 'Disdetta' WHERE idPrenotazione = '" + idPrenotazione + "';");
         stmt.executeUpdate();
         ResultSet rs = st.executeQuery("SELECT * FROM Prenotazione WHERE idPrenotazione = '" + idPrenotazione + "';");
+        rs.next();
         Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
-                rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), rs.getString("nome"), rs.getString("Cognome"));
+                rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), null , null);
         String idDocente = p.getIdDocente();
         String idCorso = p.getIdCorso();
         String orario = p.getOrario();
         String giorno = p.getGiorno();
+        System.out.println(idCorso + idDocente + orario + giorno + "DISDETTA -----------------------------------");
         Statement stmt2 = conn.createStatement();
         stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocente+"', '"+idCorso+"', '"+orario+"', '"+giorno+"', 'Libera')");
         stmt.close();
