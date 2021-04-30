@@ -635,7 +635,9 @@
                         self.showCalendario = false;
                         self.showhomepage = false;
                         self.utenti = data2;
-
+                        if(self.utenti.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
 
                     });
                 },
@@ -649,10 +651,8 @@
                         self1.showCalendario = false;
                         self1.showhomepage = false;
                         self1.prenotazioni = data3;
-
-                        self1.checkSessione = data3;
-                        if (self1.checkSessione().trim() === "Sessione scaduta") {
-                            this.getHomePage();
+                        if(self1.prenotazioni.trim() === "Sessione scaduta") {
+                            SessionScaduta();
                         }
 
                     });
@@ -662,7 +662,9 @@
                     var doc = this;
                     $.post(this.LinkAdd, {nome:$("#nome").val(), cognome:$("#cognome").val(), azione:azione}, function(data) {
                         doc.confermaAzione = data;
-
+                        if(doc.confermaAzione.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
                 },
 
@@ -670,8 +672,9 @@
                     var cor = this;
                     $.post(this.LinkAdd, {idDocenteC:$("#idDocenteC").val(), idMateriaC:$("#idMateriaC").val(), azione:azione}, function(data) {
                         cor.confermaAzione = data;
-
-
+                        if(cor.confermaAzione.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
                 },
 
@@ -679,16 +682,19 @@
                     var doc = this;
                     $.post(this.LinkRemove, {idDocRem:$("#idDocRem").val(), azione:azione}, function(data) {
                         doc.confermaAzione = data;
-
+                        if(doc.confermaAzione.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
                 },
 
                 remCor: function(azione){
-                    var Cor = this;
+                    var cor = this;
                     $.post(this.LinkRemove, {idCorRem:$("#idCorRem").val(), azione:azione}, function(data) {
-                        Cor.confermaAzione = data;
-
-
+                        cor.confermaAzione = data;
+                        if(cor.confermaAzione.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
                 },
 
@@ -696,29 +702,33 @@
                     var mat = this;
                     $.post(this.LinkAdd, {idMateria:$("#idMateria").val(), azione:azione}, function(data) {
                         mat.confermaAzione = data;
-
+                        if(mat.confermaAzione.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
                 },
 
                 remMat: function(azione){
-                    var Mat = this;
+                    var mat = this;
                     $.post(this.LinkRemove, {idMatRem:$("#idMatRem").val(), azione:azione}, function(data) {
-                        Mat.confermaAzione = data;
-
-
+                        mat.confermaAzione = data;
+                        if(mat.confermaAzione.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
                 },
 
                 getMats: function (azione) {
                     var self1 = this;
-                    var auto = this;
                     $.get(this.LinkJSON, {azione:azione}, function (data3) {
                         self1.showCalendario = false;
                         self1.showMiePrenotazioni = false;
                         self1.showPrenotazioni = false;
                         self1.showUtenti = false;
                         self1.mats = data3;
-
+                        if(self1.mats.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
 
                 },
@@ -727,7 +737,9 @@
                     var self1 = this;
                     $.get(this.LinkJSON, {azione:azione}, function (data3) {
                         self1.docs = data3;
-
+                        if(self1.docs.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
 
                 },
@@ -746,6 +758,9 @@
                         }
                         self1.showMiePrenotazioni = true;
                         self1.Mieprenotazioni = data3;
+                        if(self1.Mieprenotazioni.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
                 },
 
@@ -760,7 +775,9 @@
                         self1.showPrenotazioni = false;
                         self1.showUtenti = false;
                         self1.showhomepage = false;
-
+                        if(self1.calendario.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
                 },
 
@@ -784,6 +801,9 @@
                     var self1 = this;
                     $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
                         self1.confermaAzione = data;
+                        if(self1.confermaAzione.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
                 },
 
@@ -791,6 +811,9 @@
                     var self1 = this;
                     $.post(this.LinkShow, {idPrenotazione:idPrenotazione, idUtente:idUtente, idDocente:idDocente, idCorso:idCorso, orario:orario, giorno:giorno, stato:stato, azione:azione}, function(data) {
                         self1.confermaAzione = data;
+                        if(self1.confermaAzione.trim() === "Sessione scaduta") {
+                            SessionScaduta();
+                        }
                     });
                 },
 
@@ -824,6 +847,9 @@
                         auto.removeDoc = false;
                     }
                     auto.docs = data3;
+                    if(auto.docs.trim() === "Sessione scaduta") {
+                        SessionScaduta();
+                    }
                 },
 
                 AddCorsoShow: function () {
@@ -847,6 +873,9 @@
                     var auto = this;
                     $.get(this.LinkJSON, {azione:azione}, function (data3) {auto.docs = data3;});
                     auto.docs = data3;
+                    if(auto.docs.trim() === "Sessione scaduta") {
+                        SessionScaduta();
+                    }
 
                 },
 
@@ -857,6 +886,9 @@
                     auto.AddCorso = false;
                     $.get(this.LinkJSON, {azione:azione, idDocenteC:$("#idDocenteC").val()}, function (data3) {auto.mats2 = data3;});
                     auto.mats2 = data3;
+                    if(auto.mats2.trim() === "Sessione scaduta") {
+                        SessionScaduta();
+                    }
 
                 },
 
@@ -875,23 +907,9 @@
                         auto.removeCor = false;
                     }
                     auto.corsi = data3;
-
-                    auto.checkSessione = data3;
-                    if (auto.checkSessione().trim() === "Sessione scaduta") {
-                        auto.showhomepage = true;
-                        auto.showMiePrenotazioni = false;
-                        auto.showPrenotazioni = false;
-                        auto.showUtenti = false;
-                        auto.showCalendario = false;
-                        auto.AddDocente = false;
-                        auto.AddCorso = false;
-                        auto.AddCorsoMat = false;
-                        auto.AddMateria = false;
-                        auto.removeCor = false;
-                        auto.removeDoc = false;
-                        auto.removeMat = false;
+                    if(auto.corsi.trim() === "Sessione scaduta") {
+                        SessionScaduta();
                     }
-
                 },
 
                 AddMateriaShow: function () {
@@ -907,8 +925,6 @@
                     } else {
                         auto.AddMateria = false;
                     }
-
-
                 },
 
                 removeMatShow: function (azione) {
@@ -926,8 +942,9 @@
                         auto.removeMat = false;
                     }
                     auto.mats2 = data3;
-
-
+                    if(auto.mats2.trim() === "Sessione scaduta") {
+                        SessionScaduta();
+                    }
                 },
 
                 getHomePage: function () {

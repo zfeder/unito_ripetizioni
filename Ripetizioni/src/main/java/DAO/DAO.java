@@ -649,6 +649,15 @@ public class DAO {
         Statement st = conn.createStatement();
         PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "', stato = 'Svolta' WHERE idPrenotazione = '" + idPrenotazione + "';");
         stmt.executeUpdate();
+        ResultSet rs = st.executeQuery("SELECT * FROM Prenotazione WHERE idPrenotazione = '" + idPrenotazione + "';");
+        Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
+                rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), rs.getString("nome"), rs.getString("Cognome"));
+        String idDocente = p.getIdDocente();
+        String idCorso = p.getIdCorso();
+        String orario = p.getOrario();
+        String giorno = p.getGiorno();
+        Statement stmt2 = conn.createStatement();
+        stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocente+"', '"+idCorso+"', '"+orario+"', '"+giorno+"', 'Libera')");
         stmt.close();
         conn.close();
 
@@ -659,6 +668,15 @@ public class DAO {
         Statement st = conn.createStatement();
         PreparedStatement stmt = conn.prepareStatement("UPDATE Prenotazione SET idUtente = '" +Utente+ "', stato = 'Disdetta' WHERE idPrenotazione = '" + idPrenotazione + "';");
         stmt.executeUpdate();
+        ResultSet rs = st.executeQuery("SELECT * FROM Prenotazione WHERE idPrenotazione = '" + idPrenotazione + "';");
+        Prenotazione p = new Prenotazione(rs.getString("idPrenotazione"), rs.getString("idUtente"), rs.getString("idDocente"),
+                rs.getString("idCorso"), rs.getString("Orario"), rs.getString("Giorno"), rs.getString("Stato"), rs.getString("nome"), rs.getString("Cognome"));
+        String idDocente = p.getIdDocente();
+        String idCorso = p.getIdCorso();
+        String orario = p.getOrario();
+        String giorno = p.getGiorno();
+        Statement stmt2 = conn.createStatement();
+        stmt2.executeUpdate("INSERT INTO PRENOTAZIONE (IDUTENTE, IDDOCENTE, IDCORSO, ORARIO, GIORNO, STATO) VALUES ('null', '"+idDocente+"', '"+idCorso+"', '"+orario+"', '"+giorno+"', 'Libera')");
         stmt.close();
         conn.close();
 
